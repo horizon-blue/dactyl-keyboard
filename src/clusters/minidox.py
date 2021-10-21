@@ -1,4 +1,4 @@
-from clusters.default import DefaultCluster
+from clusters.default_cluster import DefaultCluster
 
 
 class MinidoxCluster(DefaultCluster):
@@ -13,6 +13,12 @@ class MinidoxCluster(DefaultCluster):
         # have to repeat this for all classes/namespaces
         for item in parent_locals:
             globals()[item] = parent_locals[item]
+
+    def thumborigin(self):
+        origin = super().thumborigin()
+        origin[1] = origin[1] - .4 * (trackball_Usize - 1) * sa_length
+
+        return origin
 
     def tl_place(self, shape):
         shape = rotate(shape, [10, -23, 25])

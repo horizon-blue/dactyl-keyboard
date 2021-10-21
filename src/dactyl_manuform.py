@@ -5,13 +5,15 @@ import getopt, sys
 import json
 import os
 import shutil
-from clusters.default import DefaultCluster
+from clusters.default_cluster import DefaultCluster
 from clusters.carbonfet import CarbonfetCluster
 from clusters.mini import MiniCluster
 from clusters.minidox import MinidoxCluster
 from clusters.trackball_orbyl import TrackballOrbyl
 from clusters.trackball_wilder import TrackballWild
 from clusters.trackball_cj import TrackballCJ
+from clusters.custom_cluster import CustomCluster
+
 
 def deg2rad(degrees: float) -> float:
     return degrees * pi / 180
@@ -159,7 +161,7 @@ mount_width = keyswitch_width + 2 * plate_rim
 mount_height = keyswitch_height + 2 * plate_rim
 mount_thickness = plate_thickness
 
-if default_1U_cluster and thumb_style == 'DEFAULT':
+if default_1U_cluster:
     double_plate_height = (.7 * sa_double_length - mount_height) / 3
 elif thumb_style == 'DEFAULT':
     double_plate_height = (.95 * sa_double_length - mount_height) / 3
@@ -485,16 +487,28 @@ def apply_key_geometry(
         shape = translate_fn(shape, [0, column_offset(column)[1], 0])
 
     else:
+        if row > 2 and column > 1:
+            if column == 2 and row == 4:
+                shape = rotate(shape, (35, -15, -10))
+            else:
+                shape = rotate_x_fn(shape, -0.2)
+                shape = translate_fn(shape, [0, 0, row])
+
         shape = translate_fn(shape, [0, 0, -row_radius])
         shape = rotate_x_fn(shape, alpha * (centerrow - row))
         shape = translate_fn(shape, [0, 0, row_radius])
         shape = translate_fn(shape, [0, 0, -column_radius])
         shape = rotate_y_fn(shape, column_angle)
-        shape = translate_fn(shape, [0, 0, column_radius])
+        shape = translate_fn(shape, [0, 0, column_radius ])
         shape = translate_fn(shape, column_offset(column))
 
-    shape = rotate_y_fn(shape, tenting_angle)
-    shape = translate_fn(shape, [0, 0, keyboard_z_offset])
+        shape = rotate_y_fn(shape, tenting_angle)
+
+
+    if column == 2 and row == 4:
+        shape = translate_fn(shape, [0, -2, keyboard_z_offset + 7])
+    else:
+        shape = translate_fn(shape, [0, 0, keyboard_z_offset])
 
     return shape
 
@@ -665,19 +679,6 @@ def connectors():
 ############
 
 
-def main_thumborigin():
-    # debugprint('thumborigin()')
-    origin = key_position([mount_width / 2, -(mount_height / 2), 0], 1, cornerrow)
-
-    for i in range(len(origin)):
-        origin[i] = origin[i] + thumb_offsets[i]
-
-    if thumb_style == 'MINIDOX':
-        origin[1] = origin[1] - .4 * (trackball_Usize - 1) * sa_length
-
-    return origin
-
-
 def adjustable_plate_size(Usize=1.5):
     return (Usize * sa_length - mount_height) / 2
 
@@ -732,35 +733,6 @@ def thumb_connectors(side='right', style_override=None):
         return right_cluster.thumb_connectors(side)
     else:
         return left_cluster.thumb_connectors(side)
-
-
-def thumb_post_tr():
-    debugprint('thumb_post_tr()')
-    return translate(web_post(),
-                     [(mount_width / 2) - post_adj, ((mount_height / 2) + double_plate_height) - post_adj, 0]
-                     )
-
-
-def thumb_post_tl():
-    debugprint('thumb_post_tl()')
-    return translate(web_post(),
-                     [-(mount_width / 2) + post_adj, ((mount_height / 2) + double_plate_height) - post_adj, 0]
-                     )
-
-
-def thumb_post_bl():
-    debugprint('thumb_post_bl()')
-    return translate(web_post(),
-                     [-(mount_width / 2) + post_adj, -((mount_height / 2) + double_plate_height) + post_adj, 0]
-                     )
-
-
-def thumb_post_br():
-    debugprint('thumb_post_br()')
-    return translate(web_post(),
-                     [(mount_width / 2) - post_adj, -((mount_height / 2) + double_plate_height) + post_adj, 0]
-                     )
-
 
 ############################
 # MINI THUMB CLUSTER
@@ -2001,6 +1973,8 @@ def get_cluster(style):
         clust = TrackballWild(globals())
     elif style == TrackballCJ.name():
         clust = TrackballCJ(globals())
+    elif style == CustomCluster.name():
+        clust = CustomCluster(globals())
     else:
         clust = DefaultCluster(globals())
 

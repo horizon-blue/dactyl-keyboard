@@ -1,0 +1,37 @@
+{
+  "ENGINE": "openscad",
+  "override_name": "brad_dolph",
+  "iteration": "5x6",
+  "show_caps": false,
+  "nrows": 5,
+  "ncols": 6,
+  "plate_style": "NOTCH",
+  "beta": 0.08726638888888888,
+  "alpha": 0.26179916666666664,
+  "symmetry": "symmetric",
+  "column_style_gt5": "orthographic",
+  "column_style": "standard",
+  "full_last_rows": false,
+  "thumb_style": "CUSTOM",
+  "other_thumb": "CUSTOM",
+  "pinky_1_5U": false,
+  "first_1_5U_row": 0,
+  "last_1_5U_row": 5,
+  "default_1U_cluster": true,
+  "fixed_tenting": 0.2,
+  "fixed_angles": [
+    0.17453277777777776,
+    0.17453277777777776,
+    0,
+    0,
+    0,
+    -0.26179916666666664,
+    -0.33,
+    -0.26179916666666664
+  ],
+  "thumb_offsets": [
+    6,
+    -3,
+    4
+  ]
+}
