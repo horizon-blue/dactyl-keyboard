@@ -2,7 +2,7 @@
   "ENGINE": "openscad",
   "override_name": "brad_dolph",
   "iteration": "5x6",
-  "show_caps": false,
+  "show_caps": true,
   "nrows": 5,
   "ncols": 6,
   "plate_style": "NOTCH",
@@ -32,6 +32,6 @@
   "thumb_offsets": [
     6,
     -3,
-    4
+    -3
   ]
 }

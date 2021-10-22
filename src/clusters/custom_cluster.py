@@ -18,42 +18,42 @@ class CustomCluster(DefaultCluster):
         debugprint('tl_place()')
         shape = rotate(shape, [9.5, -12, 10])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-32.5, -17.5, -2.5])
+        shape = translate(shape, [-30.5, -15.5, -2.5])
         return shape
 
     def tr_place(self, shape):
         debugprint('tr_place()')
         shape = rotate(shape, [10, -9, 10])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-12, -16, 1])
+        shape = translate(shape, [-10, -16, 1])
         return shape
 
     def mr_place(self, shape):
         debugprint('mr_place()')
-        shape = rotate(shape, [-6, -28, 48])
+        shape = rotate(shape, [-6, -15, 48])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-29, -40, -9])
+        shape = translate(shape, [-29, -42, -9])
         return shape
 
     def ml_place(self, shape):
         debugprint('ml_place()')
-        shape = rotate(shape, [6, -28, 45])
+        shape = rotate(shape, [6, -15, 45])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-49, -27, -8])
+        shape = translate(shape, [-49, -29, -8])
         return shape
 
     def br_place(self, shape):
         debugprint('br_place()')
-        shape = rotate(shape, [-16, -27, 54])
+        shape = rotate(shape, [0, -5, 54])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-37.8, -55.3, -19.3])
+        shape = translate(shape, [-46.8, -57.3, -17.3])
         return shape
 
     def bl_place(self, shape):
         debugprint('bl_place()')
-        shape = rotate(shape, [-4, -29, 52])
+        shape = rotate(shape, [5, -5, 52])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-56.3, -43.3, -18.5])
+        shape = translate(shape, [-66.3, -45.3, -14.5])
         return shape
 
     def thumb_1x_layout(self, shape, cap=False):
@@ -122,3 +122,10 @@ class CustomCluster(DefaultCluster):
         return translate(web_post(),
                          [(mount_width / 2) - post_adj, -((mount_height / 2)) + post_adj, 0]
                          )
+
+    def screw_positions(self):
+        position = self.thumborigin()
+        position = list(np.array(position) + np.array([-21, -56, 0]))
+        position[2] = 0
+
+        return position

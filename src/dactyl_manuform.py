@@ -487,28 +487,28 @@ def apply_key_geometry(
         shape = translate_fn(shape, [0, column_offset(column)[1], 0])
 
     else:
-        if row > 2 and column > 1:
-            if column == 2 and row == 4:
-                shape = rotate(shape, (35, -15, -10))
-            else:
-                shape = rotate_x_fn(shape, -0.2)
-                shape = translate_fn(shape, [0, 0, row])
+        # if row > 2 and column > 1:
+            # if (column == 2 or column == 3) and row == 4:
+            #     shape = rotate(shape, (35, -15, -10))
+            # else:
+            #     shape = rotate_x_fn(shape, -0.2)
+            #     shape = translate_fn(shape, [0, 0, row])
 
         shape = translate_fn(shape, [0, 0, -row_radius])
         shape = rotate_x_fn(shape, alpha * (centerrow - row))
         shape = translate_fn(shape, [0, 0, row_radius])
         shape = translate_fn(shape, [0, 0, -column_radius])
         shape = rotate_y_fn(shape, column_angle)
-        shape = translate_fn(shape, [0, 0, column_radius ])
+        shape = translate_fn(shape, [0, 0, column_radius])
         shape = translate_fn(shape, column_offset(column))
 
         shape = rotate_y_fn(shape, tenting_angle)
 
 
-    if column == 2 and row == 4:
-        shape = translate_fn(shape, [0, -2, keyboard_z_offset + 7])
-    else:
-        shape = translate_fn(shape, [0, 0, keyboard_z_offset])
+    # if (column == 2 or column == 3) and row == 4:
+    #     shape = translate_fn(shape, [0, -2, keyboard_z_offset + 7])
+    # else:
+    #     shape = translate_fn(shape, [0, 0, keyboard_z_offset])
 
     return shape
 
@@ -529,11 +529,21 @@ def y_rot(shape, angle):
     # debugprint('y_rot()')
     return rotate(shape, [0, rad2deg(angle), 0])
 
-
 def key_place(shape, column, row):
     debugprint('key_place()')
-    return apply_key_geometry(shape, translate, x_rot, y_rot, column, row)
+    if row > 2 and column > 1:
+        if (column == 2 or column == 3) and row == 4:
+            shape = rotate(shape, (35, ((column * -1) - 10), -10))
+        else:
+            shape = x_rot(shape, -0.2)
+            shape = translate(shape, [0, -3, row])
 
+    shape = apply_key_geometry(shape, translate, x_rot, y_rot, column, row)
+
+    if (column == 2 or column == 3) and row == 4:
+        return translate(shape, [4, -2, keyboard_z_offset + 4])
+
+    return translate(shape, [0, 0, keyboard_z_offset])
 
 def add_translate(shape, xyz):
     debugprint('add_translate()')
@@ -545,9 +555,14 @@ def add_translate(shape, xyz):
 
 def key_position(position, column, row):
     debugprint('key_position()')
-    return apply_key_geometry(
+    position = rotate_around_x(position, -0.2)
+    position = add_translate(position, [0, 0, row])
+
+    position = apply_key_geometry(
         position, add_translate, rotate_around_x, rotate_around_y, column, row
     )
+
+    return add_translate(position, [0, 0, keyboard_z_offset])
 
 
 def key_holes(side="right"):
