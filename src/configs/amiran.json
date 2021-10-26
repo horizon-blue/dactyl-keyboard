@@ -13,9 +13,9 @@
   "column_style_gt5": "orthographic",
   "column_style": "standard",
   "full_last_rows": false,
-  "thumb_style": "TRACKBALL_WILD",
-  "other_thumb": "TRACKBALL_WILD",
-  "ball_side": "both",
+  "thumb_style": "DEFAULT",
+  "other_thumb": "DEFALUT",
+  "ball_side": "right",
   "pinky_1_5U": false,
   "first_1_5U_row": 0,
   "last_1_5U_row": 5
