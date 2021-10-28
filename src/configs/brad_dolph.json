@@ -1,13 +1,11 @@
 {
-  "ENGINE": "openscad",
+  "ENGINE": "cadquery",
   "override_name": "brad_dolph",
   "iteration": "5x6",
   "show_caps": true,
   "nrows": 5,
   "ncols": 6,
   "plate_style": "NOTCH",
-  "beta": 0.08726638888888888,
-  "alpha": 0.26179916666666664,
   "symmetry": "symmetric",
   "column_style_gt5": "orthographic",
   "column_style": "standard",
@@ -33,5 +31,13 @@
     6,
     -3,
     -3
+  ],
+  "d_key_rots": [
+    [40, -19, -7],
+    [40, -13, -9]
+  ],
+  "d_key_offsets": [
+    [4, -3, 5],
+    [3.5, 0, 7]
   ]
 }

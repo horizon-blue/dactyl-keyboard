@@ -23,9 +23,9 @@ class CustomCluster(DefaultCluster):
 
     def tr_place(self, shape):
         debugprint('tr_place()')
-        shape = rotate(shape, [10, -9, 10])
+        shape = rotate(shape, [10, -5, 5])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-10, -16, 1])
+        shape = translate(shape, [-11, -13, 1])
         return shape
 
     def mr_place(self, shape):

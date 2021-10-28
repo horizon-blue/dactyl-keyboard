@@ -5,7 +5,7 @@ import getopt, sys
 import json
 import os
 import shutil
-from clusters.default import DefaultCluster
+from clusters.default_cluster import DefaultCluster
 from clusters.carbonfet import CarbonfetCluster
 from clusters.mini import MiniCluster
 from clusters.minidox import MinidoxCluster
@@ -492,6 +492,13 @@ def apply_key_geometry(
         shape = translate_fn(shape, [0, column_offset(column)[1], 0])
 
     else:
+        # if row > 2 and column > 1:
+            # if (column == 2 or column == 3) and row == 4:
+            #     shape = rotate(shape, (35, -15, -10))
+            # else:
+            #     shape = rotate_x_fn(shape, -0.2)
+            #     shape = translate_fn(shape, [0, 0, row])
+
         shape = translate_fn(shape, [0, 0, -row_radius])
         shape = rotate_x_fn(shape, alpha * (centerrow - row))
         shape = translate_fn(shape, [0, 0, row_radius])
@@ -500,8 +507,13 @@ def apply_key_geometry(
         shape = translate_fn(shape, [0, 0, column_radius])
         shape = translate_fn(shape, column_offset(column))
 
-    shape = rotate_y_fn(shape, tenting_angle)
-    shape = translate_fn(shape, [0, 0, keyboard_z_offset])
+        shape = rotate_y_fn(shape, tenting_angle)
+
+
+    # if (column == 2 or column == 3) and row == 4:
+    #     shape = translate_fn(shape, [0, -2, keyboard_z_offset + 7])
+    # else:
+    #     shape = translate_fn(shape, [0, 0, keyboard_z_offset])
 
     return shape
 
@@ -525,8 +537,29 @@ def y_rot(shape, angle):
 
 def key_place(shape, column, row):
     debugprint('key_place()')
-    return apply_key_geometry(shape, translate, x_rot, y_rot, column, row)
+    if row == 0:
+        shape = translate(shape, [0, 8, 1])
+        shape = x_rot(shape, 0.1)
+    if row > 2:
+        if (column == 2 or column == 3) and row == 4:
+            shape = rotate(shape, d_key_rots[column - 2])
+        else:
+            shape = x_rot(shape, -0.3)
+            shape = translate(shape, [0, -4.5, 3])
 
+    # if column == 5:
+    #     shape = y_rot(shape, -0.174)
+
+    shape = apply_key_geometry(shape, translate, x_rot, y_rot, column, row)
+
+    if (column == 2 or column == 3) and row == 4:
+        d = d_key_offsets[column - 2]
+        return translate(shape, [d[0], d[1], keyboard_z_offset + d[2]])
+
+    if column == 5:
+        shape = translate(rotate(shape, (0, -5, 0)), (3, 6, -3))
+
+    return translate(shape, [0, 0, keyboard_z_offset])
 
 def add_translate(shape, xyz):
     debugprint('add_translate()')
@@ -538,9 +571,14 @@ def add_translate(shape, xyz):
 
 def key_position(position, column, row):
     debugprint('key_position()')
-    return apply_key_geometry(
+    position = rotate_around_x(position, -0.2)
+    position = add_translate(position, [0, 0, row])
+
+    position = apply_key_geometry(
         position, add_translate, rotate_around_x, rotate_around_y, column, row
     )
+
+    return add_translate(position, [0, 0, keyboard_z_offset])
 
 
 def key_holes(side="right"):
@@ -1609,10 +1647,10 @@ def screw_insert_all_shapes(bottom_radius, top_radius, height, offset=0, side='r
         translate(screw_insert(0, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
         translate(screw_insert(0, lastrow - 1, bottom_radius, top_radius, height, side=side),
                   (0, left_wall_lower_y_offset, offset)),
-        translate(screw_insert(3, lastrow, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
+        translate(screw_insert(3, lastrow, bottom_radius, top_radius, height, side=side), (0, 5, offset)),
         translate(screw_insert(3, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
-        translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
-        translate(screw_insert(lastcol, lastrow - 1, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
+        translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side), (2, 0, offset)),
+        translate(screw_insert(lastcol, lastrow - 1, bottom_radius, top_radius, height, side=side), (2, 0, offset)),
         translate(screw_insert_thumb(bottom_radius, top_radius, height, side=side), (0, 0, offset)),
     )
 
