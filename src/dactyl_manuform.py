@@ -80,7 +80,7 @@ def make_dactyl():
     for item in data:
         globals()[item] = data[item]
 
-    if save_name is not None:
+    if save_name not in ['', None]:
         config_name = save_name
     elif overrides is not None:
         config_name = override_name + "_" + str(nrows) + "x" + str(ncols) + "_" + thumb_style
