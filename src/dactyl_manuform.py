@@ -4,7 +4,6 @@ import os.path as path
 import getopt, sys
 import json
 import os
-import shutil
 import importlib
 from clusters.default_cluster import DefaultCluster
 from clusters.carbonfet import CarbonfetCluster
@@ -50,6 +49,7 @@ def make_dactyl():
 
     symmetry = None
     column_style = None
+    save_path = path.join(r"..", "things")
 
     def cluster(side="right"):
         return right_cluster if side == "right" else left_cluster
@@ -58,21 +58,28 @@ def make_dactyl():
     for item in cfg.shape_config:
         globals()[item] = cfg.shape_config[item]
 
-    if True:
+    data = None
+
+
+    ## CHECK FOR CONFIG FILE AND WRITE TO ANY VARIABLES IN FILE.
+    opts, args = getopt.getopt(sys.argv[1:], "", ["config=", "save_path="])
+    for opt, arg in opts:
+        if opt in '--config':
+            with open(os.path.join(r"..", "configs", arg + '.json'), mode='r') as fid:
+                data = json.load(fid)
+        elif opt in '--save_path':
+            print("save_path set to argument: ", arg)
+            save_path = arg
+
+    if data is None:
         print("NO CONFIGURATION SPECIFIED, USING run_config.json")
         with open(os.path.join(r".", 'run_config.json'), mode='r') as fid:
             data = json.load(fid)
 
-    else:
-        ## CHECK FOR CONFIG FILE AND WRITE TO ANY VARIABLES IN FILE.
-        opts, args = getopt.getopt(sys.argv[1:], "", ["config="])
-        for opt, arg in opts:
-            if opt in ('--config'):
-                with open(os.path.join(r"..", "configs", arg + '.json'), mode='r') as fid:
-                    data = json.load(fid)
-
     if data["overrides"] not in [None, ""]:
-        with open(os.path.join(data["overrides"]), mode='r') as fid:
+        save_path = path.join(save_path, data["overrides"])
+        override_file = path.join(save_path, data["overrides"] + '.json')
+        with open(override_file, mode='r') as fid:
             override_data = json.load(fid)
         for item in override_data:
             data[item] = override_data[item]
@@ -83,7 +90,7 @@ def make_dactyl():
     if save_name not in ['', None]:
         config_name = save_name
     elif overrides is not None:
-        config_name = override_name + "_" + str(nrows) + "x" + str(ncols) + "_" + thumb_style
+        config_name = overrides + "_" + str(nrows) + "x" + str(ncols) + "_" + thumb_style
 
     ENGINE = data["ENGINE"]
     # Really rough setup.  Check for ENGINE, set it not present from configuration.
@@ -97,24 +104,18 @@ def make_dactyl():
 
     parts_path = os.path.abspath(path.join(r".", "parts"))
 
-    if override_name in ['', None, '.']:
-        if save_dir in ['', None, '.']:
-            save_path = path.join(r"..", "things")
-            # parts_path = path.join(r"..", "src", "parts")
-        else:
-            save_path = path.join(r"..", "things", save_dir)
-            # parts_path = path.join(r"..", r"..", "src", "parts")
+    if save_dir not in ['', None, '.']:
+        save_path = save_dir
+        print("save_path set to save_dir json setting: ", save_path)
         # parts_path = path.join(r"..", r"..", "src", "parts")
-    else:
-        save_path = path.join(save_dir, override_name)
+    # parts_path = path.join(r"..", r"..", "src", "parts")
+
         # parts_path = path.jo
 
     dir_exists = os.path.isdir(save_path)
     if not dir_exists:
         os.makedirs(save_path, exist_ok=True)
 
-    if overrides not in [None, ""]:
-        shutil.copy(overrides, save_path)
     ###############################################
     # END EXTREMELY UGLY BOOTSTRAP
     ###############################################

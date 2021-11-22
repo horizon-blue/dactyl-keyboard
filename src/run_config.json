@@ -1,9 +1,8 @@
 {
   "ENGINE": "solid",
   "save_dir": ".",
-  "overrides": "C:\\Users\\nethe\\OneDrive\\Sales\\Models\\Customers\\test_config.json",
+  "overrides": "testing",
   "save_name": "",
-  "override_name": "",
   "config_name": "5x6",
   "show_caps": false,
   "show_pcbs": false,
