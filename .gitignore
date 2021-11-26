@@ -25,3 +25,5 @@ config/
 .iml
 **/*.iml
 
+!/src/play/
+!/src/play/cad_play.py

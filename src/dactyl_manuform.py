@@ -559,9 +559,10 @@ def make_dactyl():
                 if valid_key(column, row):
                     holes.append(key_place(single_plate(side=side), column, row))
 
-        shape = union(holes)
-
-        return shape
+        return holes
+        # shape = union(holes)
+        #
+        # return shape
 
 
     def caps():
@@ -592,39 +593,45 @@ def make_dactyl():
         post = translate(post, (0, 0, plate_thickness - (web_thickness / 2)))
         return post
 
+    def web_post_tr_offsets(wide=False):
+        if wide:
+            w_divide = 1.2
+        else:
+            w_divide = 2.0
+        return [(mount_width / w_divide) - post_adj, (mount_height / 2) - post_adj, 0]
 
     def web_post_tr(wide=False):
+        return translate(web_post(), web_post_tr_offsets(wide))
+
+    def web_post_tl_offsets(wide=False):
         if wide:
             w_divide = 1.2
         else:
             w_divide = 2.0
-
-        return translate(web_post(), ((mount_width / w_divide) - post_adj, (mount_height / 2) - post_adj, 0))
-
+        return [-(mount_width / w_divide) + post_adj, (mount_height / 2) - post_adj, 0]
 
     def web_post_tl(wide=False):
+        return translate(web_post(), web_post_tl_offsets(wide))
+
+    def web_post_bl_offsets(wide=False):
         if wide:
             w_divide = 1.2
         else:
             w_divide = 2.0
-        return translate(web_post(), (-(mount_width / w_divide) + post_adj, (mount_height / 2) - post_adj, 0))
-
+        return [-(mount_width / w_divide) + post_adj, -(mount_height / 2) + post_adj, 0]
 
     def web_post_bl(wide=False):
+        return translate(web_post(), web_post_bl_offsets(wide))
+
+    def web_post_br_offsets(wide=False):
         if wide:
             w_divide = 1.2
         else:
             w_divide = 2.0
-        return translate(web_post(), (-(mount_width / w_divide) + post_adj, -(mount_height / 2) + post_adj, 0))
-
+        return [(mount_width / w_divide) - post_adj, -(mount_height / 2) + post_adj, 0]
 
     def web_post_br(wide=False):
-        if wide:
-            w_divide = 1.2
-        else:
-            w_divide = 2.0
-        return translate(web_post(), ((mount_width / w_divide) - post_adj, -(mount_height / 2) + post_adj, 0))
-
+        return translate(web_post(), web_post_br_offsets(wide))
 
     def get_torow(column):
         torow = lastrow
@@ -638,6 +645,7 @@ def make_dactyl():
     def connectors():
         debugprint('connectors()')
         hulls = []
+        # SPACES BETWEEN COLUMN KEY HOLES
         for column in range(ncols - 1):
             torow = get_torow(column)
             for row in range(torow):  # need to consider last_row?
@@ -649,6 +657,7 @@ def make_dactyl():
                 places.append(key_place(web_post_br(), column, row))
                 hulls.append(triangle_hulls(places))
 
+        # SPACES BETWEEN ROW KEYHOLES
         for column in range(ncols):
             torow = get_torow(column)
             # for row in range(nrows-1):
@@ -660,6 +669,7 @@ def make_dactyl():
                 places.append(key_place(web_post_tr(), column, row + 1))
                 hulls.append(triangle_hulls(places))
 
+        # KEYHOLE ROW/COLUMN CORNER PIECES
         for column in range(ncols - 1):
             torow = get_torow(column)
             # for row in range(nrows-1):  # need to consider last_row?
@@ -1785,11 +1795,33 @@ def make_dactyl():
             shape = add([shape, cluster(side).thumbcaps(side=side)])
             shape = add([shape, caps()])
 
+        shape = add_supports(shape)
+
         if side == "left":
             shape = mirror(shape, 'YZ')
 
         return shape
 
+
+    def add_supports(shape):
+        support_shapes = [shape]
+        for column in range(ncols):
+            for row in range(nrows):
+                if valid_key(column, row):
+                    coords = [
+                        key_position(web_post_tl_offsets(), column, row),
+                        key_position(web_post_tr_offsets(), column, row),
+                        key_position(web_post_bl_offsets(), column, row),
+                        key_position(web_post_br_offsets(), column, row),
+                    ]
+
+                    for coord in coords:
+                        coord[2] = coord[2] - 2
+                        support_shapes.append(translate(cylinder(1, coord[2]),
+                                                        [coord[0], coord[1], (coord[2] / 2) - 1]))
+                    support_shapes.append(hull_from_points(coords))
+
+        return union(support_shapes)
 
     # NEEDS TO BE SPECIAL FOR CADQUERY
     def baseplate(wedge_angle=None, side='right'):

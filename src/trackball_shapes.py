@@ -1,4 +1,4 @@
-from helpers_solid import *
+from helpers_cadquery import *
 import os.path as path
 import numpy
 
@@ -136,9 +136,16 @@ def gen_track_socket():
     return difference(track_outer(), [track_cutter()])
 
 
+def gen_keyhole_support():
+    parts_path = path.abspath(path.join(r".", "parts"))
+    plate_file = path.join(parts_path, "derek_hotswap")
+    plate_shape = import_file(plate_file)
+    return difference(translate(box(16, 15, 4), [0, 0, -2]), [plate_shape])
+
+
 # cutter_fin = socket_bearing_fin(7, 3, 2, 7, -35)
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
 # result = difference(main_fin, [cutter_fin])
-export_file(shape=gen_track_socket(), fname=path.join("..", "things", "play"))
+export_file(shape=gen_keyhole_support(), fname=path.join("..", "things", "keyhole_support"))
 
