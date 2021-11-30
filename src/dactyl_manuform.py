@@ -1815,11 +1815,20 @@ def make_dactyl():
                         key_position(web_post_br_offsets(), column, row),
                     ]
 
+                    avg_x = 0
+                    avg_y = 0
+                    avg_z = 0
+
                     for coord in coords:
-                        coord[2] = coord[2] - 2
-                        support_shapes.append(translate(cylinder(1, coord[2]),
-                                                        [coord[0], coord[1], (coord[2] / 2) - 1]))
-                    support_shapes.append(hull_from_points(coords))
+                        avg_x += coord[0]
+                        avg_y += coord[1]
+                        coord[2] = coord[2] - 2  # offset a titch
+                        avg_z += coord[2]
+
+                    origin = [avg_x / 4, avg_y / 4, (avg_z / 4) - 20]
+
+                    for coord in coords:
+                        support_shapes.append(get_branch(origin, coord))
 
         return union(support_shapes)
 

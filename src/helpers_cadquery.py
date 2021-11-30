@@ -20,6 +20,10 @@ def cylinder(radius, height, segments=100):
     return shape
 
 
+def get_branch(origin, vec):
+    return cq.Solid.makeCylinder(pnt=origin, dir=vec, radius=0.2, height=10)
+
+
 def sphere(radius):
     return cq.Workplane('XY').union(cq.Solid.makeSphere(radius))
 
