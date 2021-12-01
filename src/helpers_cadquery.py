@@ -20,8 +20,18 @@ def cylinder(radius, height, segments=100):
     return shape
 
 
-def get_branch(origin, vec):
-    return cq.Solid.makeCylinder(pnt=origin, dir=vec, radius=0.2, height=10)
+def get_branch(work, o, v):
+    o_zero = []
+    for (elem1, elem2) in zip(v, o):
+        o_zero.append(elem1 - elem2)
+
+    origin = cq.Vector((0, 0, o[2] / 2))
+    offset = cq.Vector(o_zero)
+
+    # dist = abs(np.sqrt((v[0] - o[0]) ** 2 + (v[1] - o[1]) ** 2 + (v[2] - o[2]) ** 2))
+    dist = abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2))
+    cyl = cq.Solid.makeCylinder(pnt=origin, dir=offset, radius=0.5, height=dist)
+    return work.union(cyl, clean=False)
 
 
 def sphere(radius):
@@ -50,14 +60,14 @@ def mirror(shape, plane=None):
     return shape.mirror(mirrorPlane=plane)
 
 
-def union(shapes):
+def union(shapes, clean=True):
     debugprint('union()')
     shape = None
     for item in shapes:
         if shape is None:
             shape = item
         else:
-            shape = shape.union(item)
+            shape = shape.union(item, clean=clean)
     return shape
 
 

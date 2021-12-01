@@ -559,10 +559,9 @@ def make_dactyl():
                 if valid_key(column, row):
                     holes.append(key_place(single_plate(side=side), column, row))
 
-        return holes
-        # shape = union(holes)
-        #
-        # return shape
+        shape = union(holes)
+
+        return shape
 
 
     def caps():
@@ -1795,8 +1794,10 @@ def make_dactyl():
             shape = add([shape, cluster(side).thumbcaps(side=side)])
             shape = add([shape, caps()])
 
-        shape = add_supports(shape)
-
+        supports = add_supports(shape)
+        # shape = union(shape, supports)
+        export_file(shape=union(supports, clean=False), fname=path.join(save_path, config_name + side +r"_supports"))
+        # export_file(shape=union(supports, clean=False), fname=path.join(r"..", "things", r"debug_thumb_connector_shape"))
         if side == "left":
             shape = mirror(shape, 'YZ')
 
@@ -1804,7 +1805,8 @@ def make_dactyl():
 
 
     def add_supports(shape):
-        support_shapes = [shape]
+        print("add_supports")
+        support_shapes = []
         for column in range(ncols):
             for row in range(nrows):
                 if valid_key(column, row):
@@ -1822,15 +1824,24 @@ def make_dactyl():
                     for coord in coords:
                         avg_x += coord[0]
                         avg_y += coord[1]
-                        coord[2] = coord[2] - 2  # offset a titch
+                        coord[2] = coord[2] - 0.5  # offset a titch
                         avg_z += coord[2]
 
-                    origin = [avg_x / 4, avg_y / 4, (avg_z / 4) - 20]
+                    origin = [avg_x / 4, avg_y / 4, (avg_z / 4) - 5]
+
+                    if origin[2] < 1:
+                        origin[2] = 1
+
+
+                    plane = rotate(box(2, 2, origin[2]), (0, 0, 45))
 
                     for coord in coords:
-                        support_shapes.append(get_branch(origin, coord))
+                        plane = get_branch(plane, origin, coord)
 
-        return union(support_shapes)
+                    plane = translate(plane, (origin[0], origin[1], origin[2] / 2))
+                    support_shapes.append(plane)
+
+        return support_shapes
 
     # NEEDS TO BE SPECIAL FOR CADQUERY
     def baseplate(wedge_angle=None, side='right'):
