@@ -1794,21 +1794,26 @@ def make_dactyl():
             shape = add([shape, cluster(side).thumbcaps(side=side)])
             shape = add([shape, caps()])
 
-        supports = add_supports(shape)
-        # shape = union(shape, supports)
-        export_file(shape=union(supports, clean=False), fname=path.join(save_path, config_name + side +r"_supports"))
-        # export_file(shape=union(supports, clean=False), fname=path.join(r"..", "things", r"debug_thumb_connector_shape"))
         if side == "left":
             shape = mirror(shape, 'YZ')
 
         return shape
 
 
-    def add_supports(shape):
+    def add_supports(base_shape, side="right"):
         print("add_supports")
         support_shapes = []
+        plate_offsets = [
+            [-1, 1, 0],
+            [1, 1, 0],
+            [-1, -1, 0],
+            [1, -1, 0]
+        ]
+        all_origins = []
         for column in range(ncols):
+            column_origins = []
             for row in range(nrows):
+                # print("column " + str(column) + ", row " + str(row))
                 if valid_key(column, row):
                     coords = [
                         key_position(web_post_tl_offsets(), column, row),
@@ -1824,24 +1829,42 @@ def make_dactyl():
                     for coord in coords:
                         avg_x += coord[0]
                         avg_y += coord[1]
-                        coord[2] = coord[2] - 0.5  # offset a titch
+                        # coord[2] = coord[2] + 1  # offset up a titch
                         avg_z += coord[2]
 
-                    origin = [avg_x / 4, avg_y / 4, (avg_z / 4) - 5]
+                    origin = [avg_x / 4, avg_y / 4, (avg_z / 4) - 10]
 
                     if origin[2] < 1:
                         origin[2] = 1
 
 
-                    plane = rotate(box(2, 2, origin[2]), (0, 0, 45))
+                    # plane = rotate(box(2, 2, origin[2]), (0, 0, 45))
 
-                    for coord in coords:
+
+                    cutter_vec = []
+                    for i in range(len(coords)):
+                        coord = coords[i]
                         plane = get_branch(plane, origin, coord)
+                        vec_off = [coords[i][0] + plate_offsets[i][0], coords[i][1] + plate_offsets[i][1], coords[i][2] + plate_offsets[i][2]]
+                        cutter_vec.append(vec_off)
+                        down_coord = vec_off.copy()
+                        down_coord[2] = vec_off[2] - 2
+                        cutter_vec.append(down_coord)
+
+                    cutter = translate(hull_from_points(cutter_vec), (0, 0, 1))
 
                     plane = translate(plane, (origin[0], origin[1], origin[2] / 2))
+                    plane = union([plane, cutter])
                     support_shapes.append(plane)
 
-        return support_shapes
+        supports = union(support_shapes, clean=False)
+
+        if side == "left":
+            supports = mirror(supports, 'YZ')
+
+        supports = difference(supports, [base_shape])
+
+        return supports
 
     # NEEDS TO BE SPECIAL FOR CADQUERY
     def baseplate(wedge_angle=None, side='right'):
@@ -1939,6 +1962,12 @@ def make_dactyl():
         export_file(shape=base, fname=path.join(save_path, config_name + r"_right_plate"))
         export_dxf(shape=base, fname=path.join(save_path, config_name + r"_right_plate"))
 
+        if generate_supports:
+            supports = add_supports(base, side="right")
+            supports = difference(supports, [mod_r])
+            export_file(shape=supports,
+                        fname=path.join(save_path, config_name + r"_right_supports"))
+
         if symmetry == "asymmetric":
 
             mod_l = model_side(side="left")
@@ -1948,10 +1977,23 @@ def make_dactyl():
             export_file(shape=base_l, fname=path.join(save_path, config_name + r"_left_plate"))
             export_dxf(shape=base_l, fname=path.join(save_path, config_name + r"_left_plate"))
 
+            if generate_supports:
+                supports = add_supports(mod_l, side="left")
+                export_file(shape=supports,
+                            fname=path.join(save_path, config_name + r"_left_supports"))
         else:
-            export_file(shape=mirror(mod_r, 'YZ'), fname=path.join(save_path, config_name + r"_left"))
+            mod_l = mirror(mod_r, 'YZ')
+            export_file(shape=mod_l, fname=path.join(save_path, config_name + r"_left"))
+            if generate_supports:
+                supports = add_supports(mod_l, side="left")
+                export_file(shape=supports,
+                            fname=path.join(save_path, config_name + r"_left_supports"))
 
             lbase = mirror(base, 'YZ')
+            if generate_supports:
+                supports = add_supports(lbase, side="left")
+                export_file(shape=supports,
+                            fname=path.join(save_path, config_name + r"_left_supports"))
             export_file(shape=lbase, fname=path.join(save_path, config_name + r"_left_plate"))
             export_dxf(shape=lbase, fname=path.join(save_path, config_name + r"_left_plate"))
 

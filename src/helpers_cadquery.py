@@ -31,7 +31,7 @@ def get_branch(work, o, v):
     # dist = abs(np.sqrt((v[0] - o[0]) ** 2 + (v[1] - o[1]) ** 2 + (v[2] - o[2]) ** 2))
     dist = abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2))
     cyl = cq.Solid.makeCylinder(pnt=origin, dir=offset, radius=0.5, height=dist)
-    return work.union(cyl, clean=False)
+    return work.union(cyl, clean=False)  # If clean is true, the default, things go kablooey
 
 
 def sphere(radius):
@@ -111,6 +111,8 @@ def face_from_points(points):
 
     return face
 
+def scale(shape, factor):
+    return shape.scale(factor)
 
 def hull_from_points(points):
     # debugprint('hull_from_points()')

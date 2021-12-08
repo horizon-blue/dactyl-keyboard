@@ -6,6 +6,7 @@
   "config_name": "5x6",
   "show_caps": false,
   "show_pcbs": false,
+  "generate_supports": false,
   "nrows": 6,
   "ncols": 6,
   "alpha": 0.26179916666666664,
