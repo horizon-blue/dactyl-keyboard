@@ -1844,7 +1844,6 @@ def make_dactyl():
                     if lowest_z < 1:
                         lowest_z = 1
 
-
                     middle_post = [avg_x / 4, avg_y / 4, avg_z / 4]
                     origin = [avg_x / 4, avg_y / 4, lowest_z]
                     print("Created middle_post vector")
@@ -1904,7 +1903,7 @@ def make_dactyl():
 
                     post = get_branch(post, origin, middle_post)
                     post = translate(post, (origin[0], origin[1], origin[2] / 2))
-                    post = union([post, plate])
+                    post = union([post, plate], clean=False)
                     support_shapes.append(post)
 
         print("Main stuff done, union all together")

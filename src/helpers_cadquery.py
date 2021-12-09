@@ -32,7 +32,7 @@ def get_branch(work, o, v):
     dist = abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2)) * 0.9
     # cyl = cq.Solid.makeCylinder(pnt=origin, dir=offset, radius=0.7, height=dist)
     cyl = cq.Solid.makeCone(pnt=origin, dir=offset, radius1=1, radius2=0.5, height=dist)
-    return work.union(cyl)  # If clean is true, the default, things go kablooey
+    return work.union(cyl, clean=False)  # If clean is true, the default, things go kablooey
 
 
 def sphere(radius):
@@ -68,7 +68,7 @@ def union(shapes, clean=True):
         if shape is None:
             shape = item
         else:
-            shape = shape.union(item, clean=False)
+            shape = shape.union(item, clean=clean)
     return shape
 
 
