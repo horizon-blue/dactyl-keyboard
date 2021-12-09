@@ -1904,17 +1904,17 @@ def make_dactyl():
 
                     post = get_branch(post, origin, middle_post)
                     post = translate(post, (origin[0], origin[1], origin[2] / 2))
-                    post = union([post, plate], clean=False)
+                    post = union([post, plate])
                     support_shapes.append(post)
 
         print("Main stuff done, union all together")
-        supports = union(support_shapes, clean=False)
+        supports = union(support_shapes)
 
         if side == "left":
             supports = mirror(supports, 'YZ')
 
         print("Calculating difference from base")
-        supports = difference(supports, [base_shape], clean=False)
+        supports = difference(supports, [base_shape])
 
         return supports
 
