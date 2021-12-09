@@ -1907,7 +1907,7 @@ def make_dactyl():
                     support_shapes.append(post)
 
         print("Main stuff done, union all together")
-        supports = union(support_shapes)
+        supports = union(support_shapes, clean=False)
 
         if side == "left":
             supports = mirror(supports, 'YZ')
