@@ -28,18 +28,23 @@ def get_distance(p1, p2):
     return abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2)), o_zero
 
 
-def get_connector(shape, p1, p2):
-    print("get connector: p1=" + str(p1) + ", p2=" + str(p2))
+def get_connector(shape, origin, adjacent):
+
     o_zero = []
-    for (elem1, elem2) in zip(p1, p2):
+    for (elem1, elem2) in zip(origin, adjacent):
         o_zero.append(elem1 - elem2)
 
     dist = abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2))
 
-    offset = cq.Vector(o_zero)
-    origin = cq.Vector(p1)
+    direction = cq.Vector(o_zero)
+    pnt = cq.Vector((0, 0, 0))
 
-    connector = cq.Solid.makeBox(dist, 1, 1, pnt=origin, dir=offset)
+    print("    Connector: \n      origin=" + str(origin) +
+          "\n      adjacent=" + str(adjacent) +
+          "\n      dir=" + str(direction) +
+          "\n      pnt=" + str(pnt))
+
+    connector = translate(cq.Solid.makeBox(dist, 1, 1, pnt=pnt, dir=direction), (0, 0, 0.6))
     return shape.union(connector)
 
 
