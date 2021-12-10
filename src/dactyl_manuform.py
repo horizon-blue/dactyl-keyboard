@@ -1802,7 +1802,6 @@ def make_dactyl():
 
     def add_supports(base_shape, side="right"):
         print("add_supports")
-        support_shapes = []
         plate_offsets = [
             [-1, 1, 0],
             [1, 1, 0],
@@ -1810,6 +1809,7 @@ def make_dactyl():
             [1, -1, 0]
         ]
         all_origins = []
+        supports = None
         for column in range(ncols):
             column_origins = []
             for row in range(nrows):
@@ -1818,8 +1818,8 @@ def make_dactyl():
                     coords = [
                         key_position(web_post_tl_offsets(), column, row),
                         key_position(web_post_tr_offsets(), column, row),
-                        key_position(web_post_bl_offsets(), column, row),
                         key_position(web_post_br_offsets(), column, row),
+                        key_position(web_post_bl_offsets(), column, row),
                     ]
 
                     avg_x = 0
@@ -1846,30 +1846,12 @@ def make_dactyl():
 
                     middle_post = [avg_x / 4, avg_y / 4, avg_z / 4]
                     origin = [avg_x / 4, avg_y / 4, lowest_z]
-                    print("Created middle_post vector")
-                    bottom_base = translate(cylinder(5, 1), (origin[0], origin[1], 0.25))
 
-                    support_shapes.append(bottom_base)
+                    # support_shapes.append(bottom_base)
 
                     if origin[2] < 1:
                         origin[2] = 1
 
-                    post = translate(cone(4, 2, origin[2]), (0, 0, origin[2] / 2))
-                    ball_join = translate(sphere(2), (0, 0, origin[2] / 2))
-                    post = union([post, ball_join])
-
-                    plate_points = []
-                    for i in range(len(coords)):
-                        coord = coords[i]
-                        post = get_branch(post, origin, coord)
-                        plate_points.append(coord.copy())
-                        down_coord = coord.copy()
-                        down_coord[2] = coord[2] - 3
-                        plate_points.append(down_coord)
-
-                    plate = hull_from_points(plate_points)
-
-                    print("Plates done")
                     mid_points = [
                         [
                             (coords[0][0] + coords[1][0]) / 2,
@@ -1893,27 +1875,63 @@ def make_dactyl():
                         ]
                     ]
 
-                    print("mid_points found: " + str(mid_points))
+                    print("Created middle_post vector")
+                    bottom_base = translate(cylinder(5, 1), (0, 0, 0.25))
+
+                    post = translate(cylinder(4, origin[2]), (0, 0, origin[2] / 2))
+                    ball_join = translate(sphere(2), (0, 0, origin[2] / 2))
+                    post = union([post, bottom_base, ball_join])
+
+                    plate_points = []
+                    for i in range(len(coords)):
+                        coord = coords[i]
+                        post = get_branch(post, origin, coord)
+                        post = get_branch(post, origin, mid_points[i])
+                        plate_points.append(coord.copy())
+                        down_coord = coord.copy()
+                        down_coord[2] = coord[2] - 3
+                        plate_points.append(down_coord)
+
+                    post = get_branch(post, origin, middle_post)
+
+                    plate = hull_from_points(plate_points)
+
+                    print("Plate done")
 
                     if column == 2 and row == 1:
                         print("at breakpoint")
 
-                    for mid_point in mid_points:
-                        post = get_branch(post, origin, mid_point)
-
-                    post = get_branch(post, origin, middle_post)
                     post = translate(post, (origin[0], origin[1], origin[2] / 2))
                     post = union([post, plate], clean=False)
-                    support_shapes.append(post)
+
+                    # connect bottom bases
+                    # bottom_origin = [origin[0], origin[1], 0]
+                    # column_origins.append(bottom_origin)
+                    # if column > 0 or row > 0:
+                    #     if column > 0:
+                    #         prev_col = all_origins[column - 1]
+                    #         if len(prev_col) > row:
+                    #             prev_col_origin = prev_col[row]
+                    #             post = get_connector(post, prev_col_origin, bottom_origin)
+                    #     if row > 0:
+                    #         prev_row_origin = column_origins[row - 1]
+                    #         post = get_connector(post, prev_row_origin, bottom_origin)
+
+                    if supports is None:
+                        supports = post
+                    else:
+                        supports = union([supports, post])
+
+            all_origins.append(column_origins)
 
         print("Main stuff done, union all together")
-        supports = union(support_shapes, clean=False)
+        # supports = union(support_shapes, clean=False)
 
         if side == "left":
             supports = mirror(supports, 'YZ')
 
         print("Calculating difference from base")
-        supports = difference(supports, [base_shape])
+        # supports = difference(supports, [base_shape])
 
         return supports
 
