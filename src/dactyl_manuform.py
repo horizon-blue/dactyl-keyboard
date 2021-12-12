@@ -1915,7 +1915,7 @@ def make_dactyl():
                     #     post = get_connector(post, bottom_origin, prev_row_origin)
                     #
                     post = translate(post, (origin[0], origin[1], origin[2] / 2))
-                    post = union([post, plate], clean=False)
+                    # post = union([post, plate], clean=False)
 
                     if supports is None:
                         supports = post
@@ -1928,8 +1928,8 @@ def make_dactyl():
             supports = mirror(supports, 'YZ')
 
         print("Calculating difference from base")
-        spaced_shape = translate(base_shape, (0, 0, -0.2))
-        supports = difference(supports, [spaced_shape])
+        # spaced_shape = translate(base_shape, (0, 0, -0.2))
+        # supports = difference(supports, [spaced_shape])
 
         return supports
 
@@ -2068,7 +2068,9 @@ def make_dactyl():
                 config_name + r"_right",
                 config_name + r"_left",
                 config_name + r"_right_plate",
-                config_name + r"_left_plate"
+                config_name + r"_left_plate",
+                config_name + r"_right_supports",
+                config_name + r"_left_supports"
             ])
 
         if oled_mount_type == 'UNDERCUT':

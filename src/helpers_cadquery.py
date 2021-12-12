@@ -57,7 +57,7 @@ def get_branch(shape, o, v):
     offset = cq.Vector(o_zero)
 
     # dist = abs(np.sqrt((v[0] - o[0]) ** 2 + (v[1] - o[1]) ** 2 + (v[2] - o[2]) ** 2))
-    dist = abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2)) * 0.9
+    dist = abs(np.sqrt(o_zero[0] ** 2 + o_zero[1] ** 2 + o_zero[2] ** 2))
     cyl = cq.Solid.makeCylinder(pnt=origin, dir=offset, radius=0.7, height=dist)
     # cyl = cq.Solid.makeCone(pnt=origin, dir=offset, radius1=1, radius2=0.5, height=dist)
     return shape.union(cyl, clean=False)  # If clean is true, the default, things go kablooey
