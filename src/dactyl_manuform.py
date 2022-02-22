@@ -9,6 +9,7 @@ from clusters.default_cluster import DefaultCluster
 from clusters.carbonfet import CarbonfetCluster
 from clusters.mini import MiniCluster
 from clusters.minidox import MinidoxCluster
+from clusters.minithicc import Minithicc
 from clusters.trackball_orbyl import TrackballOrbyl
 from clusters.trackball_wilder import TrackballWild
 from clusters.trackball_cj import TrackballCJ
@@ -43,6 +44,9 @@ def make_dactyl():
     left_cluster = None
 
     left_wall_x_offset = 8
+    left_wall_x_row_offsets = [
+        8, 8, 8, 8, 8, 8
+    ]
     left_wall_z_offset = 3
     left_wall_lower_y_offset = 0
     left_wall_lower_z_offset = 0
@@ -182,6 +186,7 @@ def make_dactyl():
 
     if oled_mount_type is not None and oled_mount_type != "NONE":
         left_wall_x_offset = oled_left_wall_x_offset_override
+        left_wall_x_row_offsets = oled_left_x_row_offsets
         left_wall_z_offset = oled_left_wall_z_offset_override
         left_wall_lower_y_offset = oled_left_wall_lower_y_offset
         left_wall_lower_z_offset = oled_left_wall_lower_z_offset
@@ -255,6 +260,11 @@ def make_dactyl():
 
             plate = difference(plate, [shape_cut])
 
+        if plate_file is not None:
+            socket = import_file(plate_file)
+            socket = translate(socket, [0, 0, plate_thickness + plate_offset])
+            plate = union([plate, socket])
+
         if plate_style in ['UNDERCUT', 'HS_UNDERCUT', 'NOTCH', 'HS_NOTCH']:
             if plate_style in ['UNDERCUT', 'HS_UNDERCUT']:
                 undercut = box(
@@ -284,10 +294,10 @@ def make_dactyl():
 
             plate = difference(plate, [undercut])
 
-        if plate_file is not None:
-            socket = import_file(plate_file)
-            socket = translate(socket, [0, 0, plate_thickness + plate_offset])
-            plate = union([plate, socket])
+        # if plate_file is not None:
+        #     socket = import_file(plate_file)
+        #     socket = translate(socket, [0, 0, plate_thickness + plate_offset])
+        #     plate = union([plate, socket])
 
         if plate_holes:
             half_width = plate_holes_width / 2.
@@ -772,7 +782,7 @@ def make_dactyl():
             y_offset = 0.0
             z_offset = 0.0
 
-        return list(pos - np.array([left_wall_x_offset, -y_offset, left_wall_z_offset + z_offset]))
+        return list(pos - np.array([left_wall_x_row_offsets[row], -y_offset, left_wall_z_offset + z_offset]))
 
 
     def left_key_place(shape, row, direction, low_corner=False, side='right'):
@@ -823,6 +833,7 @@ def make_dactyl():
 
         hulls.append(place2(post2))
         hulls.append(place2(translate(post2, wall_locate1(dx2, dy2))))
+        hulls.append(place2(translate(post2, wall_locate1(dx2, dy2))))
         hulls.append(place2(translate(post2, wall_locate2(dx2, dy2))))
         hulls.append(place2(translate(post2, wall_locate3(dx2, dy2, back))))
         shape1 = hull_from_shapes(hulls)
@@ -834,8 +845,8 @@ def make_dactyl():
         hulls.append(place2(translate(post2, wall_locate3(dx2, dy2, back))))
         shape2 = bottom_hull(hulls)
 
-        return union([shape1, shape2])
-        # return shape1
+        # return union([shape1, shape2])
+        return shape1
 
 
     def key_wall_brace(x1, y1, dx1, dy1, post1, x2, y2, dx2, dy2, post2, back=False):
@@ -943,6 +954,7 @@ def make_dactyl():
                 key_place(web_post_tl(), 0, y),
                 key_place(web_post_bl(), 0, y - 1),
                 left_key_place(web_post(), y, 1, side=side),
+                left_key_place(web_post(), y - 1, -1, side=side),
                 left_key_place(web_post(), y - 1, -1, side=side),
             ))
             shape = union([shape, temp_shape1])
@@ -1616,14 +1628,17 @@ def make_dactyl():
     def screw_insert_all_shapes(bottom_radius, top_radius, height, offset=0, side='right'):
         print('screw_insert_all_shapes()')
         shape = (
-            translate(screw_insert(0, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
+            translate(screw_insert(0, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear left
             translate(screw_insert(0, lastrow - 1, bottom_radius, top_radius, height, side=side),
-                      (0, left_wall_lower_y_offset, offset)),
-            translate(screw_insert(3, lastrow, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
-            translate(screw_insert(3, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
-            translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # inner position wasn't solid
-            translate(screw_insert(lastcol, lastrow - 1, bottom_radius, top_radius, height, side=side), (0, 0, offset)),
-            translate(screw_insert_thumb(bottom_radius, top_radius, height, side), (0, 0, offset)),
+                      (0, left_wall_lower_y_offset, offset)),  # front left
+            translate(screw_insert(3, lastrow, bottom_radius, top_radius, height, side=side),
+                      (0, 0, offset)),  # front middle
+            translate(screw_insert(3, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear middle
+            translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side),
+                      (0, 0, offset)),  # rear right
+            translate(screw_insert(lastcol, lastrow - 1, bottom_radius, top_radius, height, side=side),
+                      (-2, -8, offset)),  # front right # TODO CONFIGURE IN JSON
+            translate(screw_insert_thumb(bottom_radius, top_radius, height, side), (0, 0, offset)),  # thumb cluster
         )
 
         return shape
@@ -1940,6 +1955,8 @@ def make_dactyl():
             clust = MiniCluster(all_merged)
         elif style == MinidoxCluster.name():
             clust = MinidoxCluster(all_merged)
+        elif style == Minithicc.name():
+            clust = Minithicc(all_merged)
         elif style == TrackballOrbyl.name():
             clust = TrackballOrbyl(all_merged)
         elif style == TrackballWild.name():

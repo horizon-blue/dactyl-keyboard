@@ -1,9 +1,24 @@
-from helpers_solid import *
+from helpers_cadquery import *
 import os.path as path
+import os
 import numpy
 
 ball_diam = 34  # ball diameter
 ball_space = 1  # additional room around ball in socket, 1mm
+
+
+def hot_swap_ridged():
+    plate_size = 3.5
+    notch_size = 5
+    socket = import_file(os.path.join(os.getcwd(), "parts", "derek_hotswap"))
+    outside_box = box(14 + plate_size, 14 + plate_size, 4)
+    inside_box = box(14, 14, 7)
+    # cross = translate(union([box(notch_size, 16, 3), box(16, notch_size, 3)]), (0, 0, 1))
+    ridge = difference(outside_box, [inside_box])
+    ridge = translate(ridge, (0, 0, 2))
+    socket = union([socket, ridge])
+    return socket
+    # export_file(socket, "hotswap_with_ridge")
 
 
 def get_ball(with_space: False):
@@ -140,5 +155,5 @@ def gen_track_socket():
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
 # result = difference(main_fin, [cutter_fin])
-export_file(shape=gen_track_socket(), fname=path.join("..", "things", "play"))
+export_file(shape=hot_swap_ridged(), fname=path.join(".", "parts", "hotswap_ridged_test"))
 
