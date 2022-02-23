@@ -1,7 +1,7 @@
 {
   "ENGINE": "solid",
   "save_dir": ".",
-  "overrides": "",
+  "overrides": "testing",
   "save_name": "",
   "config_name": "5x6",
   "show_caps": false,
