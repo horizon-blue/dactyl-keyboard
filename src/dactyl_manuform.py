@@ -845,8 +845,8 @@ def make_dactyl():
         hulls.append(place2(translate(post2, wall_locate3(dx2, dy2, back))))
         shape2 = bottom_hull(hulls)
 
-        # return union([shape1, shape2])
-        return shape1
+        return union([shape1, shape2])
+        # return shape1
 
 
     def key_wall_brace(x1, y1, dx1, dy1, post1, x2, y2, dx2, dy2, post2, back=False):
