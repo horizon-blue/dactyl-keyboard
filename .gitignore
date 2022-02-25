@@ -25,3 +25,4 @@ config/
 .iml
 **/*.iml
 
+/src/.ipynb_checkpoints/
