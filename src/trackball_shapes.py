@@ -2,7 +2,7 @@ from helpers_solid import *
 import os.path as path
 import numpy
 
-ball_diam = 34  # ball diameter
+ball_diam = 38  # ball diameter
 ball_space = 1  # additional room around ball in socket, 1mm
 
 
@@ -140,5 +140,5 @@ def gen_track_socket():
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
 # result = difference(main_fin, [cutter_fin])
-export_file(shape=gen_track_socket(), fname=path.join("..", "things", "play"))
+export_file(shape=gen_holder(), fname=path.join("..", "things", "holder"))
 
