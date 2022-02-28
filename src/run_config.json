@@ -1,5 +1,5 @@
 {
-  "ENGINE": "cadquery",
+  "ENGINE": "solid",
   "save_dir": ".",
   "overrides": "flat_testing",
   "save_name": "",
