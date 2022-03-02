@@ -196,33 +196,38 @@ class TrackballWild(TrackballOrbyl):
             self.mr_place, .5, 1, web_post_tr(),
             (lambda sh: key_place(sh, 3, lastrow)), 0, -1, web_post_bl(),
         )
+        # BOTTOM FRONT BETWEEN MR AND BR
         shape = union([shape, wall_brace(
             self.mr_place, .5, 1, web_post_tr(),
             self.br_place, 0, -1, web_post_br(),
         )])
+        # BOTTOM FRONT AT BR
         shape = union([shape, wall_brace(
             self.br_place, 0, -1, web_post_br(),
             self.br_place, 0, -1, web_post_bl(),
         )])
+        # BOTTOM FRONT BETWEEN BR AND BL
         shape = union([shape, wall_brace(
             self.br_place, 0, -1, web_post_bl(),
             self.bl_place, 0, -1, web_post_br(),
         )])
+        # BOTTOM FRONT AT BL
         shape = union([shape, wall_brace(
             self.bl_place, 0, -1, web_post_br(),
             self.bl_place, -1, -1, web_post_bl(),
         )])
-
+        # TOP LEFT BEHIND TRACKBALL
         shape = union([shape, wall_brace(
             self.track_place, -1.5, 0, self.tb_post_tl(),
             (lambda sh: left_key_place(sh, lastrow - 1, -1, side=ball_side, low_corner=True)), -1, 0, web_post(),
         )])
+        # LEFT OF TRACKBALL
         shape = union([shape, wall_brace(
-            self.track_place, -1.5, 0, self.tb_post_tl(),
-            self.track_place, -1, 0, self.tb_post_l(),
+            self.track_place, -2, 0, self.tb_post_tl(),
+            self.track_place, -2, 0, self.tb_post_l(),
         )])
         shape = union([shape, wall_brace(
-            self.track_place, -1, 0, self.tb_post_l(),
+            self.track_place, -2, 0, self.tb_post_l(),
             self.bl_place, -1, 0, web_post_tl(),
         )])
         shape = union([shape, wall_brace(

@@ -348,7 +348,7 @@ def make_dactyl():
         # shape = union([shape, cyl])
 
         tb_file = path.join(parts_path, r"trackball_socket_btu")
-        tbcut_file = path.join(parts_path, r"trackball_socket_cutter_34mm")
+        tbcut_file = path.join(parts_path, r"trackball_socket_w_btus_cutter")
         sens_file = path.join(parts_path, r"trackball_sensor_mount")
         senscut_file = path.join(parts_path, r"trackball_sensor_cutter")
 
@@ -1787,10 +1787,11 @@ def make_dactyl():
             tbprecut, tb, tbcutout, sensor, ball = generate_trackball_in_cluster(cluster(side))
 
             shape = difference(shape, [tbprecut])
+            shape = difference(shape, [tbcutout])
             # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
             shape = union([shape, tb])
             # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
-            # shape = difference(shape, [tbcutout])
+
             # # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
             # # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
             # shape = union([shape, sensor])
