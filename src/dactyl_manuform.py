@@ -488,6 +488,10 @@ def make_dactyl():
                 column_x_delta_actual = column_x_delta - 1.5
                 column_angle = beta * (centercol - column - 0.27)
 
+        if row == 0:
+            shape = translate_fn(shape, [0, 4, 2.1])
+            shape = rotate_x_fn(shape, 0.25)
+
         if column_style == "orthographic":
             column_z_delta = column_radius * (1 - np.cos(column_angle))
             shape = translate_fn(shape, [0, 0, -row_radius])
@@ -516,6 +520,8 @@ def make_dactyl():
             shape = rotate_y_fn(shape, column_angle)
             shape = translate_fn(shape, [0, 0, column_radius])
             shape = translate_fn(shape, column_offset(column))
+
+
 
         shape = rotate_y_fn(shape, tenting_angle)
         shape = translate_fn(shape, [0, 0, keyboard_z_offset])
@@ -796,8 +802,10 @@ def make_dactyl():
         return [dx * wall_thickness, dy * wall_thickness, -1]
 
 
-    def wall_locate2(dx, dy):
+    def wall_locate2(dx, dy, back=False):
         debugprint("wall_locate2()")
+        if back:
+            return [dx * wall_x_offset, dy * wall_back_y_offset, -wall_z_offset]
         return [dx * wall_x_offset, dy * wall_y_offset, -wall_z_offset]
 
 
@@ -806,7 +814,7 @@ def make_dactyl():
         if back:
             return [
                 dx * (wall_x_offset + wall_base_x_thickness),
-                dy * (wall_y_offset + wall_base_back_thickness),
+                dy * (wall_back_y_offset + wall_base_back_thickness),
                 -wall_z_offset,
             ]
         else:
@@ -828,20 +836,20 @@ def make_dactyl():
 
         hulls.append(place1(post1))
         hulls.append(place1(translate(post1, wall_locate1(dx1, dy1))))
-        hulls.append(place1(translate(post1, wall_locate2(dx1, dy1))))
+        hulls.append(place1(translate(post1, wall_locate2(dx1, dy1, back))))
         hulls.append(place1(translate(post1, wall_locate3(dx1, dy1, back))))
 
         hulls.append(place2(post2))
         hulls.append(place2(translate(post2, wall_locate1(dx2, dy2))))
         hulls.append(place2(translate(post2, wall_locate1(dx2, dy2))))
-        hulls.append(place2(translate(post2, wall_locate2(dx2, dy2))))
+        hulls.append(place2(translate(post2, wall_locate2(dx2, dy2, back))))
         hulls.append(place2(translate(post2, wall_locate3(dx2, dy2, back))))
         shape1 = hull_from_shapes(hulls)
 
         hulls = []
-        hulls.append(place1(translate(post1, wall_locate2(dx1, dy1))))
+        hulls.append(place1(translate(post1, wall_locate2(dx1, dy1, back))))
         hulls.append(place1(translate(post1, wall_locate3(dx1, dy1, back))))
-        hulls.append(place2(translate(post2, wall_locate2(dx2, dy2))))
+        hulls.append(place2(translate(post2, wall_locate2(dx2, dy2, back))))
         hulls.append(place2(translate(post2, wall_locate3(dx2, dy2, back))))
         shape2 = bottom_hull(hulls)
 
@@ -1045,7 +1053,7 @@ def make_dactyl():
 
 
     usb_holder_position = key_position(
-        list(np.array(wall_locate2(0, 1)) + np.array([0, (mount_height / 2), 0])), 1, 0
+        list(np.array(wall_locate2(0, 1, True)) + np.array([0, (mount_height / 2), 0])), 1, 0
     )
     usb_holder_size = [6.5, 10.0, 13.6]
     usb_holder_thickness = 4
@@ -1637,7 +1645,7 @@ def make_dactyl():
             translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side),
                       (0, 0, offset)),  # rear right
             translate(screw_insert(lastcol, lastrow - 1, bottom_radius, top_radius, height, side=side),
-                      (-2, -8, offset)),  # front right # TODO CONFIGURE IN JSON
+                      (-1.5, -10, offset)),  # front right # TODO CONFIGURE IN JSON
             translate(screw_insert_thumb(bottom_radius, top_radius, height, side), (0, 0, offset)),  # thumb cluster
         )
 

@@ -86,6 +86,7 @@
   "wall_z_offset": 15,
   "wall_x_offset": 5,
   "wall_y_offset": 6,
+  "wall_back_y_offset": 6,
   "left_wall_x_offset": 8,
   "left_wall_z_offset": 3,
   "left_wall_lower_y_offset": 0,

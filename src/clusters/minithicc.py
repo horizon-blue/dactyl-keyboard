@@ -18,44 +18,44 @@ class Minithicc(MinidoxCluster):
     def tl_place(self, shape):
         shape = rotate(shape, [14, -15, 20])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-35, -16, -11])
+        shape = translate(shape, [-35, -16, -15])
         return shape
 
     def tr_place(self, shape):
         shape = rotate(shape, [17, -15, 10])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-15, -10, -5])
+        shape = translate(shape, [-15, -10, -9])
         return shape
 
     def ml_place(self, shape):
         shape = rotate(shape, [10, -15, 30])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-54, -26, -17])
+        shape = translate(shape, [-54, -26, -21])
         return shape
 
-    def mr_place(self, shape):
-        shape = rotate(shape, [10, -23, 25])
-        shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-23, -34, -6])
-        return shape
-
-    def br_place(self, shape):
-        shape = rotate(shape, [6, -32, 35])
-        shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-51, -25, -11.5])
-        return shape
-
-    def bl_place(self, shape):
-        shape = rotate(shape, [6, -32, 35])
-        shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-51, -25, -11.5])
-        return shape
-
-    def fl_place(self, shape):
-        shape = rotate(shape, [0, -32, 40])
-        shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-25, -45, -15.5])
-        return shape
+    # def mr_place(self, shape):
+    #     shape = rotate(shape, [10, -23, 25])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-23, -34, -6])
+    #     return shape
+    #
+    # def br_place(self, shape):
+    #     shape = rotate(shape, [6, -32, 35])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-51, -25, -11.5])
+    #     return shape
+    #
+    # def bl_place(self, shape):
+    #     shape = rotate(shape, [6, -32, 35])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-51, -25, -11.5])
+    #     return shape
+    #
+    # def fl_place(self, shape):
+    #     shape = rotate(shape, [0, -32, 40])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-25, -45, -15.5])
+    #     return shape
 
     def thumb_1x_layout(self, shape, cap=False):
         debugprint('thumb_1x_layout()')
