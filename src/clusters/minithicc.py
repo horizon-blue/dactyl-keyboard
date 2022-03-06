@@ -15,29 +15,51 @@ class Minithicc(MinidoxCluster):
         for item in parent_locals:
             globals()[item] = parent_locals[item]
 
-    def tl_place(self, shape):
-        shape = rotate(shape, [14, -15, 20])
-        shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-35, -16, -15])
-        return shape
+    # def tl_place(self, shape):
+    #     shape = rotate(shape, [14, -15, 20])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-45, -16, -15])
+    #     return shape
+    #
+    # def tr_place(self, shape):
+    #     shape = rotate(shape, [17, -15, 10])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-25, -10, -9])
+    #     return shape
+    #
+    # def ml_place(self, shape):
+    #     shape = rotate(shape, [10, -15, 30])
+    #     shape = translate(shape, self.thumborigin())
+    #     shape = translate(shape, [-64, -26, -21])
+    #     return shape
 
     def tr_place(self, shape):
+        shape = rotate(shape, [19, -15, 2])
+        shape = translate(shape, self.thumborigin())
+        shape = translate(shape, [-14, -8, -3])
+        return shape
+
+    def tl_place(self, shape):
         shape = rotate(shape, [17, -15, 10])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-15, -10, -9])
+        shape = translate(shape, [-35, -10, -9])
+        return shape
+
+    def mr_place(self, shape):
+        shape = rotate(shape, [14, -15, 20])
+        shape = translate(shape, self.thumborigin())
+        shape = translate(shape, [-55, -16, -15])
         return shape
 
     def ml_place(self, shape):
         shape = rotate(shape, [10, -15, 30])
         shape = translate(shape, self.thumborigin())
-        shape = translate(shape, [-54, -26, -21])
+        shape = translate(shape, [-74, -26, -21])
         return shape
 
-    # def mr_place(self, shape):
-    #     shape = rotate(shape, [10, -23, 25])
-    #     shape = translate(shape, self.thumborigin())
-    #     shape = translate(shape, [-23, -34, -6])
-    #     return shape
+
+
+
     #
     # def br_place(self, shape):
     #     shape = rotate(shape, [6, -32, 35])
@@ -70,6 +92,7 @@ class Minithicc(MinidoxCluster):
         return union([
             self.tr_place(rotate(shape, [0, 0, self.thumb_plate_tr_rotation])),
             self.tl_place(rotate(shape, [0, 0, self.thumb_plate_tl_rotation])),
+            self.mr_place(rotate(shape, [0, 0, self.thumb_plate_mr_rotation])),
             self.ml_place(rotate(shape, [0, 0, self.thumb_plate_ml_rotation])),
         ])
 
@@ -77,6 +100,7 @@ class Minithicc(MinidoxCluster):
         return union([
             self.tr_place(rotate(shape, [0, 0, self.thumb_plate_tr_rotation])),
             self.tl_place(rotate(shape, [0, 0, self.thumb_plate_tl_rotation])),
+            self.mr_place(rotate(shape, [0, 0, self.thumb_plate_mr_rotation])),
             self.ml_place(rotate(shape, [0, 0, self.thumb_plate_ml_rotation])),
             # self.fl_place(rotate(shape, [0, 0, self.thumb_plate_bl_rotation])),
         ])
