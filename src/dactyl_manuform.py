@@ -489,8 +489,8 @@ def make_dactyl():
                 column_angle = beta * (centercol - column - 0.27)
 
         if row == 0:
-            shape = translate_fn(shape, [0, 4, 2.1])
-            shape = rotate_x_fn(shape, 0.25)
+            shape = translate_fn(shape, [0, 6, 2.1])
+            shape = rotate_x_fn(shape, 0.3)
 
         if column_style == "orthographic":
             column_z_delta = column_radius * (1 - np.cos(column_angle))
