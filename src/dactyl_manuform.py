@@ -1163,7 +1163,7 @@ def make_dactyl():
 
 
     def generate_trackball_in_cluster(cluster):
-        pos, rot = cluster.position_rotation() if ball_side != "left" else left_cluster.position_rotation()
+        pos, rot = tbiw_position_rotation() if ball_side != "left" else left_cluster.position_rotation()
         return generate_trackball(pos, rot, cluster)
 
 

@@ -175,7 +175,7 @@
       "oled_left_wall_lower_y_offset": 12.0,
       "oled_left_wall_lower_z_offset": 5.0,
       "oled_left_x_row_offsets": [
-        22, 22, 22, 8, 8, 8
+        21, 21, 21, 6, 6, 6
       ],
       "oled_mount_undercut": 1.0,
       "oled_mount_undercut_thickness": 2.0
@@ -185,7 +185,7 @@
       "oled_mount_height": 25.0,
       "oled_mount_rim": 2.5,
       "oled_mount_depth": 8.0,
-      "oled_mount_cut_depth": 20.0,
+      "oled_mount_cut_depth": 10.0,
       "oled_mount_location_xyz": [
         -78.0,
         10.0,
@@ -201,7 +201,7 @@
       "oled_left_wall_lower_y_offset": 12.0,
       "oled_left_wall_lower_z_offset": 5.0,
       "oled_left_x_row_offsets": [
-        22, 22, 22, 8, 8, 8
+        21, 21, 21, 6, 6, 6
       ],
       "oled_thickness": 4.2,
       "oled_edge_overlap_end": 6.5,
@@ -231,7 +231,7 @@
       "oled_left_wall_lower_y_offset": 12.0,
       "oled_left_wall_lower_z_offset": 5.0,
       "oled_left_x_row_offsets": [
-        22, 22, 22, 8, 8, 8
+        21, 21, 21, 6, 6, 6
       ],
       "oled_thickness": 4.2,
       "oled_mount_bezel_thickness": 3.5,
