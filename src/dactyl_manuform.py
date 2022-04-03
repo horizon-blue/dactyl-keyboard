@@ -347,7 +347,7 @@ def make_dactyl():
         # cyl = translate(cyl, (0, 0, -8))
         # shape = union([shape, cyl])
 
-        tb_file = path.join(parts_path, r"trackball_socket_btu")
+        tb_file = path.join(parts_path, r"btu_trackball_socket_again")
         tbcut_file = path.join(parts_path, r"trackball_socket_w_btus_cutter")
         sens_file = path.join(parts_path, r"trackball_sensor_mount")
         senscut_file = path.join(parts_path, r"trackball_sensor_cutter")
