@@ -18,7 +18,7 @@ def gen_holder():
     # 28mm x 21mm
     l = 28  # not used for now, fudged with base_shape build
     w = 22
-    h = 5.9
+    h = 4.0
 
     # 24mm between screw centers
     screw_dist = 24
@@ -33,7 +33,7 @@ def gen_holder():
     base_shape = hull_from_shapes([cyl1, cyl2])
 
     # Ball with 2mm space extra diameter for socket
-    ball = translate(get_ball(True), (0, 0, 15))
+    ball = translate(get_ball(True), (0, 0, 17.8))
 
     # Screw holes with a bit of extra height to subtract cleanly
     # May need to be offset by one, as per the bottom hole...?
@@ -45,7 +45,7 @@ def gen_holder():
 
     final = difference(base_shape, [ball, screw1, screw2, bottom_hole])
 
-    return final
+    return final  # translate(final, [0, l / 2, 0])
 
 
 def coords(angle, dist):
@@ -140,5 +140,5 @@ def gen_track_socket():
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
 # result = difference(main_fin, [cutter_fin])
-export_file(shape=gen_holder(), fname=path.join("..", "things", "holder"))
+export_file(shape=gen_holder(), fname=path.join("..", "things", "holder_attempt"))
 
