@@ -480,3 +480,6 @@ class DefaultCluster(object):
 
     def get_extras(self, shape, pos):
         return shape
+
+    def has_btus(self):
+        return False

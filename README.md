@@ -1,3 +1,52 @@
+# Wylderbuilds Dactyl Manuform - Python 3 - Cadquery
+So, THIS is a fork of a fork of a fork of a... You get the idea.
+
+This one is a direct fork of [joshreve's brilliant adaptation](https://github.com/joshreve/dactyl-keyboard)  of the original Clojure-based dactyl manuform generator redone in Python 3.
+Without his work, none of this would have been nearly as easy and straightforward as it has been.  Vast kudos and thanks to him.
+
+This repo is what I've customized and use to generate the models for the prints I sell online at Wylderbuilds, my Etsy store.
+
+## Main Differences and How to Make it Go
+Eventually, joshreve and I hope to merge our changes together, but until then, here's a quick rundown on the current changes.
+
+* Wylderbuilds Trackball cluster -- A new, low-rider Trackball cluster. ("thumb_style": "TRACKBALL_WILD")
+* Wylderbuilds BTU Trackball cluster -- An even newer Trackball cluster with ball transfer unit support. ("thumb_style": TRACKBALL_BTU")
+* 1.5u pinky column support -- Outside 1.5u pinky columns can be generated ("pinky_1_5U": true, "first_1_5U_row": x, "last_1_5U_row": y)
+* Full bottom rows -- Default manuforms drop the bottom row keys on outside columns, this keeps them ("full_last_rows": true)
+* Clusters broken out into their own classes -- Making it easier to swap among them and add more.
+* Updated Kailh Hot swap holder -- If enabled, the hot swap holder is full size and stronger.
+* Cadquery builds generate STLs in addition to STEP files -- The bottom plates are (still) only generated properly when the "ENGINE": "cadquery" is set and this will now generate ready-to-print STLs (some models might need a little repair)
+* OTHER MISC BITS: OLED mount wall tweaks, tweaks to screw-sizes and some wall placements, manuform angle and heights tweaked, support for an "overrides" json config file.
+
+The main script has been reworked into a single make_dactyl() function.
+
+The setup and run instructions are still more-or-less the same, but here's some tips:
+
+* The docker file likely won't get far, it hasn't been maintained or updated in some time.
+
+* To run locally, the best route is to install Anaconda or Miniconda, start a conda shell and run the "conda.sh" script.  If you're on Windows and don't want to do the WSL Linux thing, you can do the following:
+
+1. Do the Anaconda/Miniconda bit, above.
+2. In a conda shell, run the following lines:
+
+        conda create --name=dactyl-keyboard python=3.7 -y
+
+        conda activate dactyl-keyboard
+
+        conda install -c conda-forge -c cadquery cadquery=2 -y
+
+        pip install dataclasses-json numpy scipy solidpython
+
+        conda update --all -y
+
+Then, still in the shell, navigate to the src directory under the repository root and run:
+
+    python dactyl_manuform.py
+
+This will churn and pump out models into the "things" directory.  In run_config.json, "ENGINE": "solid" or "cadquery" will specify OpenSCAD or STEP/STL files, respectively.  Note that the cadquery option takes considerably longer.  Openscad is best for fast iteration.
+
+I'll update more here as things develop.
+
 # The Dactyl-ManuForm Keyboard - Python 3 - Cadquery
 This is a fork of [Dactyl-Manuform](https://github.com/tshort/dactyl-keyboard) by Tom Short, which itself is a fork of [Dactyl](https://github.com/adereth/dactyl-keyboard) by Matthew Adereth, a parameterized, split-hand, concave, columnar, ergonomic keyboard.
 

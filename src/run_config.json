@@ -12,12 +12,12 @@
   "beta": 0.08726638888888888,
   "centercol": 3,
   "centerrow_offset": 3,
-  "tenting_angle": 0.26179916666666664,
+  "tenting_angle": 0.24479916666666664,
   "symmetry": "symmetric",
   "column_style_gt5": "orthographic",
   "column_style": "standard",
   "full_last_rows": false,
-  "keyboard_z_offset": 11,
+  "keyboard_z_offset": 12,
   "thumb_style": "TRACKBALL_WILD",
   "default_1U_cluster": true,
   "trackball_in_wall": false,
@@ -67,6 +67,16 @@
     0,
     0,
     0
+  ],
+  "tb_btu_socket_translation_offset": [
+    0,
+    0,
+    -22.0
+  ],
+  "tb_btu_socket_rotation_offset": [
+    0,
+    0,
+    40
   ],
   "tb_sensor_translation_offset": [
     0,

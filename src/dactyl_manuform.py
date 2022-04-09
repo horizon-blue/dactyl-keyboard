@@ -13,6 +13,7 @@ from clusters.trackball_orbyl import TrackballOrbyl
 from clusters.trackball_wilder import TrackballWild
 from clusters.trackball_cj import TrackballCJ
 from clusters.custom_cluster import CustomCluster
+from clusters.trackball_btu import TrackballBTU
 
 
 def deg2rad(degrees: float) -> float:
@@ -341,14 +342,19 @@ def make_dactyl():
         return shape
 
 
-    def trackball_socket(segments=100, side="right"):
+    def trackball_socket(btus=False,segments=100, side="right"):
         # shape = sphere(ball_diameter / 2)
         # cyl = cylinder(ball_diameter / 2 + 4, 20)
         # cyl = translate(cyl, (0, 0, -8))
         # shape = union([shape, cyl])
 
-        tb_file = path.join(parts_path, r"btu_trackball_socket_again")
-        tbcut_file = path.join(parts_path, r"trackball_socket_w_btus_cutter")
+        tb_file = path.join(parts_path, r"trackball_socket_body_34mm")
+        tbcut_file = path.join(parts_path, r"trackball_socket_cutter_34mm")
+
+        if btus:
+            tb_file = path.join(parts_path, r"btu_trackball_socket_square")
+            tbcut_file = path.join(parts_path, r"trackball_socket_w_btus_cutter")
+
         sens_file = path.join(parts_path, r"trackball_sensor_mount")
         senscut_file = path.join(parts_path, r"trackball_sensor_cutter")
 
@@ -1117,24 +1123,31 @@ def make_dactyl():
 
 
     def generate_trackball(pos, rot, cluster):
+        tb_t_offset = tb_socket_translation_offset
+        tb_r_offset = tb_socket_rotation_offset
+
+        if cluster is not None and cluster.has_btus():
+            tb_t_offset = tb_btu_socket_translation_offset
+            tb_r_offset = tb_btu_socket_rotation_offset
+
         precut = trackball_cutout()
-        precut = rotate(precut, tb_socket_rotation_offset)
-        precut = translate(precut, tb_socket_translation_offset)
+        precut = rotate(precut, tb_r_offset)
+        precut = translate(precut, tb_t_offset)
         precut = rotate(precut, rot)
         precut = translate(precut, pos)
 
-        shape, cutout, sensor = trackball_socket()
+        shape, cutout, sensor = trackball_socket(btus=cluster.has_btus())
 
-        shape = rotate(shape, tb_socket_rotation_offset)
-        shape = translate(shape, tb_socket_translation_offset)
+        shape = rotate(shape, tb_r_offset)
+        shape = translate(shape, tb_t_offset)
         shape = rotate(shape, rot)
         shape = translate(shape, pos)
 
         if cluster is not None:
             shape = cluster.get_extras(shape, pos)
 
-        cutout = rotate(cutout, tb_socket_rotation_offset)
-        cutout = translate(cutout, tb_socket_translation_offset)
+        cutout = rotate(cutout, tb_r_offset)
+        cutout = translate(cutout, tb_t_offset)
         # cutout = rotate(cutout, tb_sensor_translation_offset)
         # cutout = translate(cutout, tb_sensor_rotation_offset)
         cutout = rotate(cutout, rot)
@@ -1142,8 +1155,8 @@ def make_dactyl():
 
         # Small adjustment due to line to line surface / minute numerical error issues
         # Creates small overlap to assist engines in union function later
-        sensor = rotate(sensor, tb_socket_rotation_offset)
-        sensor = translate(sensor, tb_socket_translation_offset)
+        sensor = rotate(sensor, tb_r_offset)
+        sensor = translate(sensor, tb_t_offset)
         # sensor = rotate(sensor, tb_sensor_translation_offset)
         # sensor = translate(sensor, tb_sensor_rotation_offset)
         sensor = translate(sensor, (0, 0, .005))
@@ -1151,8 +1164,8 @@ def make_dactyl():
         sensor = translate(sensor, pos)
 
         ball = trackball_ball()
-        ball = rotate(ball, tb_socket_rotation_offset)
-        ball = translate(ball, tb_socket_translation_offset)
+        ball = rotate(ball, tb_r_offset)
+        ball = translate(ball, tb_t_offset)
         ball = rotate(ball, rot)
         ball = translate(ball, pos)
 
@@ -1787,14 +1800,17 @@ def make_dactyl():
             tbprecut, tb, tbcutout, sensor, ball = generate_trackball_in_cluster(cluster(side))
 
             shape = difference(shape, [tbprecut])
-            shape = difference(shape, [tbcutout])
-            # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
-            shape = union([shape, tb])
-            # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
-
-            # # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
-            # # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
-            # shape = union([shape, sensor])
+            if cluster(side).has_btus():
+                shape = difference(shape, [tbcutout])
+                shape = union([shape, tb])
+            else:
+                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
+                shape = union([shape, tb])
+                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
+                shape = difference(shape, [tbcutout])
+                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
+                # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
+                shape = union([shape, sensor])
 
             if show_caps:
                 shape = add([shape, ball])
@@ -1812,6 +1828,12 @@ def make_dactyl():
 
         return shape
 
+    def wrist_rest(base, plate, side="right"):
+        rest = import_file(path.join(parts_path, "dactyl_wrist_rest_v3_" + side))
+        rest = rotate(rest, (0, 0, -60))
+        rest = translate(rest, (30, -150, 26))
+        rest = union([rest, translate(base, (0, 0, 5)), plate])
+        return rest
 
     # NEEDS TO BE SPECIAL FOR CADQUERY
     def baseplate(wedge_angle=None, side='right'):
@@ -1909,6 +1931,10 @@ def make_dactyl():
         export_file(shape=base, fname=path.join(save_path, config_name + r"_right_plate"))
         export_dxf(shape=base, fname=path.join(save_path, config_name + r"_right_plate"))
 
+        # rest = wrist_rest(mod_r, base, side="right")
+        #
+        # export_file(shape=rest, fname=path.join(save_path, config_name + r"_right_wrist_rest"))
+
         if symmetry == "asymmetric":
 
             mod_l = model_side(side="left")
@@ -1966,6 +1992,8 @@ def make_dactyl():
             clust = TrackballOrbyl(all_merged)
         elif style == TrackballWild.name():
             clust = TrackballWild(all_merged)
+        elif style == TrackballBTU.name():
+            clust = TrackballBTU(all_merged)
         elif style == TrackballCJ.name():
             clust = TrackballCJ(all_merged)
         elif style == CustomCluster.name():

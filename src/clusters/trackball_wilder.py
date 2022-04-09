@@ -230,6 +230,19 @@ class TrackballWild(TrackballOrbyl):
             self.track_place, -2, 0, self.tb_post_l(),
             self.bl_place, -1, 0, web_post_tl(),
         )])
+
+        # BEFORE BTUS
+        #
+        # # LEFT OF TRACKBALL
+        # shape = union([shape, wall_brace(
+        #     self.track_place, -1.5, 0, self.tb_post_tl(),
+        #     self.track_place, -1, 0, self.tb_post_l(),
+        # )])
+        # shape = union([shape, wall_brace(
+        #     self.track_place, -1, 0, self.tb_post_l(),
+        #     self.bl_place, -1, 0, web_post_tl(),
+        # )])
+
         shape = union([shape, wall_brace(
             self.bl_place, -1, 0, web_post_tl(),
             self.bl_place, -1, -1, web_post_bl(),
