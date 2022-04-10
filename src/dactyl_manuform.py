@@ -338,9 +338,19 @@ def make_dactyl():
 
 
     def trackball_cutout(segments=100, side="right"):
-        shape = cylinder(trackball_hole_diameter / 2, trackball_hole_height)
+        shape = translate(cylinder(25, 25), [0, 0, 20])
         return shape
 
+    def trackball_rim():
+        return translate(  # translate A
+            difference(
+                cylinder(25, 8),
+                [translate(cylinder(22.7, 12), [0, 0, -1]),
+                 translate(box(4, 4, 4), [-24, 0, 2.5])]),
+            [0, 0, 22.5])
+        # return translate(difference(cylinder(25, 8), [
+        #     translate(cylinder(22.7, 12), [0, 0, -1])
+        # ]), [0, 0, 22.5])
 
     def trackball_socket(btus=False,segments=100, side="right"):
         # shape = sphere(ball_diameter / 2)
@@ -348,28 +358,28 @@ def make_dactyl():
         # cyl = translate(cyl, (0, 0, -8))
         # shape = union([shape, cyl])
 
-        tb_file = path.join(parts_path, r"trackball_socket_body_34mm")
+        # tb_file = path.join(parts_path, r"trackball_socket_body_34mm")
         tbcut_file = path.join(parts_path, r"trackball_socket_cutter_34mm")
 
         if btus:
-            tb_file = path.join(parts_path, r"btu_trackball_socket_square")
+            # tb_file = path.join(parts_path, r"socket_ring")
             tbcut_file = path.join(parts_path, r"trackball_socket_w_btus_cutter")
 
-        sens_file = path.join(parts_path, r"trackball_sensor_mount")
-        senscut_file = path.join(parts_path, r"trackball_sensor_cutter")
+        # sens_file = path.join(parts_path, r"trackball_sensor_mount")
+        # senscut_file = path.join(parts_path, r"trackball_sensor_cutter")
 
         # shape = import_file(tb_file)
         # # shape = difference(shape, [import_file(senscut_file)])
         # # shape = union([shape, import_file(sens_file)])
         # cutter = import_file(tbcut_file)
 
-        shape = import_file(tb_file)
-        sensor = import_file(sens_file)
+        shape = trackball_rim()  # import_file(tb_file)
+        # sensor = import_file(sens_file)
         cutter = import_file(tbcut_file)
-        cutter = union([cutter, import_file(senscut_file)])
+        # cutter = union([cutter, import_file(senscut_file)])
 
         # return shape, cutter
-        return shape, cutter, sensor
+        return shape, cutter
 
 
     def trackball_ball(segments=100, side="right"):
@@ -1123,12 +1133,12 @@ def make_dactyl():
 
 
     def generate_trackball(pos, rot, cluster):
-        tb_t_offset = tb_socket_translation_offset
-        tb_r_offset = tb_socket_rotation_offset
-
-        if cluster is not None and cluster.has_btus():
-            tb_t_offset = tb_btu_socket_translation_offset
-            tb_r_offset = tb_btu_socket_rotation_offset
+        # tb_t_offset = tb_socket_translation_offset
+        # tb_r_offset = tb_socket_rotation_offset
+        #
+        # if cluster is not None and cluster.has_btus():
+        tb_t_offset = tb_btu_socket_translation_offset
+        tb_r_offset = tb_btu_socket_rotation_offset
 
         precut = trackball_cutout()
         precut = rotate(precut, tb_r_offset)
@@ -1136,7 +1146,7 @@ def make_dactyl():
         precut = rotate(precut, rot)
         precut = translate(precut, pos)
 
-        shape, cutout, sensor = trackball_socket(btus=cluster.has_btus())
+        shape, cutout = trackball_socket(btus=cluster.has_btus())
 
         shape = rotate(shape, tb_r_offset)
         shape = translate(shape, tb_t_offset)
@@ -1155,13 +1165,13 @@ def make_dactyl():
 
         # Small adjustment due to line to line surface / minute numerical error issues
         # Creates small overlap to assist engines in union function later
-        sensor = rotate(sensor, tb_r_offset)
-        sensor = translate(sensor, tb_t_offset)
-        # sensor = rotate(sensor, tb_sensor_translation_offset)
-        # sensor = translate(sensor, tb_sensor_rotation_offset)
-        sensor = translate(sensor, (0, 0, .005))
-        sensor = rotate(sensor, rot)
-        sensor = translate(sensor, pos)
+        # sensor = rotate(sensor, tb_r_offset)
+        # sensor = translate(sensor, tb_t_offset)
+        # # sensor = rotate(sensor, tb_sensor_translation_offset)
+        # # sensor = translate(sensor, tb_sensor_rotation_offset)
+        # sensor = translate(sensor, (0, 0, .005))
+        # sensor = rotate(sensor, rot)
+        # sensor = translate(sensor, pos)
 
         ball = trackball_ball()
         ball = rotate(ball, tb_r_offset)
@@ -1170,7 +1180,7 @@ def make_dactyl():
         ball = translate(ball, pos)
 
         # return precut, shape, cutout, ball
-        return precut, shape, cutout, sensor, ball
+        return precut, shape, cutout, ball
 
 
     def generate_trackball_in_cluster(cluster):
@@ -1782,35 +1792,36 @@ def make_dactyl():
             shape = union([shape, frame])
 
         if trackball_in_wall and (side == ball_side or ball_side == 'both'):
-            tbprecut, tb, tbcutout, sensor, ball = generate_trackball_in_wall()
+            tbprecut, tb, tbcutout, ball = generate_trackball_in_wall()
 
             shape = difference(shape, [tbprecut])
             # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
             shape = union([shape, tb])
             # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
-            shape = difference(shape, [tbcutout])
+            # shape = difference(shape, [tbcutout])
             # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
             # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
-            shape = union([shape, sensor])
+            # shape = union([shape, sensor])
 
             if show_caps:
                 shape = add([shape, ball])
 
         if (trackball_in_wall or ('TRACKBALL' in thumb_style)) and (side == ball_side or ball_side == 'both'):
-            tbprecut, tb, tbcutout, sensor, ball = generate_trackball_in_cluster(cluster(side))
+            tbprecut, tb, tbcutout, ball = generate_trackball_in_cluster(cluster(side))
 
             shape = difference(shape, [tbprecut])
-            if cluster(side).has_btus():
-                shape = difference(shape, [tbcutout])
-                shape = union([shape, tb])
-            else:
-                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
-                shape = union([shape, tb])
-                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
-                shape = difference(shape, [tbcutout])
-                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
-                # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
-                shape = union([shape, sensor])
+            # shape = union([shape, tbprecut])
+            # if cluster(side).has_btus():
+            shape = difference(shape, [tbcutout])
+            shape = union([shape, tb])
+            # else:
+            #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
+            #     shape = union([shape, tb])
+            #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
+            #     shape = difference(shape, [tbcutout])
+            #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
+            #     # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
+            #     # shape = union([shape, sensor])
 
             if show_caps:
                 shape = add([shape, ball])

@@ -13,6 +13,15 @@ def get_ball(with_space: False):
     return sphere(diam / 2)
 
 
+def trackball_rim():
+    return translate(   # translate A
+        difference(
+            cylinder(25, 8),
+            [translate(cylinder(22.7, 12), [0, 0, -1]),
+             translate(box(4, 4, 4), [24, 0, 2.5])]),
+        [0, 0, 22.5])  # translate A coords
+
+
 def gen_holder():
     # PMW3360 dimensions
     # 28mm x 21mm
@@ -140,5 +149,5 @@ def gen_track_socket():
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
 # result = difference(main_fin, [cutter_fin])
-export_file(shape=gen_holder(), fname=path.join("..", "things", "holder_attempt"))
+export_file(shape=trackball_rim(), fname=path.join("..", "things", "trackball_rim_test"))
 
