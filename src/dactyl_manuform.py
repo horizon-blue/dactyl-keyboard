@@ -342,12 +342,14 @@ def make_dactyl():
         return shape
 
     def trackball_rim():
-        return translate(  # translate A
-            difference(
-                cylinder(25, 8),
-                [translate(cylinder(22.7, 12), [0, 0, -1]),
-                 translate(box(4, 4, 4), [-24, 0, 2.5])]),
-            [0, 0, 22.5])
+        return import_file(path.join(parts_path, r"test_notched_socket_sections"))
+
+        # return translate(  # translate A
+        #     difference(
+        #         cylinder(25, 8),
+        #         [translate(cylinder(22.7, 12), [0, 0, -1]),
+        #          translate(box(4, 4, 4), [-24, 0, 2.5])]),
+        #     [0, 0, 22.5])
         # return translate(difference(cylinder(25, 8), [
         #     translate(cylinder(22.7, 12), [0, 0, -1])
         # ]), [0, 0, 22.5])
@@ -1149,7 +1151,7 @@ def make_dactyl():
         shape, cutout = trackball_socket(btus=cluster.has_btus())
 
         shape = rotate(shape, tb_r_offset)
-        shape = translate(shape, tb_t_offset)
+        shape = translate(shape, [0, 0, -3])
         shape = rotate(shape, rot)
         shape = translate(shape, pos)
 
