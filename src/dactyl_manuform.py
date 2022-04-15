@@ -342,7 +342,7 @@ def make_dactyl():
         return shape
 
     def trackball_rim():
-        return import_file(path.join(parts_path, r"test_notched_socket_sections"))
+        return import_file(path.join(parts_path, r"btu_trackball_rim_rc2"))
 
         # return translate(  # translate A
         #     difference(
