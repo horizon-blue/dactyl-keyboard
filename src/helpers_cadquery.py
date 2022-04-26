@@ -157,9 +157,6 @@ def triangle_hulls(shapes):
     return union(hulls)
 
 
-
-
-
 def bottom_hull(p, height=0.001):
     debugprint("bottom_hull()")
     shape = None

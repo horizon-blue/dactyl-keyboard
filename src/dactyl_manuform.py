@@ -1850,6 +1850,7 @@ def make_dactyl():
 
     # NEEDS TO BE SPECIAL FOR CADQUERY
     def baseplate(wedge_angle=None, side='right'):
+        global logo_file
         if ENGINE == 'cadquery':
             # shape = mod_r
             shape = union([case_walls(side=side), *screw_insert_outers(side=side)])
@@ -1916,6 +1917,14 @@ def make_dactyl():
                 shape = difference(shape, hole_shapes)
                 shape = translate(shape, (0, 0, -base_rim_thickness))
                 shape = union([shape, inner_shape])
+                if logo_file not in ["", None]:
+                    logo = import_file(logo_file)
+
+                    if side == "left":
+                        logo = mirror(logo, "YZ")
+
+                    logo = translate(logo, [-10, -10, -1])
+                    shape = union([shape, logo])
 
             return shape
         else:
