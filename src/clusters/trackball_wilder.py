@@ -267,17 +267,28 @@ class TrackballWild(TrackballOrbyl):
         hulls.append(
             triangle_hulls(
                 [
+                    # Wall from bottom right key to bottom left of top cluster key
                     key_place(web_post_bl(), 0, cornerrow),
                     self.tl_place(web_post_bl()),
-                    key_place(web_post_br(), 0, cornerrow),
+                    # key_place(web_post_br(), 0, cornerrow),
+
+                    #
+                    key_place(web_post_bl(), 1, cornerrow),
+                    self.tl_place(web_post_tl()),
+                    key_place(web_post_bl(), 2, lastrow),
+                    key_place(web_post_tl(), 2, lastrow),
+                    key_place(web_post_br(), 1, cornerrow),
+
+                    #
                     self.tl_place(web_post_tl()),
                     # self.tl_place(web_post_bl()),
                     key_place(web_post_bl(), 1, cornerrow),
+                    self.tl_place(web_post_bl()),
+                    # key_place(web_post_br(), 1, cornerrow),
                     self.tl_place(web_post_tl()),
-                    key_place(web_post_br(), 1, cornerrow),
-                    self.tl_place(web_post_tr()),
-                    key_place(web_post_tl(), 2, lastrow),
+                    key_place(web_post_br(), 2, lastrow),
                     key_place(web_post_bl(), 2, lastrow),
+                    self.tl_place(web_post_tl()),
                     self.tl_place(web_post_tr()),
                     key_place(web_post_br(), 2, lastrow),
                     self.mr_place(web_post_tl()),
