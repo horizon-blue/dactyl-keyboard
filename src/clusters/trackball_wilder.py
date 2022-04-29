@@ -12,6 +12,29 @@ class TrackballWild(TrackballOrbyl):
             [-5, 18, 19]
         ]
 
+    wall_offsets = [
+        [
+            -1.0,
+            1.0,
+            0.0
+        ],
+        [
+            0.0,
+            0.0,
+            0.0
+        ],
+        [
+            0.0,
+            0.0,
+            0.0
+        ],
+        [
+            0.0,
+            0.0,
+            0.0
+        ]
+    ]
+
     @staticmethod
     def name():
         return "TRACKBALL_WILD"
@@ -53,6 +76,17 @@ class TrackballWild(TrackballOrbyl):
 
         return pos, rot
 
+    def tl_wall(self, shape):
+        return translate(self.tl_place(shape), self.wall_offsets[0])
+
+    def mr_wall(self, shape):
+        return translate(self.mr_place(shape), self.wall_offsets[1])
+
+    def br_wall(self, shape):
+        return translate(self.br_place(shape), self.wall_offsets[2])
+
+    def bl_wall(self, shape):
+        return translate(self.bl_place(shape), self.wall_offsets[3])
 
     def tl_place(self, shape):
         shape = rotate(shape, [0, 0, 0])
@@ -254,6 +288,29 @@ class TrackballWild(TrackballOrbyl):
         print('thumb_connection()')
         # clunky bit on the top left thumb connection  (normal connectors don't work well)
         hulls = []
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_place(web_post_tl()),
+                    self.tl_wall(web_post_tl()),
+                    self.tl_place(web_post_tr()),
+                    self.tl_place(web_post_tl())
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_place(web_post_tr()),
+                    self.tl_wall(web_post_tr()),
+                    self.tl_place(web_post_tl()),
+                    self.tl_place(web_post_tr())
+                ]
+            )
+        )
+
         hulls.append(
             triangle_hulls(
                 [
@@ -267,35 +324,106 @@ class TrackballWild(TrackballOrbyl):
         hulls.append(
             triangle_hulls(
                 [
-                    # Wall from bottom right key to bottom left of top cluster key
-                    key_place(web_post_bl(), 0, cornerrow),
-                    self.tl_place(web_post_bl()),
-                    # key_place(web_post_br(), 0, cornerrow),
+                    key_place(web_post_bl(), 0, cornerrow),  # col 0 bottom, bottom left (at left side/edge)
+                    self.tl_wall(web_post_bl()),  # top cluster key, bottom left (sort of top left)
+                    key_place(web_post_bl(), 1, cornerrow),  # col 1 bottom, bottom left
+                    self.tl_wall(web_post_tl())
+                ]
+            )
+        )
 
-                    #
-                    key_place(web_post_bl(), 1, cornerrow),
-                    self.tl_place(web_post_tl()),
-                    key_place(web_post_bl(), 2, lastrow),
-                    key_place(web_post_tl(), 2, lastrow),
-                    key_place(web_post_br(), 1, cornerrow),
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tl()),
+                    key_place(web_post_bl(), 1, cornerrow),  # col 1 bottom, bottom right corner
+                    key_place(web_post_br(), 1, cornerrow),  # col 1 bottom, bottom left corner
+                    self.tl_wall(web_post_tl())
+                ]
+            )
+        )
 
-                    #
-                    self.tl_place(web_post_tl()),
-                    # self.tl_place(web_post_bl()),
-                    key_place(web_post_bl(), 1, cornerrow),
-                    self.tl_place(web_post_bl()),
-                    # key_place(web_post_br(), 1, cornerrow),
-                    self.tl_place(web_post_tl()),
-                    key_place(web_post_br(), 2, lastrow),
-                    key_place(web_post_bl(), 2, lastrow),
-                    self.tl_place(web_post_tl()),
-                    self.tl_place(web_post_tr()),
-                    key_place(web_post_br(), 2, lastrow),
-                    self.mr_place(web_post_tl()),
-                    key_place(web_post_br(), 2, lastrow),
-                    key_place(web_post_bl(), 3, lastrow),
-                    self.mr_place(web_post_tl()),
-                    translate(self.mr_place(web_post_tl()), [0, 0, -5]),
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tl()),
+                    key_place(web_post_tl(), 2, lastrow),  # col 2 bottom, top left corner
+                    key_place(web_post_bl(), 2, lastrow),  # col 2 bottom, bottom left corner
+                    self.tl_wall(web_post_tl())
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tl()),
+                    key_place(web_post_tl(), 2, lastrow),  # col 2 bottom, top left corner
+                    key_place(web_post_br(), 1, cornerrow),  # col 2 bottom, bottom left corner
+                    self.tl_wall(web_post_tl())
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tl()),
+                    key_place(web_post_bl(), 2, lastrow),  # col 2 bottom, top left corner
+                    self.tl_wall(web_post_tr()),  # col 2 bottom, bottom left corner
+                    self.tl_wall(web_post_tl())
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tr()),
+                    key_place(web_post_bl(), 2, lastrow),  # col 2 bottom, top left corner
+                    key_place(web_post_br(), 2, lastrow),  # col 2 bottom, top left corner
+                    self.tl_wall(web_post_tr())  # col 2 bottom, bottom left corner
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tr()),
+                    key_place(web_post_br(), 2, lastrow),  # col 2 bottom, top left corner
+                    key_place(web_post_bl(), 3, lastrow),  # col 2 bottom, top left corner
+                    self.tl_wall(web_post_tr())  # col 2 bottom, bottom left corner
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tl_wall(web_post_tr()),
+                    key_place(web_post_bl(), 3, lastrow),  # col 2 bottom, top left corner
+                    self.mr_wall(web_post_tl()),
+                    self.tl_wall(web_post_tr())  # col 2 bottom, bottom left corner
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.mr_wall(web_post_tr()),
+                    self.mr_wall(web_post_tl()),
+                    translate(self.mr_wall(web_post_tl()), [14, 15, -2]),
+                    self.mr_wall(web_post_tr()),
+                ]
+            )
+        )
+
+
+        hulls.append(
+            triangle_hulls(
+                [
                     key_place(web_post_br(), 2, lastrow),
 
                     key_place(web_post_bl(), 3, lastrow),

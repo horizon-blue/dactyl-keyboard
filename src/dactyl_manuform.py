@@ -136,6 +136,14 @@ def make_dactyl():
     # END HELPER FUNCTIONS
     ####################################################
 
+    quickly = False
+    global quick_render
+    try:
+        if quick_render:
+            quickly = quick_render
+    except NameError:
+        quickly = False
+
     if oled_mount_type is not None and oled_mount_type != "NONE":
         for item in oled_configurations[oled_mount_type]:
             globals()[item] = oled_configurations[oled_mount_type][item]
@@ -1793,40 +1801,41 @@ def make_dactyl():
             shape = difference(shape, [hole])
             shape = union([shape, frame])
 
-        if trackball_in_wall and (side == ball_side or ball_side == 'both'):
-            tbprecut, tb, tbcutout, ball = generate_trackball_in_wall()
+        if not quickly:
+            if trackball_in_wall and (side == ball_side or ball_side == 'both'):
+                tbprecut, tb, tbcutout, ball = generate_trackball_in_wall()
 
-            shape = difference(shape, [tbprecut])
-            # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
-            shape = union([shape, tb])
-            # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
-            # shape = difference(shape, [tbcutout])
-            # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
-            # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
-            # shape = union([shape, sensor])
+                shape = difference(shape, [tbprecut])
+                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
+                shape = union([shape, tb])
+                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
+                # shape = difference(shape, [tbcutout])
+                # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
+                # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
+                # shape = union([shape, sensor])
 
-            if show_caps:
-                shape = add([shape, ball])
+                if show_caps:
+                    shape = add([shape, ball])
 
-        if (trackball_in_wall or ('TRACKBALL' in thumb_style)) and (side == ball_side or ball_side == 'both'):
-            tbprecut, tb, tbcutout, ball = generate_trackball_in_cluster(cluster(side))
+            if (trackball_in_wall or ('TRACKBALL' in thumb_style)) and (side == ball_side or ball_side == 'both'):
+                tbprecut, tb, tbcutout, ball = generate_trackball_in_cluster(cluster(side))
 
-            shape = difference(shape, [tbprecut])
-            # shape = union([shape, tbprecut])
-            # if cluster(side).has_btus():
-            shape = difference(shape, [tbcutout])
-            shape = union([shape, tb])
-            # else:
-            #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
-            #     shape = union([shape, tb])
-            #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
-            #     shape = difference(shape, [tbcutout])
-            #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
-            #     # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
-            #     # shape = union([shape, sensor])
+                shape = difference(shape, [tbprecut])
+                # shape = union([shape, tbprecut])
+                # if cluster(side).has_btus():
+                shape = difference(shape, [tbcutout])
+                shape = union([shape, tb])
+                # else:
+                #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_1"))
+                #     shape = union([shape, tb])
+                #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_2"))
+                #     shape = difference(shape, [tbcutout])
+                #     # export_file(shape=shape, fname=path.join(save_path, config_name + r"_test_3a"))
+                #     # export_file(shape=add([shape, sensor]), fname=path.join(save_path, config_name + r"_test_3b"))
+                #     # shape = union([shape, sensor])
 
-            if show_caps:
-                shape = add([shape, ball])
+                if show_caps:
+                    shape = add([shape, ball])
 
         block = box(350, 350, 40)
         block = translate(block, (0, 0, -20))
@@ -1945,9 +1954,12 @@ def make_dactyl():
 
 
     def run():
-
         mod_r = model_side(side="right")
         export_file(shape=mod_r, fname=path.join(save_path, config_name + r"_right"))
+
+        if quickly:
+            print(">>>>>  QUICK RENDER: Only rendering a the right side.")
+            exit(0)
 
         base = baseplate(side='right')
         export_file(shape=base, fname=path.join(save_path, config_name + r"_right_plate"))
