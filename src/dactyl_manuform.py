@@ -545,7 +545,7 @@ def make_dactyl():
 
     def valid_key(column, row):
         if (full_last_rows):
-            return (not (column in [0, 1])) or (not row == lastrow)
+            return (not (column in [0, 1, 2])) or (not row == lastrow)
 
         return (column in [2, 3]) or (not row == lastrow)
 
@@ -1223,7 +1223,6 @@ def make_dactyl():
 
         return tbiw_mount_location_xyz, tbiw_mount_rotation_xyz
 
-
     def generate_trackball_in_wall():
         pos, rot = tbiw_position_rotation()
         return generate_trackball(pos, rot, None)
@@ -1528,6 +1527,9 @@ def make_dactyl():
                          )
 
         return hole, shape
+
+    def ergodox_inner_column():
+        print("ergodox_inner_column()")
 
 
     def teensy_holder():

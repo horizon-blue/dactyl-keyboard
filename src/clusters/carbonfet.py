@@ -186,69 +186,37 @@ class CarbonfetCluster(DefaultCluster):
         hulls.append(
             triangle_hulls(
                 [
-                    self.ml_place(self.thumb_post_tl()),
                     key_place(web_post_bl(), 0, cornerrow),
-                    self.ml_place(self.thumb_post_tr()),
-                    key_place(web_post_br(), 0, cornerrow),
-                    self.tl_place(web_post_tl()),
+                    self.ml_place(self.thumb_post_tl()),
                     key_place(web_post_bl(), 1, cornerrow),
-                    self.tl_place(web_post_tr()),
+                    self.ml_place(self.thumb_post_tl()),
+                    key_place(web_post_bl(), 1, cornerrow),
+                    self.ml_place(self.thumb_post_tr()),
                     key_place(web_post_br(), 1, cornerrow),
-                    key_place(web_post_tl(), 2, lastrow),
-                    key_place(web_post_bl(), 2, lastrow),
-                    self.tl_place(web_post_tr()),
-                    key_place(web_post_bl(), 2, lastrow),
-                    self.tl_place(web_post_br()),
-                    key_place(web_post_br(), 2, lastrow),
-                    key_place(web_post_bl(), 3, lastrow),
-                    self.tl_place(web_post_br()),
-                    self.tr_place(web_post_tr()),
-                ]
-            )
-        )
-
-        hulls.append(
-            triangle_hulls(
-                [
-                    key_place(web_post_tr(), 3, lastrow),
-                    key_place(web_post_br(), 3, cornerrow),
-                    key_place(web_post_tl(), 3, lastrow),
-                    key_place(web_post_bl(), 3, cornerrow),
-                ]
-            )
-        )
-
-        hulls.append(
-            triangle_hulls(
-                [
-                    key_place(web_post_tr(), 2, lastrow),
-                    key_place(web_post_br(), 2, lastrow),
-                    key_place(web_post_tl(), 3, lastrow),
-                    key_place(web_post_bl(), 3, lastrow),
-                ]
-            )
-        )
-
-        hulls.append(
-            triangle_hulls(
-                [
-                    self.tr_place(web_post_br()),
-                    self.tr_place(web_post_tr()),
-                    key_place(web_post_bl(), 3, lastrow),
-                ]
-            )
-        )
-
-        hulls.append(
-            triangle_hulls(
-                [
-                    key_place(web_post_br(), 1, cornerrow),
-                    key_place(web_post_tl(), 2, lastrow),
+                    self.tl_place(web_post_tl()),
                     key_place(web_post_bl(), 2, cornerrow),
-                    key_place(web_post_tr(), 2, lastrow),
+                    self.tl_place(web_post_tr()),
                     key_place(web_post_br(), 2, cornerrow),
                     key_place(web_post_tl(), 3, lastrow),
-                    key_place(web_post_bl(), 3, cornerrow),
+                    key_place(web_post_bl(), 3, lastrow),
+                    self.tl_place(web_post_tr()),
+                    key_place(web_post_bl(), 3, lastrow),
+                    self.tl_place(web_post_br()),
+                    key_place(web_post_br(), 3, lastrow),
+                    key_place(web_post_bl(), 4, lastrow),
+                    self.tl_place(web_post_br()),
+                    self.tr_place(web_post_tr()),
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_tr(), 4, lastrow),
+                    key_place(web_post_br(), 4, cornerrow),
+                    key_place(web_post_tl(), 4, lastrow),
+                    key_place(web_post_bl(), 4, cornerrow),
                 ]
             )
         )
@@ -258,6 +226,31 @@ class CarbonfetCluster(DefaultCluster):
                 [
                     key_place(web_post_tr(), 3, lastrow),
                     key_place(web_post_br(), 3, lastrow),
+                    key_place(web_post_tl(), 4, lastrow),
+                    key_place(web_post_bl(), 4, lastrow),
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    self.tr_place(web_post_br()),
+                    self.tr_place(web_post_tr()),
+                    key_place(web_post_bl(), 4, lastrow),
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_br(), 2, cornerrow),
+                    key_place(web_post_tl(), 3, lastrow),
+                    key_place(web_post_bl(), 3, cornerrow),
+                    key_place(web_post_tr(), 3, lastrow),
+                    key_place(web_post_br(), 3, cornerrow),
+                    key_place(web_post_tl(), 4, lastrow),
                     key_place(web_post_bl(), 4, cornerrow),
                 ]
             )
@@ -266,9 +259,19 @@ class CarbonfetCluster(DefaultCluster):
         hulls.append(
             triangle_hulls(
                 [
-                    key_place(web_post_tr(), 3, lastrow),
-                    key_place(web_post_br(), 3, cornerrow),
-                    key_place(web_post_bl(), 4, cornerrow),
+                    key_place(web_post_tr(), 4, lastrow),
+                    key_place(web_post_br(), 4, lastrow),
+                    key_place(web_post_bl(), 5, cornerrow),
+                ]
+            )
+        )
+
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_tr(), 4, lastrow),
+                    key_place(web_post_br(), 4, cornerrow),
+                    key_place(web_post_bl(), 5, cornerrow),
                 ]
             )
         )
