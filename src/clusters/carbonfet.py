@@ -297,7 +297,7 @@ class CarbonfetCluster(DefaultCluster):
         shape = union([shape, wall_brace(self.mr_place, 0, -1.15, web_post_bl(), self.br_place, 0, -1, web_post_br())])
         shape = union([shape, wall_brace(self.bl_place, -1, 0, web_post_bl(), self.br_place, -1, 0, web_post_tl())])
         shape = union([shape,
-                       wall_brace(self.tr_place, 0, -1, web_post_br(), (lambda sh: key_place(sh, 3, lastrow)), 0, -1,
+                       wall_brace(self.tr_place, 0, -1, web_post_br(), (lambda sh: key_place(sh, 4, lastrow)), 0, -1,
                                   web_post_bl())])
         return shape
 
