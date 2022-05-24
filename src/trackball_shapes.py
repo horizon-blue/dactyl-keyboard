@@ -135,12 +135,6 @@ def track_cutter():
 def gen_track_socket():
     return difference(track_outer(), [track_cutter()])
 
-def rotate_around_point()
 
-
-# cutter_fin = socket_bearing_fin(7, 3, 2, 7, -35)
-# main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
-
-# result = difference(main_fin, [cutter_fin])
 export_file(shape=gen_track_socket(), fname=path.join("..", "things", "play"))
 
