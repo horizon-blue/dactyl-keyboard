@@ -383,7 +383,7 @@ def make_dactyl():
         # return shape, cutter
         return shape, cutter, sensor
 
-    def trackball_socket_gen(balldiameter, ring_height, t_air, t_wall, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3.0,
+    def trackball_socket_gen(balldiameter, ring_height, r_gap, t_wall, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3.0,
                              bolt_l=8, bolt_extern=False):
         """Generate a trackball sockets for all diameters."""
 
@@ -421,15 +421,15 @@ def make_dactyl():
 
         # setup inner variables
         r_ball = balldiameter / 2.0
-        r_iner = r_ball + t_air
-        r_outer = r_ball + t_air + t_wall
-        t_bear_air = t_air / 2
+        r_inner = r_ball + r_gap
+        r_outer = r_ball + r_gap + t_wall
+        t_bear_gap = r_gap / 2
         height = ring_height + r_outer
 
         show_ext_obj = False  # Ball and bearing, only for development
 
         # start with outer wall and top cylinder
-        shape = union([sphere(r_outer), translate(cylinder(r_outer, ring_height), (0, 0, (ring_height) / 2))])
+        shape = union([sphere(r_outer), translate(cylinder(r_outer, ring_height), (0, 0, ring_height / 2))])
 
         for i in range(3):
             bolt_orientation = 1
@@ -442,7 +442,7 @@ def make_dactyl():
             shape = union([shape, trans_bear(outer, rot_r=rot)])
 
             shape = difference(shape,
-                               [trans_bear(gen_fastening(bear_do / 2 + t_bear_air, bear_t + 2 * t_bear_air), rot_r=rot),
+                               [trans_bear(gen_fastening(bear_do / 2 + t_bear_gap, bear_t + 2 * t_bear_gap), rot_r=rot),
                                 # opening for bearing
                                 trans_bear(cylinder(bolt_d / 2, bolt_l), rot_r=rot)])  # bolt
 
@@ -457,10 +457,10 @@ def make_dactyl():
                 shape = difference(shape, [bolt_insert])
 
         # remove inner parts
-        shape = difference(shape, [sphere(r_iner),
+        shape = difference(shape, [sphere(r_inner),
                                    translate(cylinder(1.1 * r_outer, height), (0, 0, height / 2 + ring_height)),
                                    # above cylinder
-                                   translate(cylinder(r_iner, r_outer), (0, 0, r_outer / 2))])  # inner Cylinder
+                                   translate(cylinder(r_inner, r_outer), (0, 0, r_outer / 2))])  # inner Cylinder
 
         if show_ext_obj:
             all_sh = [shape, sphere(r_ball)]
@@ -470,18 +470,18 @@ def make_dactyl():
                     trans_bear(difference(cylinder(bear_do / 2, bear_t), [cylinder(bolt_d / 2, bolt_l)]), rot_r=rot))
             shape = union(all_sh)
 
-        sensor = difference(translate(gen_sensor(t=r_iner, cutout=True), (0, 0, -r_iner / 2)), [sphere(r_iner)])
+        sensor = difference(translate(gen_sensor(t=r_inner, cutout=True), (0, 0, -r_inner / 2)), [sphere(r_inner)])
 
         # start with cutout
         cutout = union([translate(gen_sensor(t=r_outer, cutout=False), (0, 0, -r_outer)),
-                        translate(cylinder(r_iner, height - r_iner), (0, 0, (height - r_iner) / 2)),
-                        sphere(r_iner)])
+                        translate(cylinder(r_inner, height - r_inner), (0, 0, (height - r_inner) / 2)),
+                        sphere(r_inner)])
         cutout_inlets = [cutout]
         for i in range(3):
             bolt_orientation = 1
             rot = -30 + 120 * i
             #  rot = 0
-            cutout_inlets.append(trans_bear(gen_fastening(bear_do / 2 + t_bear_air, bear_t + t_bear_air), rot_r=rot))
+            cutout_inlets.append(trans_bear(gen_fastening(bear_do / 2 + t_bear_gap, bear_t + t_bear_gap), rot_r=rot))
         cutout = union(cutout_inlets)
 
         return shape, cutout, sensor
