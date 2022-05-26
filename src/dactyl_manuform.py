@@ -43,13 +43,7 @@ def make_dactyl():
     right_cluster = None
     left_cluster = None
 
-    left_wall_x_offset = 8
-    left_wall_x_row_offsets = [
-        8, 8, 8, 8, 8, 8
-    ]
-    left_wall_z_offset = 3
-    left_wall_lower_y_offset = 0
-    left_wall_lower_z_offset = 0
+
 
     symmetry = None
     column_style = None
@@ -118,6 +112,14 @@ def make_dactyl():
     dir_exists = os.path.isdir(save_path)
     if not dir_exists:
         os.makedirs(save_path, exist_ok=True)
+
+    left_wall_x_offset = 8
+    left_wall_x_row_offsets = [
+        min_left_wall, min_left_wall, min_left_wall, min_left_wall, min_left_wall, min_left_wall
+    ]
+    left_wall_z_offset = 3
+    left_wall_lower_y_offset = 0
+    left_wall_lower_z_offset = 0
 
     ###############################################
     # END EXTREMELY UGLY BOOTSTRAP
@@ -196,11 +198,11 @@ def make_dactyl():
     if oled_mount_type is not None and oled_mount_type != "NONE":
         left_wall_x_offset = oled_left_wall_x_offset_override
         if nrows == 4:
-            left_wall_x_row_offsets = [22, 22, 22, 22]
+            left_wall_x_row_offsets = [max_left_wall, max_left_wall, max_left_wall, max_left_wall]
         elif nrows >= 5:
-            left_wall_x_row_offsets[0] = 22
-            left_wall_x_row_offsets[1] = 22
-            left_wall_x_row_offsets[2] = 22
+            left_wall_x_row_offsets[0] = max_left_wall
+            left_wall_x_row_offsets[1] = max_left_wall
+            left_wall_x_row_offsets[2] = max_left_wall
 
         # left_wall_x_row_offsets = [22 if row > oled_row else 8 for row in range(lastrow)]
         left_wall_z_offset = oled_left_wall_z_offset_override
@@ -888,9 +890,9 @@ def make_dactyl():
         )
         if trackball_in_wall and (side == ball_side or ball_side == 'both'):
 
-            left_wall_x_row_offsets[3] = 8
-            left_wall_x_row_offsets[4] = 8
-
+            left_wall_x_row_offsets[3] = min_left_wall
+            left_wall_x_row_offsets[4] = min_left_wall
+            # big_y_off = -25
             if low_corner:
                 y_offset = tbiw_left_wall_lower_y_offset
                 z_offset = tbiw_left_wall_lower_z_offset
