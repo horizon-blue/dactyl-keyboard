@@ -294,7 +294,7 @@ class CarbonfetCluster(DefaultCluster):
         shape = union(
             [shape, wall_brace(self.bl_place, -1, 0, self.thumb_post_tl(), self.bl_place, 0, 1, self.thumb_post_tl())])
         # thumb, tweeners
-        shape = union([shape, wall_brace(self.mr_place, 0, -1.15, web_post_bl(), self.br_place, 0, -1, web_post_br())])
+        # shape = union([shape, wall_brace(self.mr_place, 0, -1.15, web_post_bl(), self.br_place, 0, -1, web_post_br())])
         shape = union([shape, wall_brace(self.bl_place, -1, 0, web_post_bl(), self.br_place, -1, 0, web_post_tl())])
         shape = union([shape,
                        wall_brace(self.tr_place, 0, -1, web_post_br(), (lambda sh: key_place(sh, 4, lastrow)), 0, -1,
@@ -304,11 +304,11 @@ class CarbonfetCluster(DefaultCluster):
     def connection(self, side='right'):
         print('thumb_connection()')
         # clunky bit on the top left thumb connection  (normal connectors don't work well)
-        # clunky bit on the top left thumb connection  (normal connectors don't work well)
         shape = bottom_hull(
             [
                 left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow, -1, low_corner=True, side=side),
-                left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow, -1, low_corner=True, side=side),
+                translate(left_key_place(translate(web_post(), wall_locate3(-1, 0)),
+                                         cornerrow, -1, low_corner=True, side=side), (0, 2, 0)),
                 self.bl_place(translate(self.thumb_post_tr(), wall_locate2(-0.3, 1))),
                 self.bl_place(translate(self.thumb_post_tr(), wall_locate3(-0.3, 1))),
             ]
@@ -319,8 +319,8 @@ class CarbonfetCluster(DefaultCluster):
                            [
                                left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow, -1,
                                               low_corner=True, side=side),
-                               left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow, -1,
-                                              low_corner=True, side=side),
+                               translate(left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow, -1,
+                                              low_corner=True, side=side), (0, 2, 0)),
                                self.bl_place(translate(self.thumb_post_tr(), wall_locate2(-0.3, 1))),
                                self.bl_place(translate(self.thumb_post_tr(), wall_locate3(-0.3, 1))),
                                self.ml_place(self.thumb_post_tl()),

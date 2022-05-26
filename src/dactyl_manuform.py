@@ -898,7 +898,7 @@ def make_dactyl():
                 y_offset = 0.0
                 z_offset = 0.0
 
-            x_off_override = tbiw_left_wall_x_offset_override if row > 0 else 22
+            x_off_override = tbiw_left_wall_x_offset_override if row > 0 else 8
             return list(pos - np.array([
                 x_off_override,  # - ((nrows - row) * 5),
                 -y_offset,
@@ -1081,6 +1081,12 @@ def make_dactyl():
                 (lambda sh: left_key_place(sh, y - 1, -1, side=side)), -1, 0, web_post(),
                 (lambda sh: left_key_place(sh, y, 1, side=side)), -1, 0, web_post(),
             )
+            temp_shape3 = wall_brace(
+                (lambda sh: translate(left_key_place(sh, y - 1, -1, side=side), (0, -1, 0))), -1, 0, web_post(),
+                (lambda sh: translate(left_key_place(sh, y, 1, side=side), (0, -1, 0))), -1, 0, web_post(),
+            )
+            temp_shape4 = hull_from_shapes((temp_shape1, temp_shape3))
+
             temp_shape2 = hull_from_shapes((
                 key_place(web_post_tl(), 0, y),
                 key_place(web_post_bl(), 0, y - 1),
@@ -1088,9 +1094,9 @@ def make_dactyl():
                 left_key_place(web_post(), y - 1, -1, side=side),
                 left_key_place(web_post(), y - 1, -1, side=side),
             ))
-            shape = union([shape, temp_shape1])
             shape = union([shape, temp_shape2])
-
+            shape = union([shape, temp_shape4])
+            # shape = union([shape, temp_shape3])
         return shape
 
 
