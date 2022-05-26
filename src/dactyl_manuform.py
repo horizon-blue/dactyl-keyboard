@@ -1095,7 +1095,10 @@ def make_dactyl():
                 left_key_place(web_post(), y - 1, -1, side=side),
             ))
             shape = union([shape, temp_shape2])
-            shape = union([shape, temp_shape4])
+            if i == 0:
+                shape = union([shape, temp_shape4])
+            else:
+                shape = union([shape, temp_shape1])
             # shape = union([shape, temp_shape3])
         return shape
 
