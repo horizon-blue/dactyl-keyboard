@@ -253,7 +253,7 @@ def gen_track_socket():
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
 # result = difference(main_fin, [cutter_fin])
-shape, cutout, sensor = trackball_socket_gen(34, 3, 2, 3)
+shape, cutout, sensor = trackball_socket_gen(40, 3, 2, 3)
 export_file(shape=union([difference(shape, [cutout]), sensor]), fname=path.join("..", "things", "trackball_bearing_socket"))
 export_file(shape=cutout, fname=path.join("..", "things", "trackball_bearing_cutout"))
 export_file(shape=sensor, fname=path.join("..", "things", "trackball_bearing_sensor"))
