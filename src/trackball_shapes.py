@@ -1,6 +1,7 @@
-from helpers_solid import *
+from helpers_cadquery import *
 import os.path as path
 import numpy
+import cadquery as cq
 
 ball_diam = 38  # ball diameter
 ball_space = 1  # additional room around ball in socket, 1mm
@@ -245,6 +246,20 @@ def track_cutter():
     return union([ball, cutter1, cutter2, cutter3])
 
 
+def cq_stuff():
+    return (
+        cq.Sketch()
+            .segment((0., 0), (0., 2.))
+            .segment((2.,0))
+            .close()
+            .arc((.6, .6), 0.4, 0., 360.)
+            .assemble(tag='face')
+            .edges('%LINE', tag='face')
+            .vertices()
+            .chamfer(0.2)
+    )
+
+
 def gen_track_socket():
     return difference(track_outer(), [track_cutter()])
 
@@ -252,8 +267,10 @@ def gen_track_socket():
 # cutter_fin = socket_bearing_fin(7, 3, 2, 7, -35)
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
-# result = difference(main_fin, [cutter_fin])
-shape, cutout, sensor = trackball_socket_gen(40, 3, 2, 3)
-export_file(shape=union([difference(shape, [cutout]), sensor]), fname=path.join("..", "things", "trackball_bearing_socket"))
-export_file(shape=cutout, fname=path.join("..", "things", "trackball_bearing_cutout"))
-export_file(shape=sensor, fname=path.join("..", "things", "trackball_bearing_sensor"))
+result = cq_stuff()
+export_file(shape=result, fname=path.join("..", "things", "cq_play"))
+
+# shape, cutout, sensor = trackball_socket_gen(40, 3, 2, 3)
+# export_file(shape=union([difference(shape, [cutout]), sensor]), fname=path.join("..", "things", "trackball_bearing_socket"))
+# export_file(shape=cutout, fname=path.join("..", "things", "trackball_bearing_cutout"))
+# export_file(shape=sensor, fname=path.join("..", "things", "trackball_bearing_sensor"))
