@@ -1258,7 +1258,7 @@ def make_dactyl():
         precut = rotate(precut, rot)
         precut = translate(precut, pos)
 
-        shape, cutout = trackball_socket(btus=cluster.has_btus())
+        shape, cutout = trackball_socket(btus=cluster.has_btus() if cluster is not None else False)
 
         shape = rotate(shape, tb_r_offset)
         shape = translate(shape, [0, 0, -3])
@@ -1919,7 +1919,7 @@ def make_dactyl():
                 if show_caps:
                     shape = add([shape, ball])
 
-            if (trackball_in_wall or ('TRACKBALL' in thumb_style)) and (side == ball_side or ball_side == 'both'):
+            if cluster(side).is_tb and (side == ball_side or ball_side == 'both'):
                 tbprecut, tb, tbcutout, ball = generate_trackball_in_cluster(cluster(side))
 
                 shape = difference(shape, [tbprecut])
