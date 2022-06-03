@@ -431,6 +431,7 @@ def make_dactyl():
         show_ext_obj = False  # Ball and bearing, only for development
 
         # start with outer wall and top cylinder
+
         shape = union([sphere(r_outer), translate(cylinder(r_outer, ring_height), (0, 0, ring_height / 2))])
 
         for i in range(3):
@@ -464,6 +465,7 @@ def make_dactyl():
                                    # above cylinder
                                    translate(cylinder(r_inner, r_outer), (0, 0, r_outer / 2))])  # inner Cylinder
 
+
         if show_ext_obj:
             all_sh = [shape, sphere(r_ball)]
             for i in range(3):
@@ -474,6 +476,7 @@ def make_dactyl():
 
         sensor = difference(translate(gen_sensor(t=r_inner, cutout=True), (0, 0, -r_inner / 2)), [sphere(r_inner)])
 
+        top_lip = difference(cylinder(r_outer, ring_height / 4), [cylinder(r_inner + 2, ring_height / 3)])
         # start with cutout
         cutout = union([translate(gen_sensor(t=r_outer, cutout=False), (0, 0, -r_outer)),
                         translate(cylinder(r_inner, height - r_inner), (0, 0, (height - r_inner) / 2)),
@@ -1255,6 +1258,10 @@ def make_dactyl():
                           )
         return shape
 
+    def pre_rotate(shape):
+        if tb_pre_rotate not in [None, ""]:
+            return rotate(shape, tb_pre_rotate)
+        return shape
 
     def generate_trackball(pos, rot, cluster):
         tb_t_offset = tb_socket_translation_offset
@@ -1264,7 +1271,7 @@ def make_dactyl():
             tb_t_offset = tb_btu_socket_translation_offset
             tb_r_offset = tb_btu_socket_rotation_offset
 
-        precut = trackball_cutout()
+        precut = pre_rotate(trackball_cutout())
         precut = rotate(precut, tb_r_offset)
         precut = translate(precut, tb_t_offset)
         precut = rotate(precut, rot)
@@ -1272,6 +1279,7 @@ def make_dactyl():
 
         shape, cutout, sensor = trackball_socket(btus=cluster is not None and cluster.has_btus())
 
+        shape = pre_rotate(shape)
         shape = rotate(shape, tb_r_offset)
         shape = translate(shape, tb_t_offset)
         shape = rotate(shape, rot)
@@ -1280,6 +1288,7 @@ def make_dactyl():
         if cluster is not None:
             shape = cluster.get_extras(shape, pos)
 
+        cutout = pre_rotate(cutout)
         cutout = rotate(cutout, tb_r_offset)
         cutout = translate(cutout, tb_t_offset)
         # cutout = rotate(cutout, tb_sensor_translation_offset)
@@ -1289,6 +1298,7 @@ def make_dactyl():
 
         # Small adjustment due to line to line surface / minute numerical error issues
         # Creates small overlap to assist engines in union function later
+        sensor = pre_rotate(sensor)
         sensor = rotate(sensor, tb_r_offset)
         sensor = translate(sensor, tb_t_offset)
         # sensor = rotate(sensor, tb_sensor_translation_offset)
