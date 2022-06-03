@@ -1,4 +1,4 @@
-from helpers_cadquery import *
+from helpers_solid import *
 import os.path as path
 import numpy
 import cadquery as cq
@@ -261,16 +261,20 @@ def cq_stuff():
 
 
 def gen_track_socket():
-    return difference(track_outer(), [track_cutter()])
+    return difference(track_outer(), [translate(track_cutter(), [0.001, 0, 0])])
 
 
 # cutter_fin = socket_bearing_fin(7, 3, 2, 7, -35)
 # main_fin = socket_bearing_fin(10, 7, 5, 10, -25)
 
-result = cq_stuff()
-export_file(shape=result, fname=path.join("..", "things", "cq_play"))
+# result = cq_stuff()
+# export_file(shape=result, fname=path.join("..", "things", "cq_play"))
 
-# shape, cutout, sensor = trackball_socket_gen(40, 3, 2, 3)
+shape, cutout, sensor = trackball_socket_gen(34, 2, 4, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
+# export_file(shape=shape, fname=path.join("..", "things", "trackball_bearing_socket"))
+
+inner_fin = socket_bearing_fin(2.5, 3, 1.5, 6.5, -25, True)
+outer_fin = socket_bearing_fin(4, 5, 3, 8, -22, False)
 # export_file(shape=union([difference(shape, [cutout]), sensor]), fname=path.join("..", "things", "trackball_bearing_socket"))
 # export_file(shape=cutout, fname=path.join("..", "things", "trackball_bearing_cutout"))
-# export_file(shape=sensor, fname=path.join("..", "things", "trackball_bearing_sensor"))
+export_file(shape=difference(outer_fin, [inner_fin]), fname=path.join("..", "things", "trackball_bearing_socket"))
