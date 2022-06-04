@@ -478,9 +478,11 @@ def make_dactyl():
 
         top_lip = difference(cylinder(r_outer, ring_height / 4), [cylinder(r_inner + 2, ring_height / 3)])
         # start with cutout
+        top_lip = translate(difference(cylinder(r_outer, ring_height / 2), [cylinder(r_inner - 2, 8)]), (0, 0, 0))
         cutout = union([translate(gen_sensor(t=r_outer, cutout=False), (0, 0, -r_outer)),
                         translate(cylinder(r_inner, height - r_inner), (0, 0, (height - r_inner) / 2)),
                         sphere(r_inner)])
+        cutout = difference(cutout, [top_lip])
         cutout_inlets = [cutout]
         for i in range(3):
             bolt_orientation = 1

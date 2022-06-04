@@ -16,7 +16,7 @@ def cylinder(radius, height, segments=100):
 
 
 def sphere(radius):
-    return sl.sphere(radius)
+    return sl.sphere(radius, segments=100)
 
 
 def cone(r1, r2, height):
