@@ -147,8 +147,8 @@ def finalize_trackball(shape, ring_height, r_gap, r_inner, r_outer, height):
                                translate(cylinder(1.1 * r_outer, height), (0, 0, height / 2 + ring_height)),
                                # above cylinder
                                translate(cylinder(r_inner, r_outer), (0, 0, r_outer / 2))])  # inner Cylinder
-    top_lip = translate(difference(cylinder(r_outer, ring_height / 2), [cylinder(r_inner - (r_gap * 0.94), 8)]),
-                        (0, 0, ring_height - (ring_height / 8)))
+    top_lip = translate(difference(cylinder(r_outer, ring_height / 8), [cylinder(r_inner - (r_gap * 0.92), ring_height / 7)]),
+                        (0, 0, ring_height - 0.1))
     cutout = union([translate(gen_sensor(t=r_outer, cutout=False), (0, 0, -r_outer)),
                     translate(cylinder(r_inner, height - r_inner), (0, 0, (height - r_inner) / 2)),
                     sphere(r_inner)])
@@ -291,7 +291,7 @@ def gen_track_socket():
 # result = cq_stuff()
 # export_file(shape=result, fname=path.join("..", "things", "cq_play"))
 
-shape, cutout, no = bearing_trackball_socket(34, 7, 1, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
+shape, cutout, no = bearing_trackball_socket(34, 8, 1, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
 export_file(shape=difference(shape, [cutout]), fname=path.join("..", "things", "trackball_bearing_cutout"))
 
 # inner_fin = socket_bearing_fin(2.5, 3, 1.5, 6.5, -25, True)
