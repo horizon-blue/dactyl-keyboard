@@ -3,7 +3,7 @@ import os.path as path
 import numpy
 import cadquery as cq
 
-ball_diam = 38  # ball diameter
+ball_diam = 34  # ball diameter
 ball_space = 1  # additional room around ball in socket, 1mm
 
 
@@ -108,14 +108,62 @@ def socket_bearing_fin(outer_r, outer_depth, axle_r, axle_depth, cut_offset, gro
 
     return rotate(difference(base_shape, [cutter]), (0, -90, 0))
 
+def gen_sensor(w=22, l=32, t=10, cut=4.7, screw_dia=2, cutout=True):
+    shp = union([translate(cylinder(w / 2, t), (0, +(l - w) / 2, 0)),  # start with circle left
+                 box(w, l - w, t),  # center box
+                 translate(cylinder(w / 2, t), (0, -(l - w) / 2, 0))])  # end with circle right
+    if cutout:
+        screw_diff = 26.8  # why not 25.4
+        screw_exentric = -1.05  # move both screws in Y direction
+        offset_screw_1 = -(screw_diff) / 2 - screw_exentric
+        offset_screw_2 = +(screw_diff) / 2 + screw_exentric
+        offset_sens = 0.0
+        t_cut = 1.01 * t
+        shp = difference(shp, [
+            translate(union([cylinder(cut / 2, t_cut), translate(box(cut, cut, t_cut), (0, -cut / 2, 0))]),
+                      (0, offset_sens, 0)),  # rounded box
+            translate(cylinder(screw_dia / 2, t_cut), (0, offset_screw_1, 0)),  # screw 1
+            translate(cylinder(screw_dia / 2, t_cut), (0, offset_screw_2, 0))])  # screw 2
+    return shp
 
-def trackball_socket_gen(balldiameter, ring_height, t_air, t_wall, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3.0,
-                         bolt_l=5, bolt_extern=False):
+
+def standard_parts(balldiameter, ring_height, r_gap, t_wall):
+    # setup inner variables
+    r_ball = balldiameter / 2.0
+    r_inner = r_ball + r_gap
+    r_outer = r_ball + r_gap + t_wall
+
+    # start with outer wall and top cylinder
+
+    shape = union([sphere(r_outer), translate(cylinder(r_outer, ring_height), (0, 0, ring_height / 2))])
+
+    sensor = difference(translate(gen_sensor(t=r_inner, cutout=True), (0, 0, -r_inner / 2)), [sphere(r_inner)])
+
+    return shape, sensor
+
+
+def finalize_trackball(shape, ring_height, r_gap, r_inner, r_outer, height):
+    shape = difference(shape, [sphere(r_inner),
+                               translate(cylinder(1.1 * r_outer, height), (0, 0, height / 2 + ring_height)),
+                               # above cylinder
+                               translate(cylinder(r_inner, r_outer), (0, 0, r_outer / 2))])  # inner Cylinder
+    top_lip = translate(difference(cylinder(r_outer, ring_height / 2), [cylinder(r_inner - (r_gap * 0.94), 8)]),
+                        (0, 0, ring_height - (ring_height / 8)))
+    cutout = union([translate(gen_sensor(t=r_outer, cutout=False), (0, 0, -r_outer)),
+                    translate(cylinder(r_inner, height - r_inner), (0, 0, (height - r_inner) / 2)),
+                    sphere(r_inner)])
+    cutout = difference(cutout, [top_lip])
+    shape = union([shape, top_lip])
+
+    return shape, cutout
+
+def bearing_trackball_socket(balldiameter, ring_height, r_gap, t_wall, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3.0,
+                             bolt_l=8, bolt_extern=False):
     """Generate a trackball sockets for all diameters."""
 
     # ========== START internal functions ==========
     def trans_bear(shp, rot_r=0, rot_depth=25):
-        shp = translate(shp, (-r_ball - bear_do / 2, 0, 0))
+        shp = translate(shp, (-r_ball - bear_do / 2 - 1, 0, -0.5))
         shp = rotate(shp, (90, -rot_depth, rot_r))
         return shp
 
@@ -125,37 +173,20 @@ def trackball_socket_gen(balldiameter, ring_height, t_air, t_wall, bear_do=6, be
                      rotate(translate(box(3 * r, 2 * r, t), (1.5 * r, 0, 0)), (0, 0, -beta))])
         return shp
 
-    def gen_sensor(w=22, l=32, t=10, cut=4.7, screw_dia=2, cutout=True):
-        shp = union([translate(cylinder(w / 2, t), (0, +(l - w) / 2, 0)),  # start with circle left
-                     box(w, l - w, t),  # center box
-                     translate(cylinder(w / 2, t), (0, -(l - w) / 2, 0))])  # end with circle right
-        if cutout:
-            screw_diff = 26.8  # why not 25.4
-            screw_exentric = -1.05  # move both screws in Y direction
-            offset_screw_1 = -(screw_diff) / 2 - screw_exentric
-            offset_screw_2 = +(screw_diff) / 2 + screw_exentric
-            offset_sens = 0.0
-            t_cut = 1.01 * t
-            shp = difference(shp, [
-                translate(union([cylinder(cut / 2, t_cut), translate(box(cut, cut, t_cut), (0, -cut / 2, 0))]),
-                          (0, offset_sens, 0)),  # rounded box
-                translate(cylinder(screw_dia / 2, t_cut), (0, offset_screw_1, 0)),  # screw 1
-                translate(cylinder(screw_dia / 2, t_cut), (0, offset_screw_2, 0))])  # screw 2
-        return shp
-
     # ========== END internal functions ==========
 
     # setup inner variables
     r_ball = balldiameter / 2.0
-    r_iner = r_ball + t_air
-    r_outer = r_ball + t_air + t_wall
-    t_bear_air = t_air / 2
+    r_inner = r_ball + r_gap
+    r_outer = r_ball + r_gap + t_wall
+    t_bear_gap = r_gap / 2
     height = ring_height + r_outer
 
     show_ext_obj = False  # Ball and bearing, only for development
 
     # start with outer wall and top cylinder
-    shape = union([sphere(r_outer), translate(cylinder(r_outer, ring_height), (0, 0, (ring_height) / 2))])
+
+    shape, sensor = standard_parts(balldiameter, ring_height, r_gap, t_wall)
 
     for i in range(3):
         bolt_orientation = 1
@@ -168,7 +199,7 @@ def trackball_socket_gen(balldiameter, ring_height, t_air, t_wall, bear_do=6, be
         shape = union([shape, trans_bear(outer, rot_r=rot)])
 
         shape = difference(shape,
-                           [trans_bear(gen_fastening(bear_do / 2 + t_bear_air, bear_t + 2 * t_bear_air), rot_r=rot),
+                           [trans_bear(gen_fastening(bear_do / 2 + t_bear_gap, bear_t + 2 * t_bear_gap), rot_r=rot),
                             # opening for bearing
                             trans_bear(cylinder(bolt_d / 2, bolt_l), rot_r=rot)])  # bolt
 
@@ -182,11 +213,7 @@ def trackball_socket_gen(balldiameter, ring_height, t_air, t_wall, bear_do=6, be
             bolt_insert = trans_bear(gen_fastening(bolt_d / 2.1, bolt_l * 1.1, alpha=25, beta=-25), rot_r=rot)
             shape = difference(shape, [bolt_insert])
 
-    # remove inner parts
-    shape = difference(shape, [sphere(r_iner),
-                               translate(cylinder(1.1 * r_outer, height), (0, 0, height / 2 + ring_height)),
-                               # above cylinder
-                               translate(cylinder(r_iner, r_outer), (0, 0, r_outer / 2))])  # inner Cylinder
+    shape, cutout = finalize_trackball(shape, ring_height, r_gap, r_inner, r_outer, height)
 
     if show_ext_obj:
         all_sh = [shape, sphere(r_ball)]
@@ -196,18 +223,12 @@ def trackball_socket_gen(balldiameter, ring_height, t_air, t_wall, bear_do=6, be
                 trans_bear(difference(cylinder(bear_do / 2, bear_t), [cylinder(bolt_d / 2, bolt_l)]), rot_r=rot))
         shape = union(all_sh)
 
-    sensor = difference(translate(gen_sensor(t=r_iner, cutout=True), (0, 0, -r_iner / 2)), [sphere(r_iner)])
-
-    # start with cutout
-    cutout = union([translate(gen_sensor(t=r_outer, cutout=False), (0, 0, -r_outer)),
-                    translate(cylinder(r_iner, height - r_iner), (0, 0, (height - r_iner) / 2)),
-                    sphere(r_iner)])
     cutout_inlets = [cutout]
     for i in range(3):
         bolt_orientation = 1
         rot = -30 + 120 * i
         #  rot = 0
-        cutout_inlets.append(trans_bear(gen_fastening(bear_do / 2 + t_bear_air, bear_t + t_bear_air), rot_r=rot))
+        cutout_inlets.append(trans_bear(gen_fastening(bear_do / 2 + t_bear_gap, bear_t + t_bear_gap), rot_r=rot))
     cutout = union(cutout_inlets)
 
     return shape, cutout, sensor
@@ -270,11 +291,11 @@ def gen_track_socket():
 # result = cq_stuff()
 # export_file(shape=result, fname=path.join("..", "things", "cq_play"))
 
-shape, cutout, sensor = trackball_socket_gen(34, 2, 4, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
-# export_file(shape=shape, fname=path.join("..", "things", "trackball_bearing_socket"))
+shape, cutout, no = bearing_trackball_socket(34, 7, 1, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
+export_file(shape=difference(shape, [cutout]), fname=path.join("..", "things", "trackball_bearing_cutout"))
 
-inner_fin = socket_bearing_fin(2.5, 3, 1.5, 6.5, -25, True)
-outer_fin = socket_bearing_fin(4, 5, 3, 8, -22, False)
+# inner_fin = socket_bearing_fin(2.5, 3, 1.5, 6.5, -25, True)
+# outer_fin = socket_bearing_fin(4, 5, 3, 8, -22, False)
 # export_file(shape=union([difference(shape, [cutout]), sensor]), fname=path.join("..", "things", "trackball_bearing_socket"))
 # export_file(shape=cutout, fname=path.join("..", "things", "trackball_bearing_cutout"))
-export_file(shape=difference(outer_fin, [inner_fin]), fname=path.join("..", "things", "trackball_bearing_socket"))
+# export_file(shape=difference(outer_fin, [inner_fin]), fname=path.join("..", "things", "trackball_bearing_socket"))
