@@ -3,7 +3,7 @@ import os.path as path
 import numpy
 import cadquery as cq
 
-ball_diam = 34  # ball diameter
+ball_diam = 40  # ball diameter
 ball_space = 1  # additional room around ball in socket, 1mm
 
 
@@ -291,8 +291,10 @@ def gen_track_socket():
 # result = cq_stuff()
 # export_file(shape=result, fname=path.join("..", "things", "cq_play"))
 
-shape, cutout, no = bearing_trackball_socket(34, 8, 1, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
+shape, cutout, no = bearing_trackball_socket(ball_diam, 8, 1, 3, bear_do=6, bear_di=3, bear_t=2.5, bolt_d=3, bolt_l=6)
 export_file(shape=difference(shape, [cutout]), fname=path.join("..", "things", "trackball_bearing_cutout"))
+ball = get_ball(False)
+export_file(shape=ball, fname=path.join("..", "things", "ball_40mm"))
 
 # inner_fin = socket_bearing_fin(2.5, 3, 1.5, 6.5, -25, True)
 # outer_fin = socket_bearing_fin(4, 5, 3, 8, -22, False)
