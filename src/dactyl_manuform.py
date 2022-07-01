@@ -733,7 +733,7 @@ def make_dactyl():
         #         places.append(key_place(web_post_bl(), column + 1, row))
         #         places.append(key_place(web_post_tl(), column + 1, row + 1))
         #         hulls.append(triangle_hulls(places))
-        
+
 
         return union(hulls)
 
@@ -1023,8 +1023,11 @@ def make_dactyl():
         torow = lastrow - 1
         if (full_last_rows):
             torow = lastrow
-        shape = []
-        for i in range(ncols - 4):
+        x = 4
+        shape = union([key_wall_brace(
+            x, torow, 0, -1, web_post_bl(), x, torow, 0, -1, web_post_br()
+        )])
+        for i in range(1, ncols - 4):
             x = i + 4
             shape = union([shape, key_wall_brace(
                 x, torow, 0, -1, web_post_bl(), x, torow, 0, -1, web_post_br()
