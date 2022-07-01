@@ -121,8 +121,12 @@ class TrackballWild(TrackballOrbyl):
                     self.track_place(self.tb_post_r()),
                     self.tl_place(web_post_bl()),
                     self.track_place(self.tb_post_tr()),
-                    key_place(web_post_bl(), 0, cornerrow),
+                    key_place(web_post_bl(), 1, cornerrow),
                     self.track_place(self.tb_post_tl()),
+                    key_place(web_post_bl(), 0, cornerrow - 1),
+                    left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
+                    key_place(translate(web_post_bl(), wall_locate2(-1, 0)), 0, cornerrow - 1),
+                    left_key_place(web_post(), cornerrow - 1, -1, low_corner=True, side=side),
                 ]
             )
         )
@@ -186,6 +190,27 @@ class TrackballWild(TrackballOrbyl):
             )
         )
 
+        # inner connections
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_br(), 0, 2),
+                    key_place(web_post_tr(), 0, 3),
+                    key_place(web_post_bl(), 0, 2),
+                ]
+            )
+        )
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_br(), 0, 2),
+                    key_place(web_post_tr(), 0, 3),
+                    key_place(web_post_bl(), 1, 2),
+                    key_place(web_post_tl(), 1, 3),
+                ]
+            )
+        )
+
         return union(hulls)
 
     # todo update walls for wild track, still identical to orbyl
@@ -221,6 +246,17 @@ class TrackballWild(TrackballOrbyl):
             self.track_place, -1.5, 0, self.tb_post_tl(),
             (lambda sh: left_key_place(sh, lastrow - 2, -1, side=ball_side, low_corner=True)), -1, 0, web_post(),
         )])
+
+        # shape = union([shape, hull_from_shapes(
+        #     [
+        #         left_key_place(web_post(), cornerrow - 1, -1, low_corner=True, side=side),
+        #         left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
+        #         key_place(web_post_bl(), 0, cornerrow - 1),
+        #         key_place(translate(web_post_bl(), wall_locate2(-1, 0)), 0, cornerrow - 1),
+        #         self.tb_post_tl(),
+        #     ]
+        # )])
+        
         # LEFT OF TRACKBALL
         shape = union([shape, wall_brace(
             self.track_place, -2, 0, self.tb_post_tl(),
@@ -297,6 +333,17 @@ class TrackballWild(TrackballOrbyl):
             )
         )
         shape = union(hulls)
+        
         # inner connection
+        shape = union([shape, hull_from_shapes(
+            [
+                key_place(web_post_bl(), 0, cornerrow - 1),
+                key_place(web_post_tl(), 1, cornerrow),
+                key_place(web_post_bl(), 1, cornerrow),
+            ]
+        )])
+
+
+        # end
 
         return shape
