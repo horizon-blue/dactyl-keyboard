@@ -198,10 +198,14 @@ def make_dactyl():
         left_wall_lower_y_offset = oled_left_wall_lower_y_offset
         left_wall_lower_z_offset = oled_left_wall_lower_z_offset
 
+
     cap_top_height = plate_thickness + sa_profile_key_height
     row_radius = ((mount_height + extra_height) / 2) / (np.sin(alpha / 2)) + cap_top_height
     column_radius = (
                             ((mount_width + extra_width) / 2) / (np.sin(beta / 2))
+                    ) + cap_top_height
+    wide_column_radius =  (
+                            ((mount_width + extra_width_15u) / 2) / (np.sin(beta / 2))
                     ) + cap_top_height
     column_x_delta = -1 - column_radius * np.sin(beta)
     column_base_angle = beta * (centercol - 2)
@@ -335,6 +339,8 @@ def make_dactyl():
             plate = mirror(plate, 'YZ')
 
         return plate
+    
+    # def larger_plate_horizontal()
 
 
     def trackball_cutout(segments=100, side="right"):
@@ -537,9 +543,9 @@ def make_dactyl():
 
     def valid_key(column, row):
         if (full_last_rows):
-            return (not (column in [0, 1])) or (not row == lastrow)
+            return (not (column in [0, 1, 2])) or (not row == lastrow)
 
-        return (column in [2, 3]) or (not row == lastrow)
+        return (column in [3, 4]) or (not row == lastrow)
 
 
     def x_rot(shape, angle):
@@ -555,7 +561,7 @@ def make_dactyl():
     def key_place(shape, column, row):
         debugprint('key_place()')
         return apply_key_geometry(shape, translate, x_rot, y_rot, column, row)
-
+    
 
     def add_translate(shape, xyz):
         debugprint('add_translate()')
@@ -576,14 +582,19 @@ def make_dactyl():
         debugprint('key_holes()')
         # hole = single_plate()
         holes = []
-        for column in range(ncols):
+        for column in range(1, ncols):
             for row in range(nrows):
                 if valid_key(column, row):
                     holes.append(key_place(single_plate(side=side), column, row))
+        
+        # inner column
+        for row in range(3):
+            holes.append(key_place(single_plate(side=side), 0, row))
 
         shape = union(holes)
 
         return shape
+
 
 
     def caps():
@@ -652,8 +663,10 @@ def make_dactyl():
         torow = lastrow
         if full_last_rows:
             torow = lastrow + 1
-        if column in [0, 1]:
+        if column in [1, 2]:
             torow = lastrow
+        elif column == 0:
+            torow = cornerrow
         return torow
 
 
@@ -692,6 +705,35 @@ def make_dactyl():
                 places.append(key_place(web_post_bl(), column + 1, row))
                 places.append(key_place(web_post_tl(), column + 1, row + 1))
                 hulls.append(triangle_hulls(places))
+        
+        # # inner connectors
+        # for column in range(0, 1):
+        #     for row in range(0, 3):  # need to consider last_row?
+        #         # for row in range(nrows):  # need to consider last_row?
+        #         places = []
+        #         places.append(key_place(web_post_tl(), column + 1, row))
+        #         places.append(key_place(web_post_tr(), column, row))
+        #         places.append(key_place(web_post_bl(), column + 1, row))
+        #         places.append(key_place(web_post_br(), column, row))
+        #         hulls.append(triangle_hulls(places))
+
+        # for row in range(cornerrow):
+        #     places = []
+        #     places.append(key_place(web_post_bl(), column, row))
+        #     places.append(key_place(web_post_br(), column, row))
+        #     places.append(key_place(web_post_tl(), column, row + 1))
+        #     places.append(key_place(web_post_tr(), column, row + 1))
+        #     hulls.append(triangle_hulls(places))
+
+        # for column in range(0, ncols - 1):
+        #     for row in range(0, 2):  # need to consider last_row?
+        #         places = []
+        #         places.append(key_place(web_post_br(), column, row))
+        #         places.append(key_place(web_post_tr(), column, row + 1))
+        #         places.append(key_place(web_post_bl(), column + 1, row))
+        #         places.append(key_place(web_post_tl(), column + 1, row + 1))
+        #         hulls.append(triangle_hulls(places))
+        
 
         return union(hulls)
 
@@ -939,7 +981,7 @@ def make_dactyl():
             (lambda sh: left_key_place(sh, 0, 1, side=side)), -1, 0, web_post(),
         )])
 
-        for i in range(lastrow):
+        for i in range(lastrow - 1):
             y = i
             low = (y == (lastrow - 1))
             temp_shape1 = wall_brace(
@@ -955,7 +997,7 @@ def make_dactyl():
             shape = union([shape, temp_shape1])
             shape = union([shape, temp_shape2])
 
-        for i in range(lastrow - 1):
+        for i in range(lastrow - 2):
             y = i + 1
             low = (y == (lastrow - 1))
             temp_shape1 = wall_brace(
@@ -981,18 +1023,7 @@ def make_dactyl():
         torow = lastrow - 1
         if (full_last_rows):
             torow = lastrow
-
-        shape = union([
-            key_wall_brace(
-                lastcol, 0, 0, 1, web_post_tr(), lastcol, 0, 1, 0, web_post_tr()
-            )
-        ])
-        shape = union([shape, key_wall_brace(
-            3, lastrow, 0, -1, web_post_bl(), 3, lastrow, 0.5, -1, web_post_br()
-        )])
-        shape = union([shape, key_wall_brace(
-            3, lastrow, 0.5, -1, web_post_br(), 4, torow, 1, -1, web_post_bl()
-        )])
+        shape = []
         for i in range(ncols - 4):
             x = i + 4
             shape = union([shape, key_wall_brace(
@@ -1648,9 +1679,9 @@ def make_dactyl():
         print('screw_insert_all_shapes()')
         shape = (
             translate(screw_insert(0, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear left
-            translate(screw_insert(0, lastrow - 1, bottom_radius, top_radius, height, side=side),
-                      (0, left_wall_lower_y_offset, offset)),  # front left
-            translate(screw_insert(3, lastrow, bottom_radius, top_radius, height, side=side),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+                      (10, -20, offset)),  # front left
+            translate(screw_insert(4, lastrow, bottom_radius, top_radius, height, side=side),
                       (0, 0, offset)),  # front middle
             translate(screw_insert(3, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear middle
             translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side),
