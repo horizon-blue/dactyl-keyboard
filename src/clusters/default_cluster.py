@@ -40,7 +40,7 @@ class DefaultCluster(object):
 
     def thumborigin(self):
         # debugprint('thumborigin()')
-        origin = key_position([mount_width / 2, -(mount_height / 2), 0], 1, cornerrow)
+        origin = key_position([mount_width / 2, -(mount_height / 2), 0], 2, cornerrow)
 
         for i in range(len(origin)):
             origin[i] = origin[i] + self.thumb_offsets[i]
@@ -304,26 +304,27 @@ class DefaultCluster(object):
                 triangle_hulls(
                     [
                         self.tl_place(self.thumb_post_tl()),
-                        key_place(web_post_bl(), 0, cornerrow),
-                        self.tl_place(self.thumb_post_tr()),
-                        key_place(web_post_br(), 0, cornerrow),
-                        self.tr_place(web_post_tl()),
                         key_place(web_post_bl(), 1, cornerrow),
-                        self.tr_place(web_post_tr()),
+                        self.tl_place(self.thumb_post_tr()),
                         key_place(web_post_br(), 1, cornerrow),
-                        key_place(web_post_tl(), 2, lastrow),
-                        key_place(web_post_bl(), 2, lastrow),
+                        self.tr_place(web_post_tl()),
+                        key_place(web_post_bl(), 2, cornerrow),
                         self.tr_place(web_post_tr()),
-                        key_place(web_post_bl(), 2, lastrow),
-                        self.tr_place(web_post_br()),
-                        key_place(web_post_br(), 2, lastrow),
-                        key_place(web_post_bl(), 3, lastrow),
-                        key_place(web_post_tr(), 2, lastrow),
+                        key_place(web_post_br(), 2, cornerrow),
                         key_place(web_post_tl(), 3, lastrow),
-                        key_place(web_post_bl(), 3, cornerrow),
+                        key_place(web_post_bl(), 3, lastrow),
+                        
+                        self.tr_place(web_post_tr()),
+                        key_place(web_post_bl(), 3, lastrow),
+                        self.tr_place(web_post_br()),
+                        key_place(web_post_br(), 3, lastrow),
+                        key_place(web_post_bl(), 4, lastrow),
                         key_place(web_post_tr(), 3, lastrow),
-                        key_place(web_post_br(), 3, cornerrow),
+                        key_place(web_post_tl(), 4, lastrow),
                         key_place(web_post_bl(), 4, cornerrow),
+                        key_place(web_post_tr(), 4, lastrow),
+                        key_place(web_post_br(), 4, cornerrow),
+                        key_place(web_post_bl(), 5, cornerrow),
                     ]
                 )
             )
@@ -332,26 +333,26 @@ class DefaultCluster(object):
                 triangle_hulls(
                     [
                         self.tl_place(self.thumb_post_tl()),
-                        key_place(web_post_bl(), 0, cornerrow),
-                        self.tl_place(self.thumb_post_tr()),
-                        key_place(web_post_br(), 0, cornerrow),
-                        self.tr_place(self.thumb_post_tl()),
                         key_place(web_post_bl(), 1, cornerrow),
-                        self.tr_place(self.thumb_post_tr()),
+                        self.tl_place(self.thumb_post_tr()),
                         key_place(web_post_br(), 1, cornerrow),
-                        key_place(web_post_tl(), 2, lastrow),
-                        key_place(web_post_bl(), 2, lastrow),
+                        self.tr_place(self.thumb_post_tl()),
+                        key_place(web_post_bl(), 2, cornerrow),
                         self.tr_place(self.thumb_post_tr()),
-                        key_place(web_post_bl(), 2, lastrow),
-                        self.tr_place(self.thumb_post_br()),
-                        key_place(web_post_br(), 2, lastrow),
-                        key_place(web_post_bl(), 3, lastrow),
-                        key_place(web_post_tr(), 2, lastrow),
+                        key_place(web_post_br(), 2, cornerrow),
                         key_place(web_post_tl(), 3, lastrow),
-                        key_place(web_post_bl(), 3, cornerrow),
+                        key_place(web_post_bl(), 3, lastrow),
+                        self.tr_place(self.thumb_post_tr()),
+                        key_place(web_post_bl(), 3, lastrow),
+                        self.tr_place(self.thumb_post_br()),
+                        key_place(web_post_br(), 3, lastrow),
+                        key_place(web_post_bl(), 4, lastrow),
                         key_place(web_post_tr(), 3, lastrow),
-                        key_place(web_post_br(), 3, cornerrow),
+                        key_place(web_post_tl(), 4, lastrow),
                         key_place(web_post_bl(), 4, cornerrow),
+                        key_place(web_post_tr(), 4, lastrow),
+                        key_place(web_post_br(), 4, cornerrow),
+                        key_place(web_post_bl(), 5, cornerrow),
                     ]
                 )
             )
@@ -359,12 +360,12 @@ class DefaultCluster(object):
         hulls.append(
             triangle_hulls(
                 [
-                    key_place(web_post_br(), 1, cornerrow),
-                    key_place(web_post_tl(), 2, lastrow),
-                    key_place(web_post_bl(), 2, cornerrow),
-                    key_place(web_post_tr(), 2, lastrow),
                     key_place(web_post_br(), 2, cornerrow),
+                    key_place(web_post_tl(), 3, lastrow),
                     key_place(web_post_bl(), 3, cornerrow),
+                    key_place(web_post_tr(), 3, lastrow),
+                    key_place(web_post_br(), 3, cornerrow),
+                    key_place(web_post_bl(), 4, cornerrow),
                 ]
             )
         )
@@ -372,10 +373,31 @@ class DefaultCluster(object):
         hulls.append(
             triangle_hulls(
                 [
-                    key_place(web_post_tr(), 3, lastrow),
-                    key_place(web_post_br(), 3, lastrow),
-                    key_place(web_post_tr(), 3, lastrow),
-                    key_place(web_post_bl(), 4, cornerrow),
+                    key_place(web_post_tr(), 4, lastrow),
+                    key_place(web_post_br(), 4, lastrow),
+                    key_place(web_post_tr(), 4, lastrow),
+                    key_place(web_post_bl(), 5, cornerrow),
+                ]
+            )
+        )
+
+        # adding the connectors for the inner column
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_br(), 0, 2),
+                    key_place(web_post_tr(), 0, 3),
+                    key_place(web_post_bl(), 0, 2),
+                ]
+            )
+        )
+        hulls.append(
+            triangle_hulls(
+                [
+                    key_place(web_post_br(), 0, 2),
+                    key_place(web_post_tr(), 0, 3),
+                    key_place(web_post_bl(), 1, 2),
+                    key_place(web_post_tl(), 1, 3),
                 ]
             )
         )
@@ -417,8 +439,8 @@ class DefaultCluster(object):
         # clunky bit on the top left thumb connection  (normal connectors don't work well)
         shape = union([bottom_hull(
             [
-                left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow, -1, low_corner=True, side=side),
-                left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow, -1, low_corner=True, side=side),
+                left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
+                left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
                 self.ml_place(translate(web_post_tr(), wall_locate2(-0.3, 1))),
                 self.ml_place(translate(web_post_tr(), wall_locate3(-0.3, 1))),
             ]
@@ -427,9 +449,9 @@ class DefaultCluster(object):
         shape = union([shape,
                        hull_from_shapes(
                            [
-                               left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow, -1,
+                               left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow - 1, -1,
                                               low_corner=True, side=side),
-                               left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow, -1,
+                               left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow - 1, -1,
                                               low_corner=True, side=side),
                                self.ml_place(translate(web_post_tr(), wall_locate2(-0.3, 1))),
                                self.ml_place(translate(web_post_tr(), wall_locate3(-0.3, 1))),
@@ -440,21 +462,39 @@ class DefaultCluster(object):
 
         shape = union([shape, hull_from_shapes(
             [
-                left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow, -1, low_corner=True, side=side),
-                left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow, -1, low_corner=True, side=side),
-                left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow, -1, low_corner=True, side=side),
+                left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
+                left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
+                left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
                 self.tl_place(self.thumb_post_tl()),
             ]
         )])
 
         shape = union([shape, hull_from_shapes(
             [
-                left_key_place(web_post(), cornerrow, -1, low_corner=True, side=side),
-                left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow, -1, low_corner=True, side=side),
-                key_place(web_post_bl(), 0, cornerrow),
+                left_key_place(web_post(), cornerrow - 1, -1, low_corner=True, side=side),
+                left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
+                key_place(web_post_bl(), 0, cornerrow - 1),
+                key_place(translate(web_post_bl(), wall_locate2(-1, 0)), 0, cornerrow - 1),
                 self.tl_place(self.thumb_post_tl()),
             ]
         )])
+
+        # inner connection
+        shape = union([shape, hull_from_shapes(
+            [
+                key_place(web_post_bl(), 0, cornerrow - 1),
+                key_place(web_post_tl(), 1, cornerrow),
+                key_place(web_post_tl(), 1, cornerrow),
+            ]
+        )])
+        shape = union([shape, hull_from_shapes(
+            [
+                key_place(web_post_bl(), 0, cornerrow - 1),
+                key_place(web_post_bl(), 1, 3),
+                self.tl_place(self.thumb_post_tl()),
+            ]
+        )])
+        # end
 
         shape = union([shape, hull_from_shapes(
             [
@@ -465,6 +505,7 @@ class DefaultCluster(object):
                 self.tl_place(self.thumb_post_tl()),
             ]
         )])
+
 
         return shape
 
