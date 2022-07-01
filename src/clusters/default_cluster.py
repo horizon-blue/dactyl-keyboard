@@ -313,7 +313,6 @@ class DefaultCluster(object):
                         key_place(web_post_br(), 2, cornerrow),
                         key_place(web_post_tl(), 3, lastrow),
                         key_place(web_post_bl(), 3, lastrow),
-                        
                         self.tr_place(web_post_tr()),
                         key_place(web_post_bl(), 3, lastrow),
                         self.tr_place(web_post_br()),
@@ -381,6 +380,7 @@ class DefaultCluster(object):
             )
         )
 
+        
         # adding the connectors for the inner column
         hulls.append(
             triangle_hulls(
@@ -404,6 +404,7 @@ class DefaultCluster(object):
 
         return union(hulls)
 
+
     def walls(self, side="right"):
         print('thumb_walls()')
         # thumb, walls
@@ -426,11 +427,11 @@ class DefaultCluster(object):
         shape = union([shape, wall_brace(self.bl_place, -1, 0, web_post_bl(), self.br_place, -1, 0, web_post_tl())])
         if default_1U_cluster:
             shape = union([shape,
-                           wall_brace(self.tr_place, 0, -1, web_post_br(), (lambda sh: key_place(sh, 3, lastrow)), 0,
+                           wall_brace(self.tr_place, 0, -1, web_post_br(), (lambda sh: key_place(sh, 4, lastrow)), 0,
                                       -1, web_post_bl())])
         else:
             shape = union([shape, wall_brace(self.tr_place, 0, -1, self.thumb_post_br(),
-                                             (lambda sh: key_place(sh, 3, lastrow)), 0, -1, web_post_bl())])
+                                             (lambda sh: key_place(sh, 4, lastrow)), 0, -1, web_post_bl())])
 
         return shape
 
@@ -462,6 +463,7 @@ class DefaultCluster(object):
 
         shape = union([shape, hull_from_shapes(
             [
+                left_key_place(web_post(), cornerrow - 1, -1, low_corner=True, side=side),
                 left_key_place(translate(web_post(), wall_locate1(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
                 left_key_place(translate(web_post(), wall_locate2(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
                 left_key_place(translate(web_post(), wall_locate3(-1, 0)), cornerrow - 1, -1, low_corner=True, side=side),
@@ -484,7 +486,7 @@ class DefaultCluster(object):
             [
                 key_place(web_post_bl(), 0, cornerrow - 1),
                 key_place(web_post_tl(), 1, cornerrow),
-                key_place(web_post_tl(), 1, cornerrow),
+                key_place(web_post_bl(), 1, cornerrow),
             ]
         )])
         shape = union([shape, hull_from_shapes(
