@@ -1,3 +1,19 @@
+# Dactyl Manuform + Trackball with Ergodox layout (sort of)
+
+Disclaimer: I hacked the script for my own use and hard-coded a bunch of meshes. There's no guarantee that the script will work with another layout.
+
+This repo contains yet another fork of Dactyl Manuform that combines [Loligagger's Dactyl Manuform with Ergodox's layout](https://geekhack.org/index.php?topic=88576.msg2852310#msg2852310) with [Wylderbuild's trakball thumb cluster](https://github.com/bullwinkle3000/dactyl-keyboard)
+
+## Changes
+
+- Comparing to the classical Dactyl Manuform model, the "Ergodox layout" has an additional inner column with three keys on each side
+- Fixed the strange artifacts that's on the bottom right of Wylderbuild's trakball thumb cluster connector.
+
+![Fixed thumb cluster connection](guide/connector_comparison.jpg)
+
+Pregenerated STL files can be found in the [things](things/) directory
+
+
 # Wylderbuilds Dactyl Manuform - Python 3 - Cadquery
 So, THIS is a fork of a fork of a fork of a... You get the idea.
 
