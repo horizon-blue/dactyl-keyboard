@@ -600,12 +600,12 @@ def make_dactyl():
     def caps():
         caps = None
         for column in range(ncols):
-            size = 1
-            if pinky_1_5U and column == lastcol:
-                if row >= first_1_5U_row and row <= last_1_5U_row:
-                    size = 1.5
             for row in range(nrows):
                 if valid_key(column, row):
+                    size = 1
+                    if pinky_1_5U and column == lastcol:
+                        if row >= first_1_5U_row and row <= last_1_5U_row:
+                            size = 1.5
                     if caps is None:
                         caps = key_place(sa_cap(size), column, row)
                     else:
@@ -657,7 +657,7 @@ def make_dactyl():
         else:
             w_divide = 2.0
         return translate(web_post(), ((mount_width / w_divide) - post_adj, -(mount_height / 2) + post_adj, 0))
-
+        
 
     def get_torow(column):
         torow = lastrow
