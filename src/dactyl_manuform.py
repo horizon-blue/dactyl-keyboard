@@ -1724,6 +1724,8 @@ def make_dactyl():
 
     def screw_insert_all_shapes(bottom_radius, top_radius, height, offset=0, side='right'):
         print('screw_insert_all_shapes()')
+        pinky_offset = 6.5 if pinky_1_5U else 0
+
         shape = (
             translate(screw_insert(0, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear left
             translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
@@ -1732,9 +1734,9 @@ def make_dactyl():
                       (0, 0, offset)),  # front middle
             translate(screw_insert(3, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear middle
             translate(screw_insert(lastcol, 0, bottom_radius, top_radius, height, side=side),
-                      (0, 0, offset)),  # rear right
+                      (pinky_offset, 0, offset)),  # rear right
             translate(screw_insert(lastcol, lastrow - 1, bottom_radius, top_radius, height, side=side),
-                      (-2, -8, offset)),  # front right # TODO CONFIGURE IN JSON
+                      (-2 + pinky_offset, -8, offset)),  # front right # TODO CONFIGURE IN JSON
             translate(screw_insert_thumb(bottom_radius, top_radius, height, side), (0, 0, offset)),  # thumb cluster
         )
 
