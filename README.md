@@ -11,6 +11,10 @@ This repo contains yet another fork of Dactyl Manuform that combines [Loligagger
 
 ![Fixed thumb cluster connection](guide/connector_comparison.jpg)
 
+- The 1.5U keycaps used to be hanging beyond the case but this should be fixed now.
+
+![Fixed thumb pinky 1.5U connectors](guide/pinky_15u_comparison.jpg)
+
 Pregenerated STL files can be found in the [things](things/) directory
 
 
