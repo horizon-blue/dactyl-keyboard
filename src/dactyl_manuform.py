@@ -501,10 +501,14 @@ def make_dactyl():
         column_angle = beta * (centercol - column)
 
         column_x_delta_actual = column_x_delta
+        # if (pinky_1_5U and column == lastcol):
+        #     if row >= first_1_5U_row and row <= last_1_5U_row:
+        #         column_x_delta_actual = column_x_delta - 1.5
+        #         column_angle = beta * (centercol - column - 0.27)
+        offset_for_column = 0
         if (pinky_1_5U and column == lastcol):
             if row >= first_1_5U_row and row <= last_1_5U_row:
-                column_x_delta_actual = column_x_delta - 1.5
-                column_angle = beta * (centercol - column - 0.27)
+                offset_for_column = 4.7625
 
         if column_style == "orthographic":
             column_z_delta = column_radius * (1 - np.cos(column_angle))
@@ -527,7 +531,7 @@ def make_dactyl():
             shape = translate_fn(shape, [0, column_offset(column)[1], 0])
 
         else:
-            shape = translate_fn(shape, [0, 0, -row_radius])
+            shape = translate_fn(shape, [offset_for_column, 0, -row_radius])
             shape = rotate_x_fn(shape, alpha * (centerrow - row))
             shape = translate_fn(shape, [0, 0, row_radius])
             shape = translate_fn(shape, [0, 0, -column_radius])
@@ -704,6 +708,36 @@ def make_dactyl():
                 places.append(key_place(web_post_tr(), column, row + 1))
                 places.append(key_place(web_post_bl(), column + 1, row))
                 places.append(key_place(web_post_tl(), column + 1, row + 1))
+                hulls.append(triangle_hulls(places))
+        
+        # Connectors between outer column and right wall when 1.5u keys are used
+        if pinky_1_5U:
+            column = lastcol
+
+            # row connection
+            for row in range(first_1_5U_row, last_1_5U_row + 1):
+                places = []
+                places.append(key_place(web_post_tr(), column, row))
+                places.append(key_place(web_post_tr(True), column, row))
+                places.append(key_place(web_post_br(), column, row))
+                places.append(key_place(web_post_br(True), column, row))
+                hulls.append(triangle_hulls(places))
+            
+            # column connection
+            for row in range(first_1_5U_row, last_1_5U_row):
+                places = []
+                places.append(key_place(web_post_br(), column, row))
+                places.append(key_place(web_post_br(True), column, row))
+                places.append(key_place(web_post_tr(), column, row + 1))
+                places.append(key_place(web_post_tr(True), column, row + 1))
+                hulls.append(triangle_hulls(places))
+            
+            if last_1_5U_row != nrows:
+                places = []
+                row = last_1_5U_row
+                places.append(key_place(web_post_br(), column, row))
+                places.append(key_place(web_post_br(True), column, row))
+                places.append(key_place(web_post_tr(), column, row + 1))
                 hulls.append(triangle_hulls(places))
         
         # # inner connectors
@@ -928,8 +962,10 @@ def make_dactyl():
             shape = union([shape, key_wall_brace(
                 x, 0, 0, 1, web_post_tl(), x - 1, 0, 0, 1, web_post_tr(), back=True
             )])
+        # make the last column wider if using 1.5U
+        wide = pinky_1_5U and first_1_5U_row == 0
         shape = union([shape, key_wall_brace(
-            lastcol, 0, 0, 1, web_post_tr(), lastcol, 0, 1, 0, web_post_tr(), back=True
+            lastcol, 0, 0, 1, web_post_tr(), lastcol, 0, 1, 0, web_post_tr(wide), back=True
         )])
         return shape
 
@@ -945,20 +981,28 @@ def make_dactyl():
         tocol = lastcol
 
         y = 0
+        # make the last column wider if using 1.5U
+        wide = pinky_1_5U and first_1_5U_row == 0
         shape = union([
             key_wall_brace(
-                tocol, y, 1, 0, web_post_tr(), tocol, y, 1, 0, web_post_br()
+                tocol, y, 1, 0, web_post_tr(wide), tocol, y, 1, 0, web_post_br(wide)
             )
         ])
 
+        
+
         for i in range(torow):
             y = i + 1
+            # decide whether to use wide connection to previous row 
+            prev_wide = wide
+            wide = pinky_1_5U and y > first_1_5U_row and y <= last_1_5U_row
+            
             shape = union([shape, key_wall_brace(
-                tocol, y - 1, 1, 0, web_post_br(), tocol, y, 1, 0, web_post_tr()
+                tocol, y - 1, 1, 0, web_post_br(prev_wide), tocol, y, 1, 0, web_post_tr(wide)
             )])
 
             shape = union([shape, key_wall_brace(
-                tocol, y, 1, 0, web_post_tr(), tocol, y, 1, 0, web_post_br()
+                tocol, y, 1, 0, web_post_tr(wide), tocol, y, 1, 0, web_post_br(wide)
             )])
             # STRANGE PARTIAL OFFSET
 
