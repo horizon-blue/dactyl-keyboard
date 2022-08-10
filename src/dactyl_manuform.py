@@ -547,7 +547,7 @@ def make_dactyl():
 
     def valid_key(column, row):
         if (full_last_rows):
-            return (not (column in [0, 1, 2])) or (not row == lastrow)
+            return (not (column in [0, 1, 2])) or (not row == lastrow) and not (column == 0 and row == 3)
 
         return (column in [3, 4]) or (not row == lastrow)
 
