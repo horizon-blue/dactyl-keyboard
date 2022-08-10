@@ -1724,12 +1724,14 @@ def make_dactyl():
 
     def screw_insert_all_shapes(bottom_radius, top_radius, height, offset=0, side='right'):
         print('screw_insert_all_shapes()')
-        pinky_offset = 6.5 if pinky_1_5U else 0
+        pinky_offset = 7.5 if pinky_1_5U else 0
+        thumbcluster_offset_x = 0 if side == "right" else 5
+        thumbcluster_offset_y = 0 if side == "right" else 4
 
         shape = (
             translate(screw_insert(0, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear left
             translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
-                      (10, -20, offset)),  # front left
+                      (10 + thumbcluster_offset_x, -20 + thumbcluster_offset_y, offset)),  # front left
             translate(screw_insert(4, lastrow, bottom_radius, top_radius, height, side=side),
                       (0, 0, offset)),  # front middle
             translate(screw_insert(3, 0, bottom_radius, top_radius, height, side=side), (0, 0, offset)),  # rear middle
