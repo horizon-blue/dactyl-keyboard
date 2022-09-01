@@ -1711,6 +1711,29 @@ def make_dactyl():
             side=side
         )
 
+    def pcb_screw_insert_all_shapes(bottom_radius, top_radius, height, offset=0, side='right'):
+        offset_x = 20
+        offset_y = -20
+        shape = (
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+                      (offset_x, offset_y, offset)),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+                      (offset_x + pcb_size, offset_y, offset)),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+                      (offset_x, offset_y + pcb_size, offset)),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+                      (offset_x + pcb_size, offset_y + pcb_size, offset)),
+        )
+        return union(shape)
+    
+    def pcb_screw_insert(side="right"):
+        print('pcb_screw_insert()')
+        pcb_screw_hole_radius = pcb_screw_hole_diameter / 2
+        outer = pcb_screw_insert_all_shapes(pcb_screw_hole_radius + 2, pcb_screw_hole_radius + 2, screw_insert_height + 1.5, side=side)
+        holes = pcb_screw_insert_all_shapes(pcb_screw_hole_radius, pcb_screw_hole_radius, 350, side=side)
+        shape = difference(outer, [holes])
+        return shape
+
 
     def screw_insert_screw_holes(side='right'):
         return screw_insert_all_shapes(1.7, 1.7, 350, side=side)
@@ -1879,6 +1902,8 @@ def make_dactyl():
             for item in tool:
                 item = translate(item, [0, 0, -10])
                 shape = difference(shape, [item])
+            pcb_screw_shape = pcb_screw_insert(side=side)
+            shape = union([shape, pcb_screw_shape])
 
             shape = translate(shape, (0, 0, -0.0001))
 
@@ -1949,6 +1974,9 @@ def make_dactyl():
             tool = translate(union(screw_insert_screw_holes(side=side)), [0, 0, -10])
             base = box(1000, 1000, .01)
             shape = shape - tool
+            pcb_screw_shape = pcb_screw_insert(side=side)
+            shape = union([shape, pcb_screw_shape])
+
             shape = intersect(shape, base)
 
             shape = translate(shape, [0, 0, -0.001])
