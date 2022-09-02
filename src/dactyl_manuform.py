@@ -1594,23 +1594,25 @@ def make_dactyl():
         return shape
 
 
-    def screw_insert_shape(bottom_radius, top_radius, height):
+    def screw_insert_shape(bottom_radius, top_radius, height, for_pcb=False):
         debugprint('screw_insert_shape()')
+        translation = (0, 0, 0) if for_pcb else (0, 0, -height / 2)
         if bottom_radius == top_radius:
-            base = translate(cylinder(radius=bottom_radius, height=height),
-                             (0, 0, -height / 2)
+            shape = translate(cylinder(radius=bottom_radius, height=height),
+                             translation
                              )
         else:
-            base = translate(cone(r1=bottom_radius, r2=top_radius, height=height), (0, 0, -height / 2))
+            shape = translate(cone(r1=bottom_radius, r2=top_radius, height=height), translation)
 
-        shape = union((
-            base,
-            translate(sphere(top_radius), (0, 0, height / 2)),
-        ))
+        if not for_pcb:
+            shape = union((
+                shape,
+                translate(sphere(top_radius), translation),
+            ))
         return shape
 
 
-    def screw_insert(column, row, bottom_radius, top_radius, height, side='right'):
+    def screw_insert(column, row, bottom_radius, top_radius, height, side='right', for_pcb=False):
         debugprint('screw_insert()')
         shift_right = column == lastcol
         shift_left = column == 0
@@ -1663,8 +1665,7 @@ def make_dactyl():
                 column,
                 row,
             )
-
-        shape = screw_insert_shape(bottom_radius, top_radius, height)
+        shape = screw_insert_shape(bottom_radius, top_radius, height, for_pcb=for_pcb)
         shape = translate(shape, [position[0], position[1], height / 2])
 
         return shape
@@ -1715,22 +1716,22 @@ def make_dactyl():
         offset_x = 20
         offset_y = -20
         shape = (
-            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side, for_pcb=True),
                       (offset_x, offset_y, offset)),
-            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side, for_pcb=True),
                       (offset_x + pcb_size, offset_y, offset)),
-            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side, for_pcb=True),
                       (offset_x, offset_y + pcb_size, offset)),
-            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side),
+            translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side, for_pcb=True),
                       (offset_x + pcb_size, offset_y + pcb_size, offset)),
         )
         return union(shape)
     
     def pcb_screw_insert(side="right"):
         print('pcb_screw_insert()')
-        pcb_screw_hole_radius = pcb_screw_hole_diameter / 2
-        outer = pcb_screw_insert_all_shapes(pcb_screw_hole_radius + 2, pcb_screw_hole_radius + 2, screw_insert_height + 1.5, side=side)
-        holes = pcb_screw_insert_all_shapes(pcb_screw_hole_radius, pcb_screw_hole_radius, 350, side=side)
+        pcb_screw_insert_radius = pcb_screw_insert_diameter / 2
+        outer = pcb_screw_insert_all_shapes(pcb_screw_insert_radius + 1.5, pcb_screw_insert_radius + 1.5, pcb_screw_insert_height, side=side)
+        holes = translate(pcb_screw_insert_all_shapes(pcb_screw_insert_radius, pcb_screw_insert_radius, 350, side=side), [0, 0, -10])
         shape = difference(outer, [holes])
         return shape
 
@@ -1902,8 +1903,6 @@ def make_dactyl():
             for item in tool:
                 item = translate(item, [0, 0, -10])
                 shape = difference(shape, [item])
-            pcb_screw_shape = pcb_screw_insert(side=side)
-            shape = union([shape, pcb_screw_shape])
 
             shape = translate(shape, (0, 0, -0.0001))
 
@@ -1960,6 +1959,9 @@ def make_dactyl():
                         )
                     )
                 shape = difference(shape, hole_shapes)
+                # adding pcb screw inserts
+                pcb_screw_shape = translate(pcb_screw_insert(side=side), (0, 0, base_thickness))
+                shape = union([shape, pcb_screw_shape])
                 shape = translate(shape, (0, 0, -base_rim_thickness))
                 shape = union([shape, inner_shape])
 
