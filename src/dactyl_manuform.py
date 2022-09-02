@@ -1959,9 +1959,10 @@ def make_dactyl():
                         )
                     )
                 shape = difference(shape, hole_shapes)
-                # adding pcb screw inserts
-                pcb_screw_shape = translate(pcb_screw_insert(side=side), (0, 0, base_thickness))
-                shape = union([shape, pcb_screw_shape])
+                if pcb_screw_insert:
+                    # adding pcb screw inserts
+                    pcb_screw_shape = translate(pcb_screw_insert(side=side), (0, 0, base_thickness))
+                    shape = union([shape, pcb_screw_shape])
                 shape = translate(shape, (0, 0, -base_rim_thickness))
                 shape = union([shape, inner_shape])
 

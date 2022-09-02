@@ -269,6 +269,7 @@
   "external_holder_yoffset": -4.5,
   "screw_hole_diameter": 3.0,
   "pcb_size": 50.0,
+  "pcb_screw_insert": true,
   "pcb_screw_insert_height": 2.0,
   "pcb_screw_insert_diameter": 3.0,
   "base_thickness": 3.0,
