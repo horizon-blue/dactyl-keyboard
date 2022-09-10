@@ -2045,7 +2045,6 @@ def make_dactyl():
         export_dxf(shape=base, fname=path.join(save_path, config_name + r"_right_plate"))
 
         # rest = wrist_rest(mod_r, base, side="right")
-        #
         # export_file(shape=rest, fname=path.join(save_path, config_name + r"_right_wrist_rest"))
 
         if symmetry == "asymmetric":
@@ -2056,6 +2055,9 @@ def make_dactyl():
             base_l = mirror(baseplate(side='left'), 'YZ')
             export_file(shape=base_l, fname=path.join(save_path, config_name + r"_left_plate"))
             export_dxf(shape=base_l, fname=path.join(save_path, config_name + r"_left_plate"))
+
+            # rest_l = wrist_rest(mod_l, base_l, side="left")
+            # export_file(shape=rest_l, fname=path.join(save_path, config_name + r"_left_wrist_rest"))
 
         else:
             export_file(shape=mirror(mod_r, 'YZ'), fname=path.join(save_path, config_name + r"_left"))
