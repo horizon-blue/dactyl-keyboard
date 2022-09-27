@@ -1761,8 +1761,8 @@ def make_dactyl():
         )
 
     def pcb_screw_insert_all_shapes(bottom_radius, top_radius, height, offset=0, side='right'):
-        offset_x = 20
-        offset_y = -20
+        offset_x = 30
+        offset_y = -18
         shape = (
             translate(screw_insert(0, lastrow - 2, bottom_radius, top_radius, height, side=side, for_pcb=True),
                       (offset_x, offset_y, offset)),
@@ -2063,7 +2063,7 @@ def make_dactyl():
             export_file(shape=mirror(mod_r, 'YZ'), fname=path.join(save_path, config_name + r"_left"))
 
             lbase = mirror(base, 'YZ')
-            export_file(shape=lbase, fname=path.join(save_path, config_name + r"_left_plate"))
+            export_file(shape=lbase, fname=path.joins(save_path, config_name + r"_left_plate"))
             export_dxf(shape=lbase, fname=path.join(save_path, config_name + r"_left_plate"))
 
         if ENGINE == 'cadquery':
