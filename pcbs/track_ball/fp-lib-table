@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "pwm3360")(type "KiCad")(uri "${KIPRJMOD}/pwm3360.pretty")(options "")(descr ""))
+)

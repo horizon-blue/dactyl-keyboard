@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\rijn\Desktop\dactyl_manuform\track_ball\track_ball.kicad_sch</source>
+    <date>07/09/2022 9:22:53 PM</date>
+    <tool>Eeschema (6.0.5)</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>track_ball.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>4.7u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>48f91836-2507-4069-9b98-d04b7e307aa9</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>100n</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b31ba792-8f1a-4e80-90ba-7c1dcbb33fb2</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>85256424-1eda-4766-92c1-82fb2cba1828</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>91303783-8320-4d5a-bd97-6791511b31dd</tstamps>
+    </comp>
+    <comp ref="H1">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_2.2mm_M2_Pad_Via</footprint>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ec27afae-71df-4575-a1b5-4efa45330eb8</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>MountingHole_Pad</value>
+      <footprint>MountingHole:MountingHole_2.2mm_M2_Pad_Via</footprint>
+      <libsource lib="Mechanical" part="MountingHole_Pad" description="Mounting Hole with connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>83314777-7bf5-4b63-b753-341221538330</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x07_Female</value>
+      <footprint>Connector_JST:JST_PH_B7B-PH-K_1x07_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x07_Female" description="Generic connector, single row, 01x07, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5f9b307c-33c2-4f16-b4af-ff203edd9c11</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>74cac563-def2-43bd-8af6-77a681818010</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>39</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>256b93b4-64fa-47d1-a22a-031c95120df2</tstamps>
+    </comp>
+    <comp ref="TP1">
+      <value>TestPoint</value>
+      <footprint>TestPoint:TestPoint_Pad_D1.5mm</footprint>
+      <libsource lib="Connector" part="TestPoint" description="test point"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3c3f989a-75c7-451c-bf27-c11e22b5b2f6</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>TLV70018_SOT23-5</value>
+      <footprint>Package_TO_SOT_SMD:SOT-23-5</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/tlv700.pdf</datasheet>
+      <libsource lib="Regulator_Linear" part="TLV70018_SOT23-5" description="200mA Low Dropout Voltage Regulator, Fixed Output 1.8V, SOT-23-5"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b156ae1f-131d-4665-a9d4-22ab6269e870</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>PWM3360</value>
+      <footprint>pwm3360:DIP-16_W10.16mm</footprint>
+      <libsource lib="pwm3360" part="PWM3360" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>72ca58c2-bad0-48ff-9ec2-6517a0b03cc3</tstamps>
+    </comp>
+    <comp ref="U3">
+      <value>SN74LVC1T45DPK</value>
+      <footprint>pwm3360:USON-6</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</datasheet>
+      <libsource lib="Logic_LevelTranslator" part="SN74LVC1T45DRL" description="Single-Bit Dual-Supply Bus Transceiver With Configurable Voltage Translation and 3-State Outputs, SOT-563"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b8620cae-aa08-4343-bac8-81b678f9e675</tstamps>
+    </comp>
+    <comp ref="U4">
+      <value>SN74LVC1T45DPK</value>
+      <footprint>pwm3360:USON-6</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</datasheet>
+      <libsource lib="Logic_LevelTranslator" part="SN74LVC1T45DRL" description="Single-Bit Dual-Supply Bus Transceiver With Configurable Voltage Translation and 3-State Outputs, SOT-563"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>224b19af-adcb-442f-b330-a31782448e65</tstamps>
+    </comp>
+    <comp ref="U5">
+      <value>SN74LVC1T45DPK</value>
+      <footprint>pwm3360:USON-6</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</datasheet>
+      <libsource lib="Logic_LevelTranslator" part="SN74LVC1T45DRL" description="Single-Bit Dual-Supply Bus Transceiver With Configurable Voltage Translation and 3-State Outputs, SOT-563"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5be26e5b-67e4-4046-8a5b-4c1dd97004e7</tstamps>
+    </comp>
+    <comp ref="U6">
+      <value>SN74LVC1T45DPK</value>
+      <footprint>pwm3360:USON-6</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</datasheet>
+      <libsource lib="Logic_LevelTranslator" part="SN74LVC1T45DRL" description="Single-Bit Dual-Supply Bus Transceiver With Configurable Voltage Translation and 3-State Outputs, SOT-563"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6b1841ff-3e5f-491d-a3d6-c1422c85ceb5</tstamps>
+    </comp>
+    <comp ref="U7">
+      <value>SN74LVC1T45DPK</value>
+      <footprint>pwm3360:USON-6</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</datasheet>
+      <libsource lib="Logic_LevelTranslator" part="SN74LVC1T45DRL" description="Single-Bit Dual-Supply Bus Transceiver With Configurable Voltage Translation and 3-State Outputs, SOT-563"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="track_ball.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bce38784-3263-4dec-9cb8-44da4214597b</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x07_Female">
+      <description>Generic connector, single row, 01x07, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x07_Female</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="TestPoint">
+      <description>test point</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Pin*</fp>
+        <fp>Test*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">TP</field>
+        <field name="Value">TestPoint</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Logic_LevelTranslator" part="SN74LVC1T45DRL">
+      <description>Single-Bit Dual-Supply Bus Transceiver With Configurable Voltage Translation and 3-State Outputs, SOT-563</description>
+      <docs>http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</docs>
+      <footprints>
+        <fp>*SOT?563*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">SN74LVC1T45DRL</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-563</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/sn74lvc1t45.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VCCA" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="A" type="bidirectional"/>
+        <pin num="4" name="B" type="bidirectional"/>
+        <pin num="5" name="DIR" type="input"/>
+        <pin num="6" name="VCCB" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Mechanical" part="MountingHole_Pad">
+      <description>Mounting Hole with connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*Pad*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole_Pad</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Linear" part="TLV70018_SOT23-5">
+      <description>200mA Low Dropout Voltage Regulator, Fixed Output 1.8V, SOT-23-5</description>
+      <docs>http://www.ti.com/lit/ds/symlink/tlv700.pdf</docs>
+      <footprints>
+        <fp>SOT?23*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TLV70018_SOT23-5</field>
+        <field name="Footprint">Package_TO_SOT_SMD:SOT-23-5</field>
+        <field name="Datasheet">http://www.ti.com/lit/ds/symlink/tlv700.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="NC" type="no_connect"/>
+        <pin num="5" name="OUT" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="pwm3360" part="PWM3360">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">PWM3360</field>
+      </fields>
+      <pins>
+        <pin num="1" name="NC" type="no_connect"/>
+        <pin num="2" name="NC" type="no_connect"/>
+        <pin num="3" name="VDDPIX" type="power_in"/>
+        <pin num="4" name="VDD" type="power_in"/>
+        <pin num="5" name="VDDIO" type="power_in"/>
+        <pin num="6" name="NC" type="no_connect"/>
+        <pin num="7" name="NRESET" type="input"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="MOTION" type="output"/>
+        <pin num="10" name="SCLK" type="input"/>
+        <pin num="11" name="MOSI" type="input"/>
+        <pin num="12" name="MISO" type="output"/>
+        <pin num="13" name="NCS" type="input"/>
+        <pin num="14" name="NC" type="no_connect"/>
+        <pin num="15" name="LED_P" type="input"/>
+        <pin num="16" name="NC" type="no_connect"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="Logic_LevelTranslator">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Logic_LevelTranslator.kicad_sym</uri>
+    </library>
+    <library logical="Mechanical">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Mechanical.kicad_sym</uri>
+    </library>
+    <library logical="Regulator_Linear">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Regulator_Linear.kicad_sym</uri>
+    </library>
+    <library logical="pwm3360">
+      <uri>C:\Users\rijn\Desktop\dactyl_manuform\track_ball/lib/pwm3360.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+1V8">
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="OUT" pintype="power_out"/>
+      <node ref="U2" pin="4" pinfunction="VDD" pintype="power_in"/>
+      <node ref="U2" pin="5" pinfunction="VDDIO" pintype="power_in"/>
+      <node ref="U3" pin="6" pinfunction="VCCB" pintype="power_in"/>
+      <node ref="U4" pin="6" pinfunction="VCCB" pintype="power_in"/>
+      <node ref="U5" pin="6" pinfunction="VCCB" pintype="power_in"/>
+      <node ref="U6" pin="6" pinfunction="VCCB" pintype="power_in"/>
+      <node ref="U7" pin="6" pinfunction="VCCB" pintype="power_in"/>
+    </net>
+    <net code="2" name="+5V">
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="J1" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="IN" pintype="power_in"/>
+      <node ref="U1" pin="3" pinfunction="EN" pintype="input"/>
+      <node ref="U3" pin="1" pinfunction="VCCA" pintype="power_in"/>
+      <node ref="U3" pin="5" pinfunction="DIR" pintype="input"/>
+      <node ref="U4" pin="1" pinfunction="VCCA" pintype="power_in"/>
+      <node ref="U4" pin="5" pinfunction="DIR" pintype="input"/>
+      <node ref="U5" pin="1" pinfunction="VCCA" pintype="power_in"/>
+      <node ref="U6" pin="1" pinfunction="VCCA" pintype="power_in"/>
+      <node ref="U6" pin="5" pinfunction="DIR" pintype="input"/>
+      <node ref="U7" pin="1" pinfunction="VCCA" pintype="power_in"/>
+    </net>
+    <net code="3" name="/MISO_L">
+      <node ref="U2" pin="12" pinfunction="MISO" pintype="output"/>
+      <node ref="U5" pin="4" pinfunction="B" pintype="bidirectional"/>
+    </net>
+    <net code="4" name="/MOSI_L">
+      <node ref="U2" pin="11" pinfunction="MOSI" pintype="input"/>
+      <node ref="U4" pin="4" pinfunction="B" pintype="bidirectional"/>
+    </net>
+    <net code="5" name="/MOTION_L">
+      <node ref="U2" pin="9" pinfunction="MOTION" pintype="output"/>
+      <node ref="U7" pin="4" pinfunction="B" pintype="bidirectional"/>
+    </net>
+    <net code="6" name="/NCS_L">
+      <node ref="U2" pin="13" pinfunction="NCS" pintype="input"/>
+      <node ref="U6" pin="4" pinfunction="B" pintype="bidirectional"/>
+    </net>
+    <net code="7" name="/SCLK_L">
+      <node ref="U2" pin="10" pinfunction="SCLK" pintype="input"/>
+      <node ref="U3" pin="4" pinfunction="B" pintype="bidirectional"/>
+    </net>
+    <net code="8" name="GND">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="H1" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="H2" pin="1" pinfunction="1" pintype="input"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U2" pin="8" pinfunction="GND" pintype="power_in"/>
+      <node ref="U3" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U4" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U5" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U6" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U7" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U7" pin="5" pinfunction="DIR" pintype="input"/>
+    </net>
+    <net code="9" name="MISO">
+      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="U5" pin="3" pinfunction="A" pintype="bidirectional"/>
+    </net>
+    <net code="10" name="MOSI">
+      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="U4" pin="3" pinfunction="A" pintype="bidirectional"/>
+    </net>
+    <net code="11" name="Net-(C1-Pad1)">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="VDDPIX" pintype="power_in"/>
+    </net>
+    <net code="12" name="Net-(R1-Pad1)">
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="TP1" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="U2" pin="7" pinfunction="NRESET" pintype="input"/>
+    </net>
+    <net code="13" name="Net-(R2-Pad1)">
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="U2" pin="15" pinfunction="LED_P" pintype="input"/>
+    </net>
+    <net code="14" name="PWM_CS">
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="U5" pin="5" pinfunction="DIR" pintype="input"/>
+      <node ref="U6" pin="3" pinfunction="A" pintype="bidirectional"/>
+    </net>
+    <net code="15" name="PWM_INT">
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="U7" pin="3" pinfunction="A" pintype="bidirectional"/>
+    </net>
+    <net code="16" name="SCK">
+      <node ref="J1" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="U3" pin="3" pinfunction="A" pintype="bidirectional"/>
+    </net>
+    <net code="17" name="unconnected-(U1-Pad4)">
+      <node ref="U1" pin="4" pinfunction="NC" pintype="no_connect"/>
+    </net>
+    <net code="18" name="unconnected-(U2-Pad1)">
+      <node ref="U2" pin="1" pinfunction="NC" pintype="no_connect"/>
+    </net>
+    <net code="19" name="unconnected-(U2-Pad2)">
+      <node ref="U2" pin="2" pinfunction="NC" pintype="no_connect"/>
+    </net>
+    <net code="20" name="unconnected-(U2-Pad6)">
+      <node ref="U2" pin="6" pinfunction="NC" pintype="no_connect"/>
+    </net>
+    <net code="21" name="unconnected-(U2-Pad14)">
+      <node ref="U2" pin="14" pinfunction="NC" pintype="no_connect"/>
+    </net>
+    <net code="22" name="unconnected-(U2-Pad16)">
+      <node ref="U2" pin="16" pinfunction="NC" pintype="no_connect"/>
+    </net>
+  </nets>
+</export>

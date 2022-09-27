@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\rijn\Desktop\dactyl_manuform\single_switch\single_switch.kicad_sch</source>
+    <date>07/09/2022 9:23:18 PM</date>
+    <tool>Eeschema (6.0.5)</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>single_switch.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>0.1u</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f487fc28-1ab3-4e81-90a6-3eb26d52bb83</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>1N4148</value>
+      <footprint>Diode_SMD:D_SOD-123</footprint>
+      <libsource lib="pspice" part="DIODE" description="Diode symbol for simulation only. Pin order incompatible with official kicad footprints"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6e709274-c754-4cb2-ad0d-068cb43ce85f</tstamps>
+    </comp>
+    <comp ref="D2">
+      <value>SK6812MINI</value>
+      <footprint>modules:MX_SK6812MINI-E_REV</footprint>
+      <datasheet>https://cdn-shop.adafruit.com/product-files/2686/SK6812MINI_REV.01-1-2.pdf</datasheet>
+      <libsource lib="LED" part="SK6812MINI" description="RGB LED with integrated controller"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ced48256-3b8c-4c79-8347-8b604674942b</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0b617b02-40fd-4085-b7b0-0b8a6fab52e1</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8405cc6a-d95d-45a1-a0fe-5f59fa1852cb</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f0aa58c4-adca-4bd1-a893-ee236c5e54b8</tstamps>
+    </comp>
+    <comp ref="J4">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4eb01928-8c6d-43e4-a3f3-34dafcd1a8a4</tstamps>
+    </comp>
+    <comp ref="J5">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a630d5fa-ac35-49af-ae46-917b0a16e0c5</tstamps>
+    </comp>
+    <comp ref="J6">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>844d10eb-5c20-4f87-8bb6-919a491b1c90</tstamps>
+    </comp>
+    <comp ref="J7">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>550d15d7-5c58-48b0-a98b-1cc2e18d2c6b</tstamps>
+    </comp>
+    <comp ref="J8">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3c7c50d3-b59a-482c-8266-7ae66b84eaba</tstamps>
+    </comp>
+    <comp ref="J9">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>05f3bdd1-2075-4263-b102-657532245e3f</tstamps>
+    </comp>
+    <comp ref="J10">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bf769ccf-b5cd-4eb7-9d4e-8bf181a113a2</tstamps>
+    </comp>
+    <comp ref="J11">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>854ee595-1398-4714-b8a0-6a39cce6540c</tstamps>
+    </comp>
+    <comp ref="J12">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f6805f44-1289-4180-be33-fb8f46cf0b57</tstamps>
+    </comp>
+    <comp ref="J13">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>64950341-001f-48be-a116-eabae43a7db3</tstamps>
+    </comp>
+    <comp ref="J14">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00b53be0-41b0-477e-b49c-c8140ac1ec49</tstamps>
+    </comp>
+    <comp ref="J15">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>31067964-237a-4689-8523-6ad8486a19c6</tstamps>
+    </comp>
+    <comp ref="J16">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>02b2add1-4da0-4285-bb7b-fdb0dcecebe8</tstamps>
+    </comp>
+    <comp ref="J17">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>92dba03a-7b4c-4de4-93c4-134e39176da2</tstamps>
+    </comp>
+    <comp ref="J18">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fbb38f1f-2e0e-456d-902c-9f0a50b424d9</tstamps>
+    </comp>
+    <comp ref="J19">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a452e681-30bc-43b1-baf8-8f3e7fdb5271</tstamps>
+    </comp>
+    <comp ref="J20">
+      <value>Conn_01x01_Female</value>
+      <footprint>modules:PinSocket_1x01_P2.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Female" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cc76e31c-b322-4679-87ac-87eb3755d3a1</tstamps>
+    </comp>
+    <comp ref="SW1">
+      <value>CPG151101S11</value>
+      <footprint>modules:Kailh_MX_Socket</footprint>
+      <libsource lib="Switch" part="SW_SPST" description="Single Pole Single Throw (SPST) switch"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="single_switch.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2c75734a-4b83-401c-b925-0108752044a1</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Connector" part="Conn_01x01_Female">
+      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x01_Female</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="LED" part="SK6812MINI">
+      <description>RGB LED with integrated controller</description>
+      <docs>https://cdn-shop.adafruit.com/product-files/2686/SK6812MINI_REV.01-1-2.pdf</docs>
+      <footprints>
+        <fp>LED*SK6812MINI*PLCC*3.5x3.5mm*P1.75mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">SK6812MINI</field>
+        <field name="Footprint">LED_SMD:LED_SK6812MINI_PLCC4_3.5x3.5mm_P1.75mm</field>
+        <field name="Datasheet">https://cdn-shop.adafruit.com/product-files/2686/SK6812MINI_REV.01-1-2.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="DOUT" type="output"/>
+        <pin num="2" name="VSS" type="power_in"/>
+        <pin num="3" name="DIN" type="input"/>
+        <pin num="4" name="VDD" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Switch" part="SW_SPST">
+      <description>Single Pole Single Throw (SPST) switch</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_SPST</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A" type="passive"/>
+        <pin num="2" name="B" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="pspice" part="DIODE">
+      <description>Diode symbol for simulation only. Pin order incompatible with official kicad footprints</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">DIODE</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="input"/>
+        <pin num="2" name="A" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Device.kicad_sym</uri>
+    </library>
+    <library logical="LED">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/LED.kicad_sym</uri>
+    </library>
+    <library logical="Switch">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Switch.kicad_sym</uri>
+    </library>
+    <library logical="pspice">
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/pspice.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="COL">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="SW1" pin="2" pinfunction="B" pintype="passive"/>
+    </net>
+    <net code="2" name="DIN">
+      <node ref="D2" pin="3" pinfunction="DIN" pintype="input"/>
+      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J4" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J5" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J6" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="3" name="DOUT">
+      <node ref="D2" pin="1" pinfunction="DOUT" pintype="output"/>
+      <node ref="J10" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J11" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J12" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J9" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="4" name="Net-(D1-Pad1)">
+      <node ref="D1" pin="1" pinfunction="K" pintype="input"/>
+      <node ref="SW1" pin="1" pinfunction="A" pintype="passive"/>
+    </net>
+    <net code="5" name="ROW">
+      <node ref="D1" pin="2" pinfunction="A" pintype="input"/>
+      <node ref="J7" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J8" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="6" name="VDD">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="D2" pin="4" pinfunction="VDD" pintype="power_in"/>
+      <node ref="J13" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J14" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J15" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J16" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+    <net code="7" name="VSS">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="D2" pin="2" pinfunction="VSS" pintype="power_in"/>
+      <node ref="J17" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J18" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J19" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J20" pin="1" pinfunction="Pin_1" pintype="passive"/>
+    </net>
+  </nets>
+</export>
